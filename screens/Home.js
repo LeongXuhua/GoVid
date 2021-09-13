@@ -44,7 +44,7 @@ const HomeScreen = ({navigation}) => {
 
         <View style={styles.menuContainer}>
             <View style={styles.menuBox}>
-                <Button title="SafeEntry Check In" />
+                <Button title="SafeEntry Check In"    onPress={()=>navigation.navigate('BookTest')} />
             </View>
 
             <View style={styles.menuBox}>

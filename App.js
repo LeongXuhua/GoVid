@@ -6,6 +6,7 @@ import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput } from '
 
 import HomeScreen from './screens/Home';
 import LoginScreen from './screens/Login';
+import BookTestScreen from './screens/BookTest';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ function App(){
           headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
           })}
       >
+         <Stack.Screen name="BookTest" component={BookTestScreen}/>
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerRight:()=>{}}}/>
       </Stack.Navigator>

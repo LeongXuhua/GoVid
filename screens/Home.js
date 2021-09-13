@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
+
 
 const HomeScreen = ({navigation}) => {
     return (
@@ -44,11 +45,13 @@ const HomeScreen = ({navigation}) => {
 
         <View style={styles.menuContainer}>
             <View style={styles.menuBox}>
-                <Button title="SafeEntry Check In" />
+                <TouchableOpacity style={styles.menuButton}>
+                    <Text style={styles.menuLabel}> SafeEntry Check In </Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.menuBox}>
-                <Button title="Check Symptoms" />
+                <Button title="Check Symptoms" titleStyle={styles.menuLabel} />
             </View>
 
             <View style={styles.menuBox}>
@@ -110,7 +113,11 @@ const styles = StyleSheet.create({
     },
 
     menuContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
         backgroundColor: 'pink',
+        width: "70%",
+        justifyContent: "space-around",
     },
 
     logo: {
@@ -155,13 +162,24 @@ const styles = StyleSheet.create({
       },
 
     menuBox: {
-        flex: 1,
         backgroundColor: "white",
         width: "30%",
         alignItems: "center",
         borderRadius: 10,
         marginTop: 10,
-        marginRight: 10,
+      },
+
+    menuBox: {
+        backgroundColor: "green",
+        width: "30%",
+        alignItems: "center",
+        borderRadius: 10,
+        marginTop: 10,
+      },
+
+      menuLabel: {
+        fontSize: 14,
+        color: "black",
       },
 
     divider: {

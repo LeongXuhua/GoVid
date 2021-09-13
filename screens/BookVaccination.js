@@ -26,7 +26,7 @@ const openUrl = async (url) => {
 
         <View style={styles.menuContainer}>
             <View style={styles.buttonContainer}>
-            <Button title="Click to be re-directed to MOH vaccination booking website" onPress={() => 
+            <Button title="Click to book vaccination" onPress={() => 
             {
                 openUrl(url1)
             }} color = "steelblue" />

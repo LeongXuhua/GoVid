@@ -1,28 +1,138 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import 'react-native-gesture-handler';
+//import React, {useState} from 'react';
+import * as React from 'react';
+import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Octicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from './screens/Home';
 import LoginScreen from './screens/Login';
 
+import CustomSidebarMenu from './components/drawer';
+import BookTestScreen from './screens/BookTest';
+import BookVaccinationScreen from './screens/BookVaccination';
+
+const NavigationDrawerStructure = (props) => {
+  //Structure for the navigatin Drawer
+  const toggleDrawer = () => {
+    //Props to open/close the drawer
+    props.navigationProps.toggleDrawer();
+  };
+
+  return (
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={toggleDrawer}>
+        {/*Donute Button Image */}
+        <Image
+          source={{
+            uri:
+              'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
+          }}
+          style={{width: 25, height: 25, marginLeft: 5}}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function Root({navigation}){
+  return (
+          <Drawer.Navigator
+          screenOptions={{
+            activeTintColor: '#fff',
+            itemStyle: {marginVertical: 5},
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+          drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+          
+          <Drawer.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+            drawerLabel: 'Home',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+
+            <Drawer.Screen
+            name="BookTest"
+            component={BookTestScreen}
+            options={{
+            drawerLabel: 'Book Swab Test',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+
+            <Drawer.Screen
+            name="BookVaccination"
+            component={BookVaccinationScreen}
+            options={{
+            drawerLabel: 'Book Vaccination',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+        </Drawer.Navigator>
+        /*<Drawer.Navigator
+          initialRouteName={"Home"}
+          screenOptions={({ navigation})=>({
+            headerStyle:{
+              backgroundColor:'#51a4fb',
+              headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
+              headerLeft: ()=> <Button title="MENU" onPress={navigation.toggleDrawer}/>,
+            },
+          })}
+        >
+          <Drawer.Screen name="Home" component={HomeScreen}/>
+        </Drawer.Navigator>*/
+  );
+}
 
 function App(){
   return (
     <NavigationContainer>
       <Stack.Navigator 
         initialRouteName={"Login"}
-        screenOptions={({ navigation})=>({
+        screenOptions={({navigation})=>({
+          headerShown: false,
           headerStyle:{
             backgroundColor:'#51a4fb',
           },
-          headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
+         /* headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
+          headerLeft: ()=> <Button title="MENU" onPress={navigation.toggleDrawer}/>,*/
           })}
       >
-        <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="Login" component={LoginScreen} options={{headerRight:()=>{}}}/>
+        <Stack.Screen name="Root" component={Root}/>
+        <Stack.Screen name="Login" component={LoginScreen} options={{headerRight:()=>{}, headerLeft:()=>{}}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

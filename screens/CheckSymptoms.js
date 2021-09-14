@@ -51,7 +51,7 @@ const CheckSymptomsScreen = () => {
 
     const handleNext = (type) => {
         if(currentQuestionIndex == data.length-1){
-            if(countYesResponse > 0){
+            if(countYesResponse > 1){
                 setShowQuestion(false);
                 setShowInfectedReccomendation(true);
                 

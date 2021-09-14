@@ -1,39 +1,44 @@
 
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import { Alert, Linking, Button, StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
 
-const url1 = "https://preregister.vaccine.gov.sg/";
-
-import sample1 from "../assets/Sample1.jpeg"
-import sample2 from "../assets/Sample2.jpeg"
+const url1 = "https://www.mfa.gov.sg/where-are-you-travelling-to";
 
 
+const TravelInformationScreen = () => {
 
-const CovidTestScreen = () => {
-  
-  const [flag, setFlag] = useState(sample1);
-
-  const changeImage = () => setFlag(sample2);
+//Alert
+const openUrl = async (url) => {
+    const isSupported = await Linking.canOpenURL(url);
+    if(isSupported){
+        await Linking.openURL(url);
+    } else {
+        Alert.alert ('This webpage is not found: ${url}');
+    }
+}
 
     return (
       <SafeAreaView style={styles.container}>
-           <Text style={styles.welcomeText}> Covid Test Result </Text>
-
-        <Image source={flag} style={styles.logo}/>
         
+        <Image source={require("../assets/logo.png")} style={styles.logo}/>
+        
+        <Text style={styles.welcomeText}> Book Vaccination </Text>
+
         <View style={styles.menuContainer}>
             <View style={styles.buttonContainer}>
-            <Button title="View Full Cert" onPress={changeImage} color="steelblue" />
+            <Button title="Click for more travel information" onPress={() => 
+            {
+                openUrl(url1)
+            }} color = "steelblue" />
             </View>
         </View>
 
 
-    
       </SafeAreaView>
     );
   }
 
-export default CovidTestScreen;
+export default TravelInformationScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
 
     buttonContainer:
     {
-        margin:-20
+        margin:10
     },
 
 
@@ -55,8 +60,8 @@ const styles = StyleSheet.create({
     },
 
     logo: {
-      width: '80%',
-      height: '80%',
+      width: '100%',
+      height: '20%',
       resizeMode: 'contain',
     },
 

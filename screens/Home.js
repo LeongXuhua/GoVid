@@ -44,14 +44,16 @@ const HomeScreen = ({navigation}) => {
         </View>
 
         <View style={styles.divider} />
-        
+
+{/* MENU BUTTONS */}
+
         <Text style={styles.newsTitle}>What do you want to do today?</Text>
 
         <View style={styles.categoryContainer}>
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'qr-code-scanner'})
+            navigation.navigate('Root', {screen: 'ScanQR'})
           }>
               <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -62,10 +64,11 @@ const HomeScreen = ({navigation}) => {
           </View>
           <Text style={styles.categoryBtnTxt}>Scan QR</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'Check Symptoms'})
+            navigation.navigate('Root', {screen: 'CheckSymptoms'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -80,7 +83,7 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'Test Result'})
+            navigation.navigate('Root', {screen: 'CovidTest'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -92,14 +95,13 @@ const HomeScreen = ({navigation}) => {
           <Text style={styles.categoryBtnTxt}>Test Result</Text>
         </TouchableOpacity>
 
-
 </View>
         <View style={[styles.categoryContainer, {marginTop: 10}]}>
 
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'Book Vaccination'})
+            navigation.navigate('Root', {screen: 'BookVaccination'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -114,7 +116,7 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'Book Covid Test'})
+            navigation.navigate('Root', {screen: 'BookTest'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -148,7 +150,7 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'Travel Declaration'})
+            navigation.navigate('Root', {screen: 'TravelInformation'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -157,7 +159,7 @@ const HomeScreen = ({navigation}) => {
               color="#000000"
             />
           </View>
-          <Text style={styles.categoryBtnTxt}>Travel Declaration</Text>
+          <Text style={styles.categoryBtnTxt}>Travel Information</Text>
         </TouchableOpacity>
      
         <TouchableOpacity
@@ -179,25 +181,6 @@ const HomeScreen = ({navigation}) => {
       </View>
 
       
-        <View style={styles.menuContainer}>
-            <View style={styles.menuBox}>
-                <TouchableOpacity style={styles.menuButton}>
-                    <Text style={styles.menuLabel}> SafeEntry Check In </Text>
-                </TouchableOpacity>
-            </View>
-
-
-
-            </View>
-
-            <View style={styles.menuBox}>
-                <Button title="Check Symptoms" 
-                titleStyle={styles.menuLabel} />
-            </View>
-
-            <View style={styles.menuBox}>
-                <Button title="Test Results" />
-            </View>
 
             <View style={styles.menuBox}>
                 <Button title="Book Covid Testing" />
@@ -211,13 +194,6 @@ const HomeScreen = ({navigation}) => {
                 <Button title="Travel Declaration" />
             </View>
 
-            <View style={styles.menuBox}>
-                <Button title="Show Cluster" />
-            </View>
-
-            <View style={styles.menuBox}>
-                <Button title="Premises Crowd" />
-            </View>
      
 
         <Text style={styles.newsTitle}> BOTTOM TEXT </Text>
@@ -232,6 +208,9 @@ const HomeScreen = ({navigation}) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+    scroll: {
+      flex: 1,
+    },
     container: {
       flex: 1,
       backgroundColor: '#51a4fb',

@@ -8,17 +8,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+import CustomSidebarMenu from './components/drawer';
+
 import HomeScreen from './screens/Home';
 import LoginScreen from './screens/Login';
-
-import CustomSidebarMenu from './components/drawer';
 import BookTestScreen from './screens/BookTest';
 import BookVaccinationScreen from './screens/BookVaccination';
-
 import ScanQRScreen from './screens/ScanQR';
-
 import CovidTestScreen from './screens/CovidTest';
 import CheckSymptomsScreen from './screens/CheckSymptoms';
+import TravelInformationScreen from './screens/TravelInformation';
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -76,12 +75,41 @@ function Root({navigation}){
             },
             }}
           />
+          <Drawer.Screen
+            name="ScanQR"
+            component={ScanQRScreen}
+            options={{
+            drawerLabel: 'Scan QR',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
 
           <Drawer.Screen
-            name="BookTest"
-            component={BookTestScreen}
+            name="CheckSymptoms"
+            component={CheckSymptomsScreen}
             options={{
-            drawerLabel: 'Book Swab Test',
+            drawerLabel: 'Check Symptoms',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+
+          <Drawer.Screen
+            name="CovidTest"
+            component={CovidTestScreen}
+            options={{
+            drawerLabel: 'Test Result',
             headerStyle: {
               backgroundColor: '#51a4fb', //Set Header color
             },
@@ -108,10 +136,10 @@ function Root({navigation}){
           />
 
           <Drawer.Screen
-            name="ScanQR"
-            component={ScanQRScreen}
+            name="BookTest"
+            component={BookTestScreen}
             options={{
-            drawerLabel: 'Scan QR',
+            drawerLabel: 'Book Swab Test',
             headerStyle: {
               backgroundColor: '#51a4fb', //Set Header color
             },
@@ -122,27 +150,11 @@ function Root({navigation}){
             }}
           />
 
-
-        <Drawer.Screen
-            name="CovidTest"
-            component={CovidTestScreen}
+          <Drawer.Screen
+            name="TravelInformation"
+            component={TravelInformationScreen}
             options={{
-            drawerLabel: 'Test Result',
-            headerStyle: {
-              backgroundColor: '#51a4fb', //Set Header color
-            },
-            headerTintColor: '#fff', //Set Header text color
-            headerTitleStyle: {
-              fontWeight: 'bold', //Set Header text style
-            },
-            }}
-          />
-
-        <Drawer.Screen
-            name="CheckSymptoms"
-            component={CheckSymptomsScreen}
-            options={{
-            drawerLabel: 'Check Symptoms',
+            drawerLabel: 'Travel Information',
             headerStyle: {
               backgroundColor: '#51a4fb', //Set Header color
             },

@@ -191,7 +191,8 @@ const HomeScreen = ({navigation}) => {
             </View>
 
             <View style={styles.menuBox}>
-                <Button title="Check Symptoms" titleStyle={styles.menuLabel} />
+                <Button title="Check Symptoms" 
+                titleStyle={styles.menuLabel} />
             </View>
 
             <View style={styles.menuBox}>

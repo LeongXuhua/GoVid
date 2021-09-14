@@ -14,9 +14,11 @@ import LoginScreen from './screens/Login';
 import CustomSidebarMenu from './components/drawer';
 import BookTestScreen from './screens/BookTest';
 import BookVaccinationScreen from './screens/BookVaccination';
+
 import ScanQRScreen from './screens/ScanQR';
 
 import CovidTestScreen from './screens/CovidTest';
+import CheckSymptomsScreen from './screens/CheckSymptoms';
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -75,7 +77,7 @@ function Root({navigation}){
             }}
           />
 
-            <Drawer.Screen
+          <Drawer.Screen
             name="BookTest"
             component={BookTestScreen}
             options={{
@@ -90,7 +92,7 @@ function Root({navigation}){
             }}
           />
 
-            <Drawer.Screen
+          <Drawer.Screen
             name="BookVaccination"
             component={BookVaccinationScreen}
             options={{
@@ -136,7 +138,20 @@ function Root({navigation}){
             }}
           />
 
-          
+        <Drawer.Screen
+            name="CheckSymptoms"
+            component={CheckSymptomsScreen}
+            options={{
+            drawerLabel: 'Check Symptoms',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
 
         </Drawer.Navigator>
         /*<Drawer.Navigator

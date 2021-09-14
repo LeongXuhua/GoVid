@@ -1,12 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const HomeScreen = ({navigation}) => {
     return (
-      <SafeAreaView style={styles.container}>
-        
+<ScrollView>
+
+<SafeAreaView style={styles.container}>
         <Image source={require("../assets/logo.png")} style={styles.logo}/>
         
         <Text style={styles.welcomeText}> WELCOME! </Text>
@@ -40,14 +44,150 @@ const HomeScreen = ({navigation}) => {
         </View>
 
         <View style={styles.divider} />
-
+        
         <Text style={styles.newsTitle}>What do you want to do today?</Text>
 
+        <View style={styles.categoryContainer}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'qr-code-scanner'})
+          }>
+              <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="qrcode-scan"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>Scan QR</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Check Symptoms'})
+          }>
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="format-list-checks"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>Check Symptoms</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Test Result'})
+          }>
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="newspaper-plus"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>Test Result</Text>
+        </TouchableOpacity>
+
+
+</View>
+        <View style={[styles.categoryContainer, {marginTop: 10}]}>
+
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Book Vaccination'})
+          }>
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="doctor"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>Book Vaccination</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Book Covid Test'})
+          }>
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="medical-bag"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>Book Covid Test</Text>
+        </TouchableOpacity>
+     
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Cluster & Crowd'})
+          }>
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="account-group"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>Cluster & Crowd</Text>
+        </TouchableOpacity>
+          
+          
+</View>
+        <View style={[styles.categoryContainer, {marginTop: 10}]}>
+
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Travel Declaration'})
+          }>
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="airplane-takeoff"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>Travel Declaration</Text>
+        </TouchableOpacity>
+     
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'More'})
+          }>
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons
+              name="more"
+              size={35}
+              color="#000000"
+            />
+          </View>
+          <Text style={styles.categoryBtnTxt}>More</Text>
+        </TouchableOpacity>
+     
+
+      </View>
+
+      
         <View style={styles.menuContainer}>
             <View style={styles.menuBox}>
                 <TouchableOpacity style={styles.menuButton}>
                     <Text style={styles.menuLabel}> SafeEntry Check In </Text>
                 </TouchableOpacity>
+            </View>
+
+
+
             </View>
 
             <View style={styles.menuBox}>
@@ -77,12 +217,14 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.menuBox}>
                 <Button title="Premises Crowd" />
             </View>
-        </View>
+     
 
         <Text style={styles.newsTitle}> BOTTOM TEXT </Text>
 
         <StatusBar style="auto" />
-      </SafeAreaView>
+        
+        </SafeAreaView>
+      </ScrollView>
     );
   }
 
@@ -186,6 +328,35 @@ const styles = StyleSheet.create({
         borderBottomColor: '#EEEEEE',
         borderBottomWidth: 1,
         width: "70%",
+    },
+
+    categoryContainer: {
+      flexDirection: 'row',
+      width: '90%',
+      alignSelf: 'center',
+      marginTop: 25,
+      marginBottom: 10,
+    },
+    categoryBtn: {
+      flex: 1,
+      width: '30%',
+      marginHorizontal: 0,
+      alignSelf: 'center',
+    },
+    categoryIcon: {
+      borderWidth: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
+      width: 70,
+      height: 70,
+      backgroundColor: '#FFFFFF' /* '#FF6347' */,
+      borderRadius: 50,
+    },
+    categoryBtnTxt: {
+      alignSelf: 'center',
+      marginTop: 5,
+      color:"#FFFFFF",
     },
 
   });

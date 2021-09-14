@@ -14,6 +14,9 @@ import LoginScreen from './screens/Login';
 import CustomSidebarMenu from './components/drawer';
 import BookTestScreen from './screens/BookTest';
 import BookVaccinationScreen from './screens/BookVaccination';
+import ScanQRScreen from './screens/ScanQR';
+
+import CovidTestScreen from './screens/CovidTest';
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -101,6 +104,40 @@ function Root({navigation}){
             },
             }}
           />
+
+          <Drawer.Screen
+            name="ScanQR"
+            component={ScanQRScreen}
+            options={{
+            drawerLabel: 'Scan QR',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+
+
+        <Drawer.Screen
+            name="CovidTest"
+            component={CovidTestScreen}
+            options={{
+            drawerLabel: 'Test Result',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+
+          
+
         </Drawer.Navigator>
         /*<Drawer.Navigator
           initialRouteName={"Home"}

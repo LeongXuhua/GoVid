@@ -4,8 +4,11 @@ import { Alert, Linking, Button, StyleSheet, Text, View, Image, SafeAreaView} fr
 
 const url1 = "https://flu.gowhere.gov.sg/";
 
-const url2 = "abcd://abcd.com";
+const url3 = "https://www.parkwaydigihealth.com/sdh/book-covid19-test?source=PSPL";
 
+const url4 = "https://www.centralclinic.com.sg/book-antigen-rapid-test"
+
+const number = `+65 67819033`
 
 const BookTestScreen = () => {
 
@@ -15,7 +18,7 @@ const openUrl = async (url) => {
     if(isSupported){
         await Linking.openURL(url);
     } else {
-        Alert.alert ('This webpage is not found: ${url}');
+        Alert.alert (`This webpage is not found: ${url}`);
     }
 }
 
@@ -26,24 +29,38 @@ const openUrl = async (url) => {
         
         <Text style={styles.welcomeText}> Book Covid Test </Text>
 
-        <Text style={styles.newsTitle}>Select Clinic</Text>
-
-        <View style={styles.menuContainer}>
+      
         <View style={styles.buttonContainer}>
-            <Button title="Open One" onPress={() => 
+            <Button title="Search Nearby Clinic" onPress={() => 
             {
                 openUrl(url1)
             }} color = "steelblue" />
         </View>
 
+        <Text style={styles.welcomeText}>Select a Clinic </Text>
+      
+
         <View style={styles.buttonContainer}>
-            <Button title="Open Two" onPress={() => 
+            <Button title="Parkway Shenton" onPress={() => 
             {
-                openUrl(url2)
+                openUrl(url3)
             }} color = "steelblue" />
         </View>
 
-     </View>
+        <View style={styles.buttonContainer}>
+            <Button title="24H Central Clinic Group" onPress={() => 
+            {
+                openUrl(url4)
+            }} color = "steelblue" />
+        </View>
+
+        <View style={styles.buttonContainer}>
+            <Button title="Raffles Medical (Changi)" onPress={() => 
+            {
+                Linking.openURL(`tel: ${number}`)
+            }} color = "steelblue" />
+        </View>
+    
 
 
       </SafeAreaView>
@@ -66,11 +83,6 @@ const styles = StyleSheet.create({
         margin:10
     },
 
-
-    menuContainer: {
-        backgroundColor: 'pink',
-    },
-
     logo: {
       width: '100%',
       height: '20%',
@@ -82,14 +94,13 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
 
-    newsTitle: {
-        color: "#555555",
+    header: {
+        color: "#FFFFFF",
         fontSize: 18,
         marginTop: 10,
         marginBottom: 10,
+        alignItems: 'center',
+      justifyContent: 'center',
     },
-
-   
-
 
   });

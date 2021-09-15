@@ -16,7 +16,36 @@ const HomeScreen = ({navigation}) => {
         <Text style={styles.welcomeText}> WELCOME! </Text>
 
         <View style={styles.divider} />
+        {/*Statistic*/}
+        <View
+          style={{
+          flexDirection: "row", 
+          padding: 5,}}>
+            <View style={styles.covidCasesBox}>
+              <MaterialCommunityIcons name="pulse" size={30} style={{color:"indianred"}}/>
+              <Text>Daily Cases</Text>
+              <Text>0</Text>
+            </View>
+            <View style={styles.covidCasesBox}>
+              <MaterialCommunityIcons name="hospital-building" size={30} style={{color:"indianred"}}/>
+              <Text>Warded Cases</Text>
+              <Text>0</Text>
+            </View>
+            <View style={styles.covidCasesBox}>
+              <MaterialCommunityIcons name="account-multiple" size={30} style={{color:"indianred"}}/>
+              <Text>Total Cases</Text>
+              <Text>0</Text>
+            </View>  
+          </View>
+          
+          <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Root', {screen: 'CasesCountries'})
+          }>
+              <Text>Cases by Countries</Text>
+          </TouchableOpacity>
 
+        {/*news*/}
         <View style={styles.newsContainer}>
             <Text style={styles.newsTitle}> Daily News </Text>
             
@@ -30,7 +59,7 @@ const HomeScreen = ({navigation}) => {
         </View>
 
         <View style={styles.divider} />
-
+          {/*status*/}
         <View style={styles.statusContainer}>
             <View style={styles.statusBox}>
                 <Text> Vaccinated</Text>
@@ -251,6 +280,15 @@ const styles = StyleSheet.create({
     welcomeText: {
         color: "#EEEEEE",
         fontSize: 24,
+    },
+    
+    covidCasesBox: {
+      backgroundColor: "white", 
+      width: 110, 
+      height: 110, 
+      borderRadius: 30, 
+      marginLeft: 10,
+      padding: 10
     },
 
     newsTitle: {

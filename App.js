@@ -19,6 +19,7 @@ import ScanQRScreen from './screens/ScanQR';
 import CovidTestScreen from './screens/CovidTest';
 import CheckSymptomsScreen from './screens/CheckSymptoms';
 import TravelInformationScreen from './screens/TravelInformation';
+import CasesCountriesScreen from './screens/CasesCountries';
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -198,6 +199,7 @@ function App(){
       >
         <Stack.Screen name="Root" component={Root}/>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerRight:()=>{}, headerLeft:()=>{}}}/>
+        <Stack.Screen name="CasesCountries" component={CasesCountriesScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

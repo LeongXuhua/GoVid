@@ -10,6 +10,8 @@
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/BookTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/BookTest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/CheckSymptoms.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/CheckSymptoms.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/CovidTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/CovidTest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Home.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -131,7 +131,7 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'Cluster & Crowd'})
+            navigation.navigate({title: 'Cluster & Crowd'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons

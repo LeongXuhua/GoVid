@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Octicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import Swiper from 'react-native-swiper';
 
 import CustomSidebarMenu from './components/drawer';
 

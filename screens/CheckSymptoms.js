@@ -1,7 +1,35 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Button, Linking } from 'react-native';
+
+
+
+const sgh = 'https://form.gov.sg/#!/5f1020e6a919ad0011b435d0';
+
+
+const zoom = Platform.select ({
+    default: 'zoomus://',
+});
+
+
+
+
+
+
 
 const CheckSymptomsScreen = () => {
+
+
+//Alert
+const openUrl = async (url) => {
+    const isSupported = await Linking.canOpenURL(url);
+    if(isSupported){
+        await Linking.openURL(url);
+    } else {
+        Alert.alert (`This webpage is not found: ${url}`);
+    }
+}
+
+
     const data = [
         {
             question: "Do you have a fever? (High temperature over 38 degrees celsius)",
@@ -35,16 +63,20 @@ const CheckSymptomsScreen = () => {
                 </View>
                     <Text style={styles.question}>{data[currentQuestionIndex]?.question}</Text>
                     <Text style={styles.description}>{data[currentQuestionIndex]?.description}</Text>
+
+                    <View style={styles.buttonContainer}>
                 <Button
                     title="No"
                     onPress={()=>handleNext('no')}
-                    style={styles.button}>
-                </Button>
+                   />
+                   </View>
+                
+                <View style={styles.buttonContainer}>
                 <Button
                     title="Yes"
                     onPress={()=>handleNext('yes')}
-                    style={styles.button}>
-                </Button>
+                  />
+               </View>
             </View>
         )
     }
@@ -94,10 +126,34 @@ const CheckSymptomsScreen = () => {
                     <View>
                         <Text style={styles.question}>You may be infected!</Text>
                         <Text style={styles.description}>You are recommended to do the following:</Text>
-                        <Button title="Facetime a doctor" />
-                        <Button title="Book a Covid test" />
+                    
+
+
+                        <View style={styles.buttonContainer}>
+            <Button title="Request Video Consultation" onPress={() => 
+            {
+                openUrl(sgh)
+            }}/>
+        </View>
+
+        
+        <View style={styles.buttonContainer}>
+            <Button title="Zoom call Doctor" onPress={() => 
+            {
+                openUrl(zoom)
+            }}/>
+        </View>
+
+        
+
+                        <View style={styles.buttonContainer}>
+                        <Button title="Book a Covid test"/>
+
+                        <View style={styles.buttonContainer}></View>
                         <Button title="Restart" onPress={restart}/>
                     </View>
+                    </View>
+                   
                 ) :null}
             </View>
         </SafeAreaView>
@@ -122,7 +178,7 @@ const styles = StyleSheet.create({
     questionContainer: {
         flex: 1,
         paddingHorizontal: 25,
-        marginTop: 30,
+        marginTop: 40,
         marginBottom: 250,
         backgroundColor: '#eaeaea',
         borderColor: '#505050',
@@ -150,10 +206,11 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
 
-    button: {
-        marginTop: 20, 
-        width: '25%', 
-        padding: 20, 
-        borderRadius: 8
-    }
-})
+    buttonContainer:
+    {
+        margin:14,
+    },
+
+
+
+});

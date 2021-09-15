@@ -10,6 +10,12 @@ const url4 = "https://www.centralclinic.com.sg/book-antigen-rapid-test"
 
 const number = `+65 67819033`
 
+const zoom = Platform.select ({
+    default: 'https://zoom.us/signin',
+});
+
+
+
 const BookTestScreen = () => {
 
 //Alert
@@ -60,9 +66,10 @@ const openUrl = async (url) => {
                 Linking.openURL(`tel: ${number}`)
             }} color = "steelblue" />
         </View>
-    
 
-
+        
+        
+  
       </SafeAreaView>
     );
   }

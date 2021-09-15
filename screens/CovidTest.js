@@ -1,35 +1,43 @@
-
-import React, {useCallback, useEffect, useState} from 'react';
-import { Alert, Linking, Button, StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
-
-const url1 = "https://preregister.vaccine.gov.sg/";
-
-import sample1 from "../assets/Sample1.jpeg"
-import sample2 from "../assets/Sample2.jpeg"
-
+import {StatusBar} from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, Text, View, Image} from 'react-native';
+import Swiper from 'react-native-swiper';
 
 
 const CovidTestScreen = () => {
-  
-  const [flag, setFlag] = useState(sample1);
+  return (
 
-  const changeImage = () => setFlag(sample2);
+<View style={styles.container}>
+<StatusBar style ="auto" />
+<Swiper
+dot={
+<View style={{
+width:10,
+height:10,
+borderRadius:4,
+margin: 5,
+backgroundColor: 'grey',
+}}></View>
+}
+>
+<Image
+source={require("../assets/Sample1.jpeg")}
 
-    return (
-      <SafeAreaView style={styles.container}>
-           <Text style={styles.welcomeText}> Covid Test Result </Text>
+style={styles.image}
+  />
+  <Image
+source={require("../assets/Sample2.jpeg")}
 
-        <Image source={flag} style={styles.logo}/>
-        
-        <View style={styles.menuContainer}>
-            <View style={styles.buttonContainer}>
-            <Button title="View Full Cert" onPress={changeImage} color="steelblue" />
-            </View>
+style={styles.image}
+  />
+  </Swiper>
+
+
+        <View style={styles.swipeText}>
+        <Text> Swipe to view Certificate </Text>
         </View>
-
-
-    
-      </SafeAreaView>
+  
+</View>
     );
   }
 
@@ -37,39 +45,26 @@ export default CovidTestScreen;
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#51a4fb',
-      alignItems: 'center',
-      justifyContent: 'center',
-
+      flex:1,
+     backgroundColor: '#51a4fb',
+     alignItems: 'center',
+     justifyContent: 'center',
     },
 
-    buttonContainer:
+    image:
     {
-        margin:-20
+      resizeMode: "center",
+      width: "100",
+      height: "100",
+  
     },
 
 
-    menuContainer: {
-        backgroundColor: '#51a4fb',
-    },
-
-    logo: {
-      width: '80%',
-      height: '80%',
-      resizeMode: 'contain',
-    },
-
-    welcomeText: {
-        color: "#EEEEEE",
-        fontSize: 24,
-    },
-
-    newsTitle: {
+  swipeText: {
         color: "#555555",
         fontSize: 18,
-        marginTop: 10,
-        marginBottom: 10,
+    
+       
     },
 
    

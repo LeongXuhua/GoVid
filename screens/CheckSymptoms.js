@@ -16,7 +16,7 @@ const zoom = Platform.select ({
 
 
 
-const CheckSymptomsScreen = () => {
+const CheckSymptomsScreen = ({navigation}) => {
 
 
 //Alert
@@ -147,7 +147,7 @@ const openUrl = async (url) => {
         
 
                         <View style={styles.buttonContainer}>
-                        <Button title="Book a Covid test"/>
+                        <Button title="Book a Covid test" onPress={() =>navigation.navigate('Root', {screen: 'BookTest'})} />
 
                         <View style={styles.buttonContainer}></View>
                         <Button title="Restart" onPress={restart}/>

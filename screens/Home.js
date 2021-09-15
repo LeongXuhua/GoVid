@@ -24,17 +24,17 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.covidCasesBox}>
               <MaterialCommunityIcons name="pulse" size={30} style={{color:"indianred"}}/>
               <Text>Daily Cases</Text>
-              <Text>0</Text>
+              <Text>837</Text>
             </View>
             <View style={styles.covidCasesBox}>
               <MaterialCommunityIcons name="hospital-building" size={30} style={{color:"indianred"}}/>
               <Text>Warded Cases</Text>
-              <Text>0</Text>
+              <Text>809</Text>
             </View>
             <View style={styles.covidCasesBox}>
               <MaterialCommunityIcons name="account-multiple" size={30} style={{color:"indianred"}}/>
               <Text>Total Cases</Text>
-              <Text>0</Text>
+              <Text>73131</Text>
             </View>  
           </View>
           
@@ -160,7 +160,7 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate({title: 'Cluster & Crowd'})
+            navigation.navigate('Root', {screen: 'CheckCrowd'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -191,26 +191,16 @@ const HomeScreen = ({navigation}) => {
           <Text style={styles.categoryBtnTxt}>Travel Information</Text>
         </TouchableOpacity>
      
-        <TouchableOpacity
-          style={styles.categoryBtn}
-          onPress={() =>
-            navigation.navigate('CardListScreen', {title: 'More'})
-          }>
-          <View style={styles.categoryIcon}>
-            <MaterialCommunityIcons
-              name="more"
-              size={35}
-              color="#000000"
-            />
-          </View>
-          <Text style={styles.categoryBtnTxt}>More</Text>
-        </TouchableOpacity>
      
 
       </View>
 
       
 
+            <View style={styles.menuBox}>
+                <Button title="Book Covid Testing" />
+            </View>
+            
             <View style={styles.menuBox}>
                 <Button title="Book Covid Testing" />
             </View>

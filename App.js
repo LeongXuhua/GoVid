@@ -17,6 +17,7 @@ import BookTestScreen from './screens/BookTest';
 import BookVaccinationScreen from './screens/BookVaccination';
 import ScanQRScreen from './screens/ScanQR';
 import CovidTestScreen from './screens/CovidTest';
+import CheckCrowdScreen from './screens/CheckCrowd';
 import CheckSymptomsScreen from './screens/CheckSymptoms';
 import TravelInformationScreen from './screens/TravelInformation';
 import CasesCountriesScreen from './screens/CasesCountries';
@@ -153,10 +154,40 @@ function Root({navigation}){
           />
 
           <Drawer.Screen
+            name="CheckCrowd"
+            component={CheckCrowdScreen}
+            options={{
+            drawerLabel: 'Check Crowd',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+
+          <Drawer.Screen
             name="TravelInformation"
             component={TravelInformationScreen}
             options={{
             drawerLabel: 'Travel Information',
+            headerStyle: {
+              backgroundColor: '#51a4fb', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+            }}
+          />
+
+          <Drawer.Screen
+            name="CasesCountries"
+            component={CasesCountriesScreen}
+            options={{
+            drawerLabel: 'Cases by Countries',
             headerStyle: {
               backgroundColor: '#51a4fb', //Set Header color
             },
@@ -199,7 +230,6 @@ function App(){
       >
         <Stack.Screen name="Root" component={Root}/>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerRight:()=>{}, headerLeft:()=>{}}}/>
-        <Stack.Screen name="CasesCountries" component={CasesCountriesScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

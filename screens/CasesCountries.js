@@ -60,15 +60,15 @@ const CasesCountiesScreen = () =>{
                 <View>
                     <MaterialCommunityIcons name="web" size={70} style={{color:"darkblue"}}/>
                 </View>    
-                <View style={styles.covidCasesBox}>
+                <View >
                     <MaterialCommunityIcons name="pulse" size={30} style={{color:"darkblue"}}/>
                     <Text>Total Global Cases</Text>
-                    <Text>{data.Global.TotalConfirmed}</Text>
+                    <Text>{data? data.Global.TotalConfirmed : 0}</Text>
                 </View>
-                <View style={styles.covidCasesBox}>
+                <View >
                     <MaterialCommunityIcons name="coffin" size={30} style={{color:"darkblue"}}/>
                     <Text>Total Global Death</Text>
-                    <Text>{data.Global.TotalDeaths}</Text>
+                    <Text>{data? data.Global.TotalDeaths : 0}</Text>
                 </View>  
             </View>
             <View style={styles.flatList}>

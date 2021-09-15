@@ -110,7 +110,7 @@ function Root({navigation}){
             name="CovidTest"
             component={CovidTestScreen}
             options={{
-            drawerLabel: 'Test Result',
+            drawerLabel: 'Covid Test',
             headerStyle: {
               backgroundColor: '#51a4fb', //Set Header color
             },

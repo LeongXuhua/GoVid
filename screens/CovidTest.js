@@ -7,45 +7,54 @@ import Swiper from 'react-native-swiper';
 const CovidTestScreen = () => {
   return (
 
+
+
 <View style={styles.container}>
+
+
+        <Text style={styles.topText}>
+        <Text> Covid Test Result </Text>
+        </Text>
+
 <StatusBar style ="auto" />
 <Swiper
 dot={
 <View style={{
-width:10,
-height:10,
+width:15,
+height:5,
 borderRadius:4,
-margin: 5,
+margin: 2,
 backgroundColor: 'grey',
 }}></View>
 }
 >
-<Image
-source={require("../assets/Sample1.jpeg")}
 
-style={styles.image}
-  />
-  <Image
+<Image
 source={require("../assets/Sample2.jpeg")}
 
 style={styles.image}
   />
+  <Image
+source={require("../assets/Sample1.jpeg")}
+
+style={styles.image}
+  />
+  
   </Swiper>
 
-
-        <View style={styles.swipeText}>
+  <Text style={styles.bottomText}>
         <Text> Swipe to view Certificate </Text>
-        </View>
+        </Text>
 
 </View>
     );
   }
 
-export default CovidTestScreen;
+  export default CovidTestScreen;
 
 const styles = StyleSheet.create({
     container: {
-    flex:1,
+   flex:1,
      backgroundColor: '#51a4fb',
      alignItems: 'center',
      justifyContent: 'center',
@@ -54,16 +63,25 @@ const styles = StyleSheet.create({
     image:
     {
       resizeMode: "center",
-      width: "100",
-      height: "100",
+      width: "100%",
+      height: "100%",
     },
 
-  swipeText: {
-        color: "#555555",
-        fontSize: 18,  
+
+
+   topText: {
+   color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: "bold",
+   margin: 40,
+
+  },
+
+   bottomText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 30,
     },
-
-   
-
-
+    
+  
   });

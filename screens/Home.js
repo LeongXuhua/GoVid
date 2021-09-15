@@ -20,35 +20,57 @@ const HomeScreen = ({navigation}) => {
         <View
           style={{
           flexDirection: "row", 
-          padding: 5,}}>
+          padding: 20,}}>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="pulse" size={30} style={{color:"indianred"}}/>
+              <MaterialCommunityIcons name="pulse" size={30} style={{color:"green"}}/>
+              <Text style={styles.topText}>
               <Text>Daily Cases</Text>
+              </Text>
+              <Text style={styles.baseText}>
               <Text>837</Text>
+              </Text>
             </View>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="hospital-building" size={30} style={{color:"indianred"}}/>
-              <Text>Warded Cases</Text>
+              <MaterialCommunityIcons name="hospital-building" size={30} style={{color:"blue"}}/>
+              <Text style={styles.topText}>
+              <Text>Hospitalised</Text>
+              </Text>
+              <Text style={styles.baseText}>
               <Text>809</Text>
+              </Text>
             </View>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="account-multiple" size={30} style={{color:"indianred"}}/>
+              <MaterialCommunityIcons name="account-multiple" size={30} style={{color:"black"}}/>
+              <Text style={styles.topText}>
               <Text>Total Cases</Text>
+              </Text>
+              <Text style={styles.baseText}>
               <Text>73131</Text>
+              </Text>
             </View>  
           </View>
-          
-          <TouchableOpacity
+
+     
+
+          <View style={styles.casesCountries}>
+     <TouchableOpacity
           onPress={() =>
             navigation.navigate('Root', {screen: 'CasesCountries'})
           }>
-              <Text>Cases by Countries</Text>
+           <Text style={styles.countriesText}>
+         <Text>World Covid-19 tracker</Text>
+         </Text>
           </TouchableOpacity>
-
+</View>
         {/*news*/}
         <View style={styles.newsContainer}>
-            <Text style={styles.newsTitle}> Daily News </Text>
-            
+
+
+        <Text style={styles.otherText}>
+            Daily News </Text>
+        
+
+
             <View style={styles.newsArticle}>
                 <Text> Update on Local COVID-19 Situation and Vaccination Progress (4 Sep 2021) </Text>
             </View>
@@ -59,6 +81,7 @@ const HomeScreen = ({navigation}) => {
         </View>
 
         <View style={styles.divider} />
+
           {/*status*/}
         <View style={styles.statusContainer}>
             <View style={styles.statusBox}>
@@ -76,7 +99,7 @@ const HomeScreen = ({navigation}) => {
 
 {/* MENU BUTTONS */}
 
-        <Text style={styles.newsTitle}>What do you want to do today?</Text>
+<Text style={styles.otherText}>What do you want to do today?</Text>
 
         <View style={styles.categoryContainer}>
         <TouchableOpacity
@@ -87,7 +110,7 @@ const HomeScreen = ({navigation}) => {
               <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="qrcode-scan"
-              size={35}
+              size={20}
               color="#000000"
             />
           </View>
@@ -102,8 +125,8 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="format-list-checks"
-              size={35}
-              color="#000000"
+              size={20}
+              color="green"
             />
           </View>
           <Text style={styles.categoryBtnTxt}>Check Symptoms</Text>
@@ -117,8 +140,8 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="newspaper-plus"
-              size={35}
-              color="#000000"
+              size={20}
+              color="blue"
             />
           </View>
           <Text style={styles.categoryBtnTxt}>Test Result</Text>
@@ -135,8 +158,8 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="doctor"
-              size={35}
-              color="#000000"
+              size={20}
+              color="black"
             />
           </View>
           <Text style={styles.categoryBtnTxt}>Book Vaccination</Text>
@@ -150,8 +173,8 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="medical-bag"
-              size={35}
-              color="#000000"
+              size={20}
+              color="green"
             />
           </View>
           <Text style={styles.categoryBtnTxt}>Book Covid Test</Text>
@@ -165,8 +188,8 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="account-group"
-              size={35}
-              color="#000000"
+              size={20}
+              color="blue"
             />
           </View>
           <Text style={styles.categoryBtnTxt}>Cluster & Crowd</Text>
@@ -184,7 +207,7 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="airplane-takeoff"
-              size={35}
+              size={20}
               color="#000000"
             />
           </View>
@@ -194,8 +217,6 @@ const HomeScreen = ({navigation}) => {
      
 
       </View>
-
-      
 
             <View style={styles.menuBox}>
                 <Button title="Book Covid Testing" />
@@ -208,13 +229,11 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.menuBox}>
                 <Button title="Book Vaccination" />
             </View>
-
-            <View style={styles.menuBox}>
-                <Button title="Travel Declaration" />
-            </View>
-
-     
-
+            <View style={styles.divider} />
+            <View style={styles.divider} />
+            <View style={styles.divider} />
+            <View style={styles.divider} />
+          
         <Text style={styles.newsTitle}> BOTTOM TEXT </Text>
 
         <StatusBar style="auto" />
@@ -241,51 +260,48 @@ const styles = StyleSheet.create({
         backgroundColor: '#51a4fb',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        width: "70%",
+        width: "80%",
       },
     
     statusContainer: {
         backgroundColor: '#51a4fb',
         flexDirection: "row",
         justifyContent: 'flex-start',
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 20,
         height: "10%",
-    },
-
-    menuContainer: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        backgroundColor: 'pink',
-        width: "70%",
-        justifyContent: "space-around",
     },
 
     logo: {
       width: '100%',
-      height: '20%',
+      height: '15%',
       resizeMode: 'contain',
     },
 
     welcomeText: {
         color: "#EEEEEE",
         fontSize: 24,
+        margin: 10,
     },
+
+    otherText: {
+      color: "#EEEEEE",
+      fontSize: 24,
+      margin: 10,
+  },
     
     covidCasesBox: {
-      backgroundColor: "white", 
-      width: 110, 
-      height: 110, 
-      borderRadius: 30, 
+      backgroundColor: "#ffffff", 
+      width: 100, 
+      height: 100, 
+      borderRadius: 25, 
       marginLeft: 10,
-      padding: 10
+      padding: 10,
     },
 
     newsTitle: {
         color: "#555555",
         fontSize: 18,
-        marginTop: 10,
-        marginBottom: 10,
+       
     },
 
     newsArticle: {
@@ -299,7 +315,7 @@ const styles = StyleSheet.create({
     statusBox: {
         backgroundColor: "white",
         width: "30%",
-        height: "100%",
+        height: "60%",
         alignItems: "center",
         borderRadius: 10,
         marginRight: 10,
@@ -307,7 +323,7 @@ const styles = StyleSheet.create({
       },
 
     statusIcon: {
-        height: "75%",
+        height: "60%",
         resizeMode: 'contain',
       },
 
@@ -335,7 +351,8 @@ const styles = StyleSheet.create({
     divider: {
         borderBottomColor: '#EEEEEE',
         borderBottomWidth: 1,
-        width: "70%",
+        width: "80%",
+        margin: 4,
     },
 
     categoryContainer: {
@@ -356,8 +373,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       alignSelf: 'center',
-      width: 70,
-      height: 70,
+      width: 50,
+      height: 50,
       backgroundColor: '#FFFFFF' /* '#FF6347' */,
       borderRadius: 50,
     },
@@ -366,5 +383,36 @@ const styles = StyleSheet.create({
       marginTop: 5,
       color:"#FFFFFF",
     },
+
+    topText:{
+   color:"#000000", //black
+   fontWeight: 'bold',
+   alignSelf: 'center',
+  },
+
+  baseText:{
+    color:"#ff0000", //red
+    fontWeight: 'bold',
+    marginTop: 5,
+    alignSelf: 'center',
+   },
+ 
+
+   casesCountries:{
+     width:"80%",
+    margin:4,
+    backgroundColor: '#007AFF',
+    borderRadius: 12,
+    padding: 10,
+   },
+
+   countriesText:{
+    color:"#ffffff",
+    fontWeight: 'bold',
+    alignSelf: 'center',
+
+   },
+ 
+
 
   });

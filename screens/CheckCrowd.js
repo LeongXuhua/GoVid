@@ -12,6 +12,10 @@ const CheckCrowdScreen = ({navigation}) => {
 
       <Image source={require("../assets/logo.png")} style={styles.logo}/>
       
+
+      <Image source={require("../assets/logo.png")} style={styles.logo}/>
+      
+
       <View style={styles.crowdTitleView}>
         <Text style={styles.crowdTitle}>
           Check crowd at location

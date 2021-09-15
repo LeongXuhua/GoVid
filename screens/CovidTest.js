@@ -36,7 +36,7 @@ style={styles.image}
         <View style={styles.swipeText}>
         <Text> Swipe to view Certificate </Text>
         </View>
-  
+
 </View>
     );
   }
@@ -45,7 +45,7 @@ export default CovidTestScreen;
 
 const styles = StyleSheet.create({
     container: {
-      flex:1,
+    flex:1,
      backgroundColor: '#51a4fb',
      alignItems: 'center',
      justifyContent: 'center',
@@ -56,15 +56,11 @@ const styles = StyleSheet.create({
       resizeMode: "center",
       width: "100",
       height: "100",
-  
     },
-
 
   swipeText: {
         color: "#555555",
-        fontSize: 18,
-    
-       
+        fontSize: 18,  
     },
 
    

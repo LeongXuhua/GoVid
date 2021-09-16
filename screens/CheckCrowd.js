@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 
   crowdTitle: {
     width: "70%",
-    color: "#AAAAAA",
+    color: "white",
     fontSize: 28,
   },
 

@@ -55,7 +55,7 @@ function Root({navigation}){
       activeTintColor: '#fff',
       itemStyle: {marginVertical: 5},
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -71,7 +71,7 @@ function Root({navigation}){
       drawerLabel: 'Home',
       headerStyle: {
         backgroundColor: '#30659c', //Set Header color
-       // backgroundColor: '#51a4fb', //Set Header color
+       // backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -85,7 +85,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Scan QR',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -101,7 +101,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Check Symptoms',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -116,7 +116,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Covid Test',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -131,7 +131,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Book Vaccination',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -146,7 +146,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Book Swab Test',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -161,7 +161,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Check Crowd',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -176,7 +176,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Travel Information',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -191,7 +191,7 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Cases by Countries',
       headerStyle: {
-        backgroundColor: '#51a4fb', //Set Header color
+        backgroundColor: '#30659c', //Set Header color
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
@@ -205,7 +205,7 @@ function Root({navigation}){
     initialRouteName={"Home"}
     screenOptions={({ navigation})=>({
       headerStyle:{
-        backgroundColor:'#51a4fb',
+        backgroundColor:'#30659c',
         headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
         headerLeft: ()=> <Button title="MENU" onPress={navigation.toggleDrawer}/>,
       },
@@ -224,7 +224,7 @@ function App(){
         screenOptions={({navigation})=>({
           headerShown: false,
           headerStyle:{
-            backgroundColor:'#51a4fb',
+            backgroundColor:'#30659c',
           },
          /* headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
           headerLeft: ()=> <Button title="MENU" onPress={navigation.toggleDrawer}/>,*/
@@ -240,7 +240,7 @@ function App(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#51a4fb',
+    backgroundColor: '#30659c',
     alignItems: 'center',
     justifyContent: 'center',
   },

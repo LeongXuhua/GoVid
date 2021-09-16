@@ -7,7 +7,11 @@ const sgh = 'https://form.gov.sg/#!/5f1020e6a919ad0011b435d0';
 
 
 const zoom = Platform.select ({
+   
+
     default: 'zoomus://',
+    // default: 'market://details?id=us.zoom.videomeetings',
+
 });
 
 
@@ -114,6 +118,7 @@ const openUrl = async (url) => {
                 { showSafeReccomendation ?(
                     <View>
                         <Text style={styles.question}>You are safe! Please continue to be safe.</Text>
+                        
                         <Button title="Restart" onPress={restart}/>
                     </View>
                 ) : null}
@@ -123,15 +128,16 @@ const openUrl = async (url) => {
                         <Text style={styles.description}>You are recommended to do the following:</Text>
                     
 
-
-                        <View style={styles.buttonContainer}>
-            <Button title="Request Video Consultation" onPress={() => 
+                       { /*
+                     <View style={styles.buttonContainer}>
+         <Button title="Request Video Consultation" onPress={() => 
             {
                 openUrl(sgh)
             }}/>
         </View>
 
-        
+        */}
+    
         <View style={styles.buttonContainer}>
             <Button title="Zoom call Doctor" onPress={() => 
             {
@@ -200,11 +206,13 @@ const styles = StyleSheet.create({
     description: {
         color: '#101010',
         fontSize: 16,
-        textAlign: 'left'
+        textAlign: 'left',
+        marginBottom: 25,
     },
 
     buttonContainer:
     {
+        
         margin: 5,
     },
 

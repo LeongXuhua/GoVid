@@ -18,7 +18,7 @@ import BookVaccinationScreen from './screens/BookVaccination';
 import ScanQRScreen from './screens/ScanQR';
 import CovidTestScreen from './screens/CovidTest';
 import CheckCrowdScreen from './screens/CheckCrowd';
-import CheckSymptomsScreen from './screens/CheckSymptoms';
+import HealthDeclarationScreen from './screens/HealthDeclaration';
 import TravelInformationScreen from './screens/TravelInformation';
 import CasesCountriesScreen from './screens/CasesCountries';
 import RegistrationScreen from './screens/Registration';
@@ -97,10 +97,10 @@ function Root({navigation}){
     />
 
     <Drawer.Screen
-      name="CheckSymptoms"
-      component={CheckSymptomsScreen}
+      name="HealthDeclaration"
+      component={HealthDeclarationScreen}
       options={{
-      drawerLabel: 'Check Symptoms',
+      drawerLabel: 'Health Declaration',
       headerStyle: {
         backgroundColor: '#30659c', //Set Header color
       },

@@ -15,7 +15,7 @@ const zoom = Platform.select ({
 });
 
 
-const CheckSymptomsScreen = ({navigation}) => {
+const HealthDeclarationScreen = ({navigation}) => {
 
 
 //Alert
@@ -162,7 +162,7 @@ const openUrl = async (url) => {
         </SafeAreaView>
     )
 }
-export default CheckSymptomsScreen;
+export default HealthDeclarationScreen;
 
 const styles = StyleSheet.create({
     container: {

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,6 +7,27 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const HomeScreen = ({navigation}) => {
+  const url = "https://wrapapi.com/use/yx/moh/covidsituation/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
+    const [data, setData] = useState();
+    const [isLoading, setIsloading] = useState(false);
+    const [error,setError] = useState();
+
+    useEffect(() => {
+        const fetchCovidData = async () => {
+            setIsloading(true);
+            try {
+                const result = await fetch(url);
+                const response = await result.json();
+                setData(response)
+                setIsloading(false);
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+        fetchCovidData();
+    }, []);
+
     return (
 <ScrollView>
 
@@ -27,7 +48,7 @@ const HomeScreen = ({navigation}) => {
               <Text>Daily Cases</Text>
               </Text>
               <Text style={styles.baseText}>
-              <Text>837</Text>
+              <Text>{data? data.data.newcases : 0}</Text>
               </Text>
             </View>
             <View style={styles.covidCasesBox}>
@@ -36,7 +57,7 @@ const HomeScreen = ({navigation}) => {
               <Text>Hospitalised</Text>
               </Text>
               <Text style={styles.baseText}>
-              <Text>809</Text>
+              <Text>{data? data.data.hospitalised : 0}</Text>
               </Text>
             </View>
             <View style={styles.covidCasesBox}>
@@ -49,8 +70,9 @@ const HomeScreen = ({navigation}) => {
               </Text>
             </View>  
           </View>
-
-     
+          <Text style={{fontSize: 10, marginTop: -20, marginLeft: -180}}>
+          {data? data.data.date : 0}
+          </Text>
 
           <View style={styles.casesCountries}>
      <TouchableOpacity

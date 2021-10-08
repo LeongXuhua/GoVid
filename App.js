@@ -21,6 +21,7 @@ import CheckCrowdScreen from './screens/CheckCrowd';
 import CheckSymptomsScreen from './screens/CheckSymptoms';
 import TravelInformationScreen from './screens/TravelInformation';
 import CasesCountriesScreen from './screens/CasesCountries';
+import RegistrationScreen from './screens/Registration';
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -199,7 +200,23 @@ function Root({navigation}){
       },
       }}
     />
+    
+    <Drawer.Screen
+      name="Register"
+      component={RegistrationScreen}
+      options={{
+      drawerLabel: 'Registration',
+      headerStyle: {
+        backgroundColor: '#30659c', //Set Header color
+      },
+      headerTintColor: '#fff', //Set Header text color
+      headerTitleStyle: {
+       fontWeight: 'bold', //Set Header text style
+      },
+      }}
+    />
 
+      
   </Drawer.Navigator>
   /*<Drawer.Navigator
     initialRouteName={"Home"}

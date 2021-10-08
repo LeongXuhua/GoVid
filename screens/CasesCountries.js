@@ -58,15 +58,15 @@ const CasesCountiesScreen = () =>{
             flexDirection: "row", 
             padding: 5,}}>
                 <View>
-                    <MaterialCommunityIcons name="web" size={70} style={{color:"darkblue"}}/>
+                    <MaterialCommunityIcons name="web" size={70} style={{color:"white"}}/>
                 </View>    
                 <View >
-                    <MaterialCommunityIcons name="pulse" size={30} style={{color:"darkblue"}}/>
+                    <MaterialCommunityIcons name="pulse" size={30} style={{color:"white"}}/>
                     <Text>Total Global Cases</Text>
                     <Text>{data? data.Global.TotalConfirmed : 0}</Text>
                 </View>
                 <View >
-                    <MaterialCommunityIcons name="coffin" size={30} style={{color:"darkblue"}}/>
+                    <MaterialCommunityIcons name="coffin" size={30} style={{color:"white"}}/>
                     <Text>Total Global Death</Text>
                     <Text>{data? data.Global.TotalDeaths : 0}</Text>
                 </View>  

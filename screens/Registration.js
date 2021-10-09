@@ -1,9 +1,75 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, Button } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Button } from 'react-native';
+import firebase from 'firebase';
+import "firebase/firestore";
+
+const firebaseConfig2 = {
+    apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
+    authDomain: "govid-fcb26.firebaseapp.com",
+    databaseURL: "https://govid-fcb26-default-rtdb.asia-southeast1.firebasedatabase.app",
+};
+
+var secondaryApp = firebase.initializeApp(firebaseConfig2, "Secondary");
 
 const RegistrationScreen = () => {
+    const [id, setId]=useState('');
+    const [name, setName]=useState('');
+    const [email, setEmail]=useState('');
+    const [password, setPassword]=useState('');
+    const [department, setDepartment]=useState('');
+    const [role, setRole]=useState('');
+    const [managerId, setManagerId]=useState('');
+    const [managerName, setManagerName]=useState('');
+
+    const [orgId, setOrgId] = useState();
+
+    function getOrganisationId(userId){
+        firebase.firestore()
+        .collection('users')
+        .doc(userId)
+        .get().then((snapshot)=>{setOrgId(snapshot.data().organisationId)})
+    };
+
+    getOrganisationId(firebase.auth().currentUser.uid);
+    
+    registerUser = () => {
+        
+        if (0!=0){
+            //logic to catch invalid registration
+        }
+        else{
+            secondaryApp.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
+                //add user into user collection, so can map to organisation ID
+                firebase.firestore().collection("users")
+                .doc(secondaryApp.auth().currentUser.uid)
+                .set({
+                    organisationId:orgId,
+                    email
+                });
+                
+                //add user details into org's collection
+                firebase.firestore().collection("organisations")
+                .doc(orgId)
+                .collection('employee')
+                .doc(secondaryApp.auth().currentUser.uid)
+                .set({
+                    id:id,
+                    name:name,
+                    email:email,
+                    department:department,
+                    role:role,
+                    managerId:managerId,
+                    managerName:managerName
+                });
+
+            })
+        };
+    };
+
     return (
-        <SafeAreaView>
+        
+        <SafeAreaView><ScrollView>
+
             <Text style={styles.text}>
             Employee ID
             </Text>
@@ -11,6 +77,8 @@ const RegistrationScreen = () => {
                 <TextInput
                     placeholder="ID"
                     style={styles.textInput}
+                    value={id}
+                    onChangeText={(value)=>setId(value)}
                 />
             </View>
 
@@ -21,6 +89,20 @@ const RegistrationScreen = () => {
                 <TextInput
                     placeholder="Full Name"
                     style={styles.textInput}
+                    value={name}
+                    onChangeText={(value)=>setName(value)}
+                />
+            </View>
+
+            <Text style={styles.text}>
+            Employee email
+            </Text>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    placeholder="email"
+                    style={styles.textInput}
+                    value={email}
+                    onChangeText={(value)=>setEmail(value)}
                 />
             </View>
 
@@ -31,6 +113,8 @@ const RegistrationScreen = () => {
                 <TextInput
                     placeholder="Password"
                     style={styles.textInput}
+                    value={password}
+                    onChangeText={(value)=>setPassword(value)}
                 />
             </View>
 
@@ -41,6 +125,8 @@ const RegistrationScreen = () => {
                 <TextInput
                     placeholder="Department"
                     style={styles.textInput}
+                    value={department}
+                    onChangeText={(value)=>setDepartment(value)}
                 />
             </View>
 
@@ -51,6 +137,8 @@ const RegistrationScreen = () => {
                 <TextInput
                     placeholder="Employee or Manager"
                     style={styles.textInput}
+                    value={role}
+                    onChangeText={(value)=>setRole(value)}
                 />
             </View>
 
@@ -61,6 +149,8 @@ const RegistrationScreen = () => {
                 <TextInput
                     placeholder="Manager ID"
                     style={styles.textInput}
+                    value={managerId}
+                    onChangeText={(value)=>setManagerId(value)}
                 />
             </View>
 
@@ -72,14 +162,18 @@ const RegistrationScreen = () => {
                 <TextInput
                     placeholder="Full Name"
                     style={styles.textInput}
+                    value={managerName}
+                    onChangeText={(value)=>setManagerName(value)}
                 />
             </View>
 
             <View style={styles.button}>
                 <Button
-                title="Register">Register</Button>
+                    title="Register"
+                    onPress={()=>registerUser()}
+                />
             </View>
-        </SafeAreaView>
+        </ScrollView></SafeAreaView>
     )
 }
     

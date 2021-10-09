@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -15,7 +15,20 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 
+import firebase from 'firebase';
+
+
+
 const CustomSidebarMenu = (props) => {
+  //get user name @@@IT IS ORGANISATION ID FOR NOW
+  const [orgId, setOrgId] = useState();
+
+        firebase.firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .get().then((snapshot)=>{setOrgId(snapshot.data().organisationId)})
+
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor:"white",}}>
       {/*Top Large Image */}
@@ -23,11 +36,11 @@ const CustomSidebarMenu = (props) => {
         source={require("../assets/logo.png")}
         style={styles.sideMenuProfileIcon}
       />
-      <Text > User S1234567Z </Text>
+      <Text> {orgId} </Text>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <Button title="logout" onPress={() => props.navigation.navigate('Login')} />
+      <Button title="logout" onPress={() => firebase.auth().signOut().then(()=>props.navigation.navigate('Login'))} />
     </SafeAreaView>
   );
 };

@@ -1,11 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput } from 'react-native';
+import firebase from 'firebase'
 
 const LoginScreen = ({navigation}) => {
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  function login(email, password){
+    firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((result) => {
+                console.log(result);
+                setEmail("");
+                setPassword("");
+                navigation.navigate('Root');
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    }
+
 
   return (
 
@@ -21,15 +36,15 @@ const LoginScreen = ({navigation}) => {
 
       <View style={styles.inputLabelView}>
         <Text style={styles.inputLabel}>
-          Username 
+          email 
         </Text>
       </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Username"
+          placeholder="email"
           placeholderTextColor="grey"
-          onChangeText={(username) => setUsername(username)}
+          onChangeText={(email) => setEmail(email)}
         />
       </View>
       
@@ -51,7 +66,8 @@ const LoginScreen = ({navigation}) => {
       <View style={styles.buttonView}>
         <Button 
           title="LOGIN"
-          onPress={()=>navigation.navigate('Root')}
+          //onPress={()=>navigation.navigate('Root')}
+          onPress={()=>login(email, password)}
         >
           LOGIN
         </Button>

@@ -23,8 +23,8 @@ import CheckCrowdScreen from './screens/CheckCrowd';
 import HealthDeclarationScreen from './screens/HealthDeclaration';
 import TravelInformationScreen from './screens/TravelInformation';
 import CasesCountriesScreen from './screens/CasesCountries';
-import RegisterEmployeeScreen from './screens/RegisterEmployee';
-import RegisterAdminScreen from './screens/RegisterAdmin';
+import RegistrationScreen from './screens/Registration';
+import uploadARTScreen from './screens/UploadART';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
@@ -99,6 +99,22 @@ function Root({navigation}){
       component={ScanQRScreen}
       options={{
       drawerLabel: 'Scan QR',
+      headerStyle: {
+        backgroundColor: '#30659c', //Set Header color
+      },
+      headerTintColor: '#fff', //Set Header text color
+      headerTitleStyle: {
+        fontWeight: 'bold', //Set Header text style
+      },
+
+      }}
+    />
+
+    <Drawer.Screen
+      name="uploadART"
+      component={uploadARTScreen}
+      options={{
+      drawerLabel: 'upload ART',
       headerStyle: {
         backgroundColor: '#30659c', //Set Header color
       },
@@ -216,25 +232,10 @@ function Root({navigation}){
     />
     
     <Drawer.Screen
-      name="Register Employee"
-      component={RegisterEmployeeScreen}
+      name="Register"
+      component={RegistrationScreen}
       options={{
-      drawerLabel: 'Registrater Employee',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-       fontWeight: 'bold', //Set Header text style
-      },
-      }}
-    />
-
-<Drawer.Screen
-      name="Register Administrator"
-      component={RegisterAdminScreen}
-      options={{
-      drawerLabel: 'Registrater Admin',
+      drawerLabel: 'Registration',
       headerStyle: {
         backgroundColor: '#30659c', //Set Header color
       },

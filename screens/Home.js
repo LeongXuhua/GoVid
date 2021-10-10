@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect, Component} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView, List, ListItem, Left, Body, Right, Thumbnail } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 
 const HomeScreen = ({navigation}) => {
   const url = "https://wrapapi.com/use/yx/moh/covidsituation/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
@@ -93,20 +92,7 @@ const HomeScreen = ({navigation}) => {
         <Text style={styles.otherText}>
             Daily News </Text>
         
-        
-          {/*
-            <List>
-              <Thumbnail square scourse={{ uri: 'https://www.google.com/search?q=image&rlz=1C1CHBF_enSG831SG832&sxsrf=AOaemvI48fwBUXxglwI5Zu310Dnla43YFg:1633782605915&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi0gPa-qr3zAhWQaCsKHYeVAQoQ_AUoAXoECAEQAw&biw=1022&bih=1030&dpr=1.25#imgrc=HXLlNEpHoJATkM'}}></Thumbnail>
-            </List>
-            <Body>
-              <Text>This is the title</Text>
-              <Text note numberOfLines={2}>this is the description</Text>
-            </Body>
-            <Right>
-              <Button transparent>
-                <Text>View</Text>
-              </Button>
-            </Right>*/}
+
 
             <View style={styles.newsArticle}>
                 <Text> Update on Local COVID-19 Situation and Vaccination Progress (4 Sep 2021) </Text>

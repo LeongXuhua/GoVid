@@ -1,21 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, SafeAreaView, Button } from 'react-native';
 
-const RegistrationScreen = () => {
+const RegisterAdminScreen = () => {
     return (
         <SafeAreaView>
             <Text style={styles.text}>
-            Employee ID
+            Organisation Name
             </Text>
             <View style={styles.inputContainer}>
                 <TextInput
-                    placeholder="ID"
+                    placeholder="Organisation Name"
                     style={styles.textInput}
                 />
             </View>
 
             <Text style={styles.text}>
-                Employee Name
+                Administrator Name
             </Text>
             <View style={styles.inputContainer}>
                 <TextInput
@@ -23,7 +23,7 @@ const RegistrationScreen = () => {
                     style={styles.textInput}
                 />
             </View>
-
+            
             <Text style={styles.text}>
                 Password
             </Text>
@@ -35,55 +35,21 @@ const RegistrationScreen = () => {
             </View>
 
             <Text style={styles.text}>
-                Department
+                Email Address
             </Text>
             <View style={styles.inputContainer}>
                 <TextInput
-                    placeholder="Department"
+                    placeholder="Email"
                     style={styles.textInput}
                 />
             </View>
 
-            <Text style={styles.text}>
-                Employment Type
-            </Text>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Employee or Manager"
-                    style={styles.textInput}
-                />
-            </View>
-
-            <Text style={styles.text}>
-                    Manager ID
-            </Text>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Manager ID"
-                    style={styles.textInput}
-                />
-            </View>
-
-            <Text style={styles.text}>
-                    Manager Name
-            </Text>
-            <View style={styles.inputContainer}>
-                
-                <TextInput
-                    placeholder="Full Name"
-                    style={styles.textInput}
-                />
-            </View>
-
-            <View style={styles.button}>
-                <Button
-                title="Register">Register</Button>
-            </View>
+            
         </SafeAreaView>
     )
 }
     
-export default RegistrationScreen;
+export default RegisterAdminScreen;
 
 const styles = StyleSheet.create({
     container: {

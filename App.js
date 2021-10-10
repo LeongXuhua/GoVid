@@ -21,7 +21,8 @@ import CheckCrowdScreen from './screens/CheckCrowd';
 import HealthDeclarationScreen from './screens/HealthDeclaration';
 import TravelInformationScreen from './screens/TravelInformation';
 import CasesCountriesScreen from './screens/CasesCountries';
-import RegistrationScreen from './screens/Registration';
+import RegisterEmployeeScreen from './screens/RegisterEmployee';
+import RegisterAdminScreen from './screens/RegisterAdmin';
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -202,10 +203,25 @@ function Root({navigation}){
     />
     
     <Drawer.Screen
-      name="Register"
-      component={RegistrationScreen}
+      name="Register Employee"
+      component={RegisterEmployeeScreen}
       options={{
-      drawerLabel: 'Registration',
+      drawerLabel: 'Registrater Employee',
+      headerStyle: {
+        backgroundColor: '#30659c', //Set Header color
+      },
+      headerTintColor: '#fff', //Set Header text color
+      headerTitleStyle: {
+       fontWeight: 'bold', //Set Header text style
+      },
+      }}
+    />
+
+<Drawer.Screen
+      name="Register Administrator"
+      component={RegisterAdminScreen}
+      options={{
+      drawerLabel: 'Registrater Admin',
       headerStyle: {
         backgroundColor: '#30659c', //Set Header color
       },

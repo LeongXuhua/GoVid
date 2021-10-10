@@ -11,7 +11,7 @@ const firebaseConfig2 = {
 
 var secondaryApp = firebase.initializeApp(firebaseConfig2, "Secondary");
 
-const RegistrationScreen = () => {
+const RegisterEmployeeScreen = () => {
     const [id, setId]=useState('');
     const [name, setName]=useState('');
     const [email, setEmail]=useState('');
@@ -177,7 +177,7 @@ const RegistrationScreen = () => {
     )
 }
     
-export default RegistrationScreen;
+export default RegisterEmployeeScreen;
 
 const styles = StyleSheet.create({
     container: {

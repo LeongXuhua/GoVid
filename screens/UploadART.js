@@ -8,20 +8,27 @@ import RadioForm, {
   RadioButtonLabel
 } from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
+import firebase from 'firebase';
+import "firebase/firestore";
+import 'firebase/firebase-storage';
 
 const UploadARTScreen = () =>{
 
   var result = [
-    {label: "Negative", value: 0},
-    {label: "Positive", value: 1},
+    {label: "Negative", value: 'negative'},
+    {label: "Positive", value: 'positive'},
   ];
+  const [testResult, setTestResult]=useState('negative');
+  const [selectedImage, setSelectedImage] = useState();
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [text, setText] = useState('Empty')
+  
 
-  const onChange = (event, selectedDate) => {
+  const onChangeDate = (event, selectedDate) => {
+    setShow(false)
     const currentDate = selectedDate || date;
   
     setDate(currentDate);
@@ -33,6 +40,7 @@ const UploadARTScreen = () =>{
 
     // Log the Date values
     console.log(tempDate)
+    
   };
 
   const showMode = (currentMode) => {
@@ -40,17 +48,12 @@ const UploadARTScreen = () =>{
     setMode(currentMode);
   };
 
-  const [selectedImage, setSelectedImage] = useState();
-  /*useEffect(() => {
-    if (image) {
-      console.log("useEffect: " + image);
-      setSelectedImage({ uri: image });
-    }
-  }, [image])*/
-
+  
+  //select image
   const pickImage = async () => {
       result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
     });
     console.log(result);
 
@@ -60,7 +63,65 @@ const UploadARTScreen = () =>{
     }
   };
 
-   return (
+  //get user and org id
+  const [orgId, setOrgId] = useState();
+  const userId = firebase.auth().currentUser.uid
+  firebase.firestore()
+        .collection('users')
+        .doc(userId)
+        .get().then((snapshot)=>{setOrgId(snapshot.data().organisationId)});
+
+  //upload results + image to cloud
+  async function uploadResult(result, date, image){
+      const uri = image;
+      const childPath = `${orgId}/testResult/${userId}`;
+      console.log(childPath)
+
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      const task = firebase
+          .storage()
+          .ref()
+          .child(childPath)
+          .put(blob);
+
+      const taskProgress = snapshot => {
+          console.log(`transferred: ${snapshot.bytesTransferred}`)
+      }
+
+      const taskCompleted = () => {
+          task.snapshot.ref.getDownloadURL().then((snapshot) => {
+              //savePostData(snapshot);
+              console.log(snapshot)
+          })
+      }
+
+      const taskError = snapshot => {
+          console.log(snapshot)
+      }
+
+      task.on("state_changed", taskProgress, taskError, taskCompleted);
+  }
+
+    /*const savePostData = (downloadURL) => {
+
+      firebase.firestore()
+          .collection('posts')
+          .doc(firebase.auth().currentUser.uid)
+          .collection("userPosts")
+          .add({
+              downloadURL,
+              caption,
+              likesCount: 0,
+              creation: firebase.firestore.FieldValue.serverTimestamp()
+          }).then((function () {
+              props.navigation.popToTop()
+          }))
+
+  };*/
+
+  return (
     <View style={styles.container}>
 
     <Text style={styles.headerText}> ART Result Submission </Text>
@@ -72,7 +133,7 @@ const UploadARTScreen = () =>{
         <RadioForm
               radio_props={result}
               initial={2}
-              onPress={(value) => {ToastAndroid.show(value.toString(), ToastAndroid.SHORT)}}
+              onPress={(value) => {setTestResult(value)}}
               buttonSize={10}
               buttonOuterSize={20}
               selectedButtonColor={'white'}
@@ -96,7 +157,7 @@ const UploadARTScreen = () =>{
               mode={mode}
               is24Hour={true}
               display="default"
-              onChange={onChange} 
+              onChange={onChangeDate} 
             />
           )}
           
@@ -111,9 +172,8 @@ const UploadARTScreen = () =>{
           </View>
 
           <View style={styles.buttonContainer}>
-                <Button title="Submit" onPress={() => 
-                { }} color = "yellowgreen" />
-                </View>
+              <Button title="Submit" onPress={()=>{uploadResult(testResult,date,selectedImage)}} color = "yellowgreen" />
+          </View>
 
         </View>
       );

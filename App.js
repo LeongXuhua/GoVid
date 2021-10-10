@@ -9,6 +9,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Swiper from 'react-native-swiper';
 
+import firebase from 'firebase';
+
 import CustomSidebarMenu from './components/drawer';
 
 import HomeScreen from './screens/Home';
@@ -23,6 +25,17 @@ import TravelInformationScreen from './screens/TravelInformation';
 import CasesCountriesScreen from './screens/CasesCountries';
 import RegisterEmployeeScreen from './screens/RegisterEmployee';
 import RegisterAdminScreen from './screens/RegisterAdmin';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
+  authDomain: "govid-fcb26.firebaseapp.com",
+  databaseURL: "https://govid-fcb26-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "govid-fcb26",
+  storageBucket: "govid-fcb26.appspot.com",
+  messagingSenderId: "613399245284",
+  appId: "1:613399245284:web:c179e304aa81e4539cd7f1",
+};
+firebase.initializeApp(firebaseConfig);
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer

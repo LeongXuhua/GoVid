@@ -21,7 +21,6 @@ const CasesCountiesScreen = () =>{
                 console.log(e)
             }
         }
-        fetchCovidData();
     }, []);
 
     const ItemRows = ({ item }) => {

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "613399245284",
+    "firebase_url": "https://govid-fcb26-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "govid-fcb26",
+    "storage_bucket": "govid-fcb26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613399245284:android:67615c9038845e7b9cd7f1",
+        "android_client_info": {
+          "package_name": "com.mypackage.govid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613399245284-3fii2pm6tm33kaam4jt9j56ue6cq416i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqpnvA-9Wn2NCaceA3ePkz6t1e1ceLpNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613399245284-3fii2pm6tm33kaam4jt9j56ue6cq416i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

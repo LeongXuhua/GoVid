@@ -77,8 +77,9 @@ const HomeScreen = ({navigation}) => {
 
           <View style={styles.casesCountries}>
      <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Root', {screen: 'CasesCountries'})
+          onPress={() =>{
+            navigation.navigate('Root', {screen: 'CasesCountries'});
+          }
           }>
            <Text style={styles.countriesText}>
          <Text>World Covid-19 tracker</Text>

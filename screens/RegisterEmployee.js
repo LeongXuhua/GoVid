@@ -8,8 +8,10 @@ const firebaseConfig2 = {
     authDomain: "govid-fcb26.firebaseapp.com",
     databaseURL: "https://govid-fcb26-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
+if (firebase.apps.length < 2) {
+    var secondaryApp = firebase.initializeApp(firebaseConfig2, "Secondary");
+  }
 
-var secondaryApp = firebase.initializeApp(firebaseConfig2, "Secondary");
 
 const RegisterEmployeeScreen = () => {
     const [id, setId]=useState('');

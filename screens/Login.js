@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput } from 'react-native';
 import firebase from 'firebase'
+import RegisterAdminScreen from './RegisterAdmin';
 
 const LoginScreen = ({navigation}) => {
 
@@ -75,7 +76,7 @@ const LoginScreen = ({navigation}) => {
     
       <View style={styles.registerView}>
         <Text >Don't have an account? </Text>
-        <Text style={{textDecorationLine:'underline'}}>Register</Text>
+        <Text style={{textDecorationLine:'underline'}} onPress={()=>navigation.navigate('RegisterAdmin')}>Register</Text>
       </View>
 
       <StatusBar style="auto" />

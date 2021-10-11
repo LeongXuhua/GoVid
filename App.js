@@ -36,7 +36,9 @@ const firebaseConfig = {
   messagingSenderId: "613399245284",
   appId: "1:613399245284:web:c179e304aa81e4539cd7f1",
 };
-firebase.initializeApp(firebaseConfig);
+if (firebase.apps.length < 2) {
+  firebase.initializeApp(firebaseConfig)
+}
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
@@ -231,20 +233,6 @@ function Root({navigation}){
       },
       }}
     />
-    <Drawer.Screen
-      name="Register Admin"
-      component={RegisterAdminScreen}
-      options={{
-      drawerLabel: 'Register Admin',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-       fontWeight: 'bold', //Set Header text style
-      },
-      }}
-    />
     
     <Drawer.Screen
       name="Register Employee"
@@ -296,6 +284,20 @@ function App(){
       >
         <Stack.Screen name="Root" component={Root}/>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerRight:()=>{}, headerLeft:()=>{}}}/>
+        <Stack.Screen name="RegisterAdmin" component={RegisterAdminScreen} 
+        options={
+          {headerRight:()=>{},
+           headerLeft:()=>{},
+            activeTintColor: '#fff',
+            itemStyle: {marginVertical: 5},
+            headerStyle: {
+              backgroundColor: '#30659c', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

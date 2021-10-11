@@ -2,66 +2,54 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Button } from 'react-native';
 import firebase from 'firebase';
 import "firebase/firestore";
-/*
-const firebaseConfig2 = {
-    apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
-    authDomain: "govid-fcb26.firebaseapp.com",
-    databaseURL: "https://govid-fcb26-default-rtdb.asia-southeast1.firebasedatabase.app",
-};
 
-var secondaryApp = firebase.initializeApp(firebaseConfig2, "Secondary");
-*/
-const RegisterAdminScreen = () => {
-   /* const [orgName, setOrgName]=useState('');
+const RegisterAdminScreen = ({navigation}) => {
+    const [orgName, setOrgName]=useState('');
     const [name, setName]=useState('');
     const [email, setEmail]=useState('');
     const [password, setPassword]=useState('');
 
-    const [orgId, setOrgId] = useState();
-
-    function getOrganisationId(userId){
-        firebase.firestore()
-        .collection('users')
-        .doc(userId)
-        .get().then((snapshot)=>{setOrgId(snapshot.data().organisationId)})
-    };
-
-    getOrganisationId(firebase.auth().currentUser.uid);
-    
-    registerUser = () => {
-        
+    registerOrg = () => {
         if (0!=0){
-            //logic to catch invalid registration
+            //conditionals
         }
         else{
-            secondaryApp.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
-                //add user into user collection, so can map to organisation ID
-                firebase.firestore().collection("users")
-                .doc(secondaryApp.auth().currentUser.uid)
-                .set({
-                    organisationId:orgId,
-                    email
+            //create new document under organisation
+            firebase.firestore().collection("organisations").add({
+                name: orgName
+            }).then((docRef)=>{
+                //create admin account for org
+                firebase.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
+                    //add user into user collection, so can map to organisation ID
+                    firebase.firestore().collection("users")
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({
+                        organisationId:docRef.id,
+                        email
+                    })
+                    
+                    //add user details into org's collection
+                    firebase.firestore().collection("organisations")
+                    .doc(docRef.id)
+                    .collection('employees')
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({
+                        name:name,
+                        email:email,
+                    })
+                    alert('An account for '+name+' of '+orgName+' has been successfully created!')
+                    navigation.navigate('Login')
+                }).catch((error) => {
+                    alert(error)
                 });
                 
-                //add user details into org's collection
-                firebase.firestore().collection("organisations")
-                .doc(orgId)
-                .collection('employee')
-                .doc(secondaryApp.auth().currentUser.uid)
-                .set({
-                    id:id,
-                    name:name,
-                    email:email,
-                    department:department,
-                    role:role,
-                    managerId:managerId,
-                    managerName:managerName
-                });
-
-            })
+            });
+            
+            
+            
         };
-    };*/
-
+    };
+    
     return (
         
         <SafeAreaView><ScrollView>
@@ -117,7 +105,7 @@ const RegisterAdminScreen = () => {
             <View style={styles.button}>
                 <Button
                     title="Register"
-                    onPress={()=>registerUser()}
+                    onPress={()=>registerOrg()}
                 />
             </View>
         </ScrollView></SafeAreaView>

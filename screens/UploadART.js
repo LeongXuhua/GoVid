@@ -73,10 +73,13 @@ const UploadARTScreen = () =>{
 
   //upload results + image to cloud
   async function uploadResult(result, date, image){
+    if(0!=0){ //SET CONDITIONS FOR REJECT UPLOAD
+
+    }else{
+      //upload image to storage
       const uri = image;
       const childPath = `${orgId}/testResult/${userId}`;
       console.log(childPath)
-
       const response = await fetch(uri);
       const blob = await response.blob();
 
@@ -92,7 +95,7 @@ const UploadARTScreen = () =>{
 
       const taskCompleted = () => {
           task.snapshot.ref.getDownloadURL().then((snapshot) => {
-              //savePostData(snapshot);
+              saveUploadData(snapshot);
               console.log(snapshot)
           })
       }
@@ -102,24 +105,25 @@ const UploadARTScreen = () =>{
       }
 
       task.on("state_changed", taskProgress, taskError, taskCompleted);
+    }
   }
 
-    /*const savePostData = (downloadURL) => {
+    //save art date and download link
+    const saveUploadData = (downloadURL) => {
 
       firebase.firestore()
-          .collection('posts')
-          .doc(firebase.auth().currentUser.uid)
-          .collection("userPosts")
-          .add({
-              downloadURL,
-              caption,
-              likesCount: 0,
-              creation: firebase.firestore.FieldValue.serverTimestamp()
+          .collection('organisations')
+          .doc(orgId)
+          .collection("employees")
+          .doc(userId)
+          .update({
+              "ARTDate" : date,
+              "ARTResult" : downloadURL,
           }).then((function () {
               props.navigation.popToTop()
           }))
 
-  };*/
+  };
 
   return (
     <View style={styles.container}>

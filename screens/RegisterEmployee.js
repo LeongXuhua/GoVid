@@ -50,7 +50,7 @@ const RegisterEmployeeScreen = () => {
                 //add user details into org's collection
                 firebase.firestore().collection("organisations")
                 .doc(orgId)
-                .collection('employee')
+                .collection('employees')
                 .doc(secondaryApp.auth().currentUser.uid)
                 .set({
                     id:id,

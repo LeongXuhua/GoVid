@@ -21,6 +21,8 @@ const CasesCountiesScreen = () =>{
                 console.log(e)
             }
         }
+        fetchCovidData();
+        
     }, []);
 
     const ItemRows = ({ item }) => {
@@ -48,7 +50,7 @@ const CasesCountiesScreen = () =>{
             </View>
         );
     }
-
+    console.log(data);
     return(
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}> Covid cases by Countires</Text>

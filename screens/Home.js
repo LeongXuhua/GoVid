@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView, FlatList, Linking } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -10,7 +10,6 @@ const HomeScreen = ({navigation}) => {
   const url = "https://wrapapi.com/use/yx/moh/covidsituation/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
     const [data, setData] = useState();
     const [isLoading, setIsloading] = useState(false);
-    const [error,setError] = useState();
 
     useEffect(() => {
         const fetchCovidData = async () => {
@@ -28,15 +27,55 @@ const HomeScreen = ({navigation}) => {
         fetchCovidData();
     }, []);
 
+    const urlNews = "https://newsapi.org/v2/top-headlines?country=sg&q=covid&apiKey=88ccbf5968f446d1a11595782665a8d4";
+  const [news, setNews] = useState();
+
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                const result = await fetch(urlNews);
+                const response = await result.json();
+                setNews(response)
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+        fetchNews();
+    }, []); 
+
+    const ItemRows = ({ item }) => {
+        return (
+            <View style={styles.rows}>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around'
+                }}>
+                    <View>
+                        <Image
+                            source={{
+                                uri: `${item.urlToImage}`
+                            }}
+                            style={styles.picture}
+                        />
+                    </View>
+                    <View style={styles.newsBox}>
+                      <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
+                        <Text numberOfLines={5}
+                        style={styles.newsTitle}>{item.title}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
     return (
 <ScrollView>
 
 <SafeAreaView style={styles.container}>
         <Image source={require("../assets/logo.png")} style={styles.logo}/>
-        
-        <Text style={styles.welcomeText}> WELCOME! </Text>
 
-        <View style={styles.divider} />
         {/*Statistic*/}
         <View
           style={{
@@ -84,22 +123,18 @@ const HomeScreen = ({navigation}) => {
          <Text>World Covid-19 tracker</Text>
          </Text>
           </TouchableOpacity>
-</View>
+        </View>
         {/*news*/}
         <View style={styles.newsContainer}>
-
-
-        <Text style={styles.otherText}>
-            Daily News </Text>
-        
-
-
-            <View style={styles.newsArticle}>
-                <Text> Update on Local COVID-19 Situation and Vaccination Progress (4 Sep 2021) </Text>
-            </View>
-
-            <View style={styles.newsArticle}>
-                <Text> 253 Cases of Locally Transmitted COVID-19 Infection </Text>
+          <Text style={styles.otherText}>Daily News </Text>
+            <View style={{height: 80}}>
+              <ScrollView horizontal>
+                <FlatList
+                horizontal
+                data={news && news.articles}
+                renderItem={({item})=> <ItemRows item={item}/>} 
+                />
+              </ScrollView>
             </View>
         </View>
 
@@ -109,12 +144,13 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.statusContainer}>
             <View style={styles.statusBox}>
                 <Text> Vaccinated</Text>
-                <Image source={require("../assets/tick.png")} style={styles.statusIcon}/>
+                <MaterialCommunityIcons name="account-check" size={50} style={{color:"green"}}/>
+                {/*<Image source={require("../assets/tick.png")} style={styles.statusIcon}/>*/}
             </View>
 
             <View style={styles.statusBox}>
                 <Text> No Exposure</Text>
-                <Image source={require("../assets/tick.png")} style={styles.statusIcon}/>
+                <MaterialCommunityIcons name="check-circle" size={50} style={{color:"green"}}/>
             </View>
         </View>
 
@@ -134,7 +170,7 @@ const HomeScreen = ({navigation}) => {
             <MaterialCommunityIcons
               name="qrcode-scan"
               size={20}
-              color="#000000"
+              color="black"
             />
           </View>
           <Text style={styles.categoryBtnTxt}>Scan QR</Text>
@@ -149,10 +185,10 @@ const HomeScreen = ({navigation}) => {
             <MaterialCommunityIcons
               name="format-list-checks"
               size={20}
-              color="green"
+              color="black"
             />
           </View>
-          <Text style={styles.categoryBtnTxt}>Check Symptoms</Text>
+          <Text style={styles.categoryBtnTxt}>Health Declaration</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -164,10 +200,10 @@ const HomeScreen = ({navigation}) => {
             <MaterialCommunityIcons
               name="newspaper-plus"
               size={20}
-              color="blue"
+              color="black"
             />
           </View>
-          <Text style={styles.categoryBtnTxt}>Test Result</Text>
+          <Text style={styles.categoryBtnTxt}>ART Test Result</Text>
         </TouchableOpacity>
 
 </View>
@@ -197,10 +233,10 @@ const HomeScreen = ({navigation}) => {
             <MaterialCommunityIcons
               name="medical-bag"
               size={20}
-              color="green"
+              color="black"
             />
           </View>
-          <Text style={styles.categoryBtnTxt}>Book Covid Test</Text>
+          <Text style={styles.categoryBtnTxt}>Book PCR Test</Text>
         </TouchableOpacity>
      
         <TouchableOpacity
@@ -212,7 +248,7 @@ const HomeScreen = ({navigation}) => {
             <MaterialCommunityIcons
               name="account-group"
               size={20}
-              color="blue"
+              color="black"
             />
           </View>
           <Text style={styles.categoryBtnTxt}>Cluster & Crowd</Text>
@@ -252,12 +288,6 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.menuBox}>
                 <Button title="Book Vaccination" />
             </View>
-            <View style={styles.divider} />
-            <View style={styles.divider} />
-            <View style={styles.divider} />
-            <View style={styles.divider} />
-          
-        <Text style={styles.newsTitle}> BOTTOM TEXT </Text>
 
         <StatusBar style="auto" />
         
@@ -296,14 +326,8 @@ const styles = StyleSheet.create({
 
     logo: {
       width: '100%',
-      height: '15%',
+      height: '10%',
       resizeMode: 'contain',
-    },
-
-    welcomeText: {
-        color: "#EEEEEE",
-        fontSize: 24,
-        margin: 10,
     },
 
     otherText: {
@@ -314,33 +338,39 @@ const styles = StyleSheet.create({
     
     covidCasesBox: {
       backgroundColor: "#ffffff", 
-      width: 100, 
-      height: 100, 
+      width: "30%", 
+      height: "100%",  
       borderRadius: 25, 
       marginLeft: 10,
       padding: 10,
     },
 
-    newsTitle: {
-        color: "#555555",
-        fontSize: 18,
-       
-    },
+    picture: {
+      height: 80,
+      width: 90,
+      marginLeft: 5,
+  },
 
-    newsArticle: {
-        backgroundColor: "white",
-        width: "100%",
-        alignItems: "center",
-        borderRadius: 10,
-        marginBottom: 10,
-      },
+  newsBox: {
+      borderWidth: 1,
+      borderColor: 'lightgrey',
+      backgroundColor: 'white',
+      height: 80,
+      width: 220,
+  },
+
+  newsTitle: {
+      fontWeight: "bold", 
+      fontSize: 13,
+      padding: 5,
+  },
 
     statusBox: {
         backgroundColor: "white",
         width: "30%",
-        height: "60%",
+        height: "90%",
         alignItems: "center",
-        borderRadius: 10,
+        borderRadius: 25,
         marginRight: 10,
         marginLeft: 10,
       },

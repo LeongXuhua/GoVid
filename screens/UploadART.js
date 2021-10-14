@@ -126,11 +126,10 @@ const UploadARTScreen = () =>{
   };
 
   return (
+    
     <View style={styles.container}>
 
     <Text style={styles.headerText}> ART Result Submission </Text>
-
-    <Image source={require("../assets/logo.png")} style={styles.logo}/>
             
     <Text style={styles.questionText}> What is your ART Result?   </Text>
 
@@ -176,10 +175,10 @@ const UploadARTScreen = () =>{
           </View>
 
           <View style={styles.buttonContainer}>
-              <Button title="Submit" onPress={()=>{uploadResult(testResult,date,selectedImage)}} color = "yellowgreen" />
+              <Button title="Submit" onPress={()=>{uploadResult(testResult,date,selectedImage)}} color = "green" />
           </View>
-
         </View>
+        
       );
     };
 
@@ -199,9 +198,8 @@ const styles = StyleSheet.create({
   },
 
   headerText: {
-    color: "#555555",
-    fontSize: 24,
-    marginBottom: 10,
+    color: "#EEEEEE",
+    fontSize: 32,
 },
 
   questionText: {

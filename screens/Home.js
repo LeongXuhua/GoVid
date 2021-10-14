@@ -7,7 +7,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const HomeScreen = ({navigation}) => {
-  const url = "https://wrapapi.com/use/yx/moh/covidsituation/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
+  const url = "https://wrapapi.com/use/yx/moh/covidstatistic/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
     const [data, setData] = useState();
     const [isLoading, setIsloading] = useState(false);
 
@@ -78,11 +78,9 @@ const HomeScreen = ({navigation}) => {
 
         {/*Statistic*/}
         <View
-          style={{
-          flexDirection: "row", 
-          padding: 20,}}>
+          style={styles.statusContainer}>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="pulse" size={30} style={{color:"green"}}/>
+              <MaterialCommunityIcons name="account-multiple" size={30} style={{color:"blue"}}/>
               <Text style={styles.topText}>
               <Text>Daily Cases</Text>
               </Text>
@@ -100,17 +98,17 @@ const HomeScreen = ({navigation}) => {
               </Text>
             </View>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="account-multiple" size={30} style={{color:"black"}}/>
+              <MaterialCommunityIcons name="emoticon-dead" size={30} style={{color:"black"}}/>
               <Text style={styles.topText}>
-              <Text>Total Cases</Text>
+              <Text>Deaths</Text>
               </Text>
               <Text style={styles.baseText}>
-              <Text>73131</Text>
+              <Text>{data? data.data.deaths : 0}</Text>
               </Text>
             </View>  
           </View>
           <Text style={{fontSize: 10, marginTop: -20, marginLeft: -180}}>
-          {data? data.data.date : 0}
+          {data? data.data.date : "null"}
           </Text>
 
           <View style={styles.casesCountries}>
@@ -143,14 +141,19 @@ const HomeScreen = ({navigation}) => {
           {/*status*/}
         <View style={styles.statusContainer}>
             <View style={styles.statusBox}>
-                <Text> Vaccinated</Text>
-                <MaterialCommunityIcons name="account-check" size={50} style={{color:"green"}}/>
+                <Text style={styles.topText}> Vaccinated</Text>
+                <MaterialCommunityIcons name="account-check" size={45} style={{color:"green"}}/>
                 {/*<Image source={require("../assets/tick.png")} style={styles.statusIcon}/>*/}
             </View>
 
             <View style={styles.statusBox}>
-                <Text> No Exposure</Text>
-                <MaterialCommunityIcons name="check-circle" size={50} style={{color:"green"}}/>
+                <Text style={styles.topText}> No Exposure</Text>
+                <MaterialCommunityIcons name="check-circle" size={45} style={{color:"green"}}/>
+            </View>
+
+            <View style={styles.statusBox}>
+                <Text style={styles.topText}>Work Status</Text>
+                <MaterialCommunityIcons name="home" size={45} style={{color:"green"}}/>
             </View>
         </View>
 
@@ -317,11 +320,8 @@ const styles = StyleSheet.create({
       },
     
     statusContainer: {
-        backgroundColor: '#51a4fb',
-        flexDirection: "row",
-        justifyContent: 'flex-start',
-        marginTop: 20,
-        height: "10%",
+        flexDirection: "row", 
+        padding: 20,
     },
 
     logo: {
@@ -368,10 +368,10 @@ const styles = StyleSheet.create({
     statusBox: {
         backgroundColor: "white",
         width: "30%",
-        height: "90%",
+        height: "100%",
         alignItems: "center",
         borderRadius: 25,
-        marginRight: 10,
+        padding: 10,
         marginLeft: 10,
       },
 

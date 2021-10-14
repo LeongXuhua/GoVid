@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Alert, Linking, Button, StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
+import { WebView } from 'react-native-webview';
 
 const url1 = "https://www.mfa.gov.sg/where-are-you-travelling-to";
 
@@ -18,7 +19,7 @@ const openUrl = async (url) => {
 }
 
     return (
-      <SafeAreaView style={styles.container}>
+      /*<SafeAreaView style={styles.container}>
         
         <Image source={require("../assets/logo.png")} style={styles.logo}/>
         
@@ -31,10 +32,11 @@ const openUrl = async (url) => {
                 openUrl(url1)
             }} color = "steelblue" />
             </View>
-        </View>
-
-
-      </SafeAreaView>
+          </View>*/
+        <WebView
+          source={{ uri: "https://www.mfa.gov.sg/where-are-you-travelling-to" }}
+        />
+      /*</SafeAreaView>*/
     );
   }
 

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, SafeAreaView, Button, Linking } from 'react-nat
 
 const sgh = 'https://form.gov.sg/#!/5f1020e6a919ad0011b435d0';
 
-
+{/*
 const zoom = Platform.select ({
    
 
@@ -13,7 +13,7 @@ const zoom = Platform.select ({
     // default: 'market://details?id=us.zoom.videomeetings',
 
 });
-
+*/}
 
 const HealthDeclarationScreen = ({navigation}) => {
 
@@ -110,7 +110,7 @@ const openUrl = async (url) => {
 
     return(
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}> Check Symptoms</Text>
+            <Text style={styles.title}>Health Declaration</Text>
 
             <View style={styles.questionContainer}>
                 { showQuestion ?(renderQuestion()) :null }
@@ -136,14 +136,14 @@ const openUrl = async (url) => {
             }}/>
         </View>
 
-        */}
+        
     
         <View style={styles.buttonContainer}>
             <Button title="Zoom call Doctor" onPress={() => 
             {
                 openUrl(zoom)
             }}/>
-        </View>
+        </View>*/}
 
         
             

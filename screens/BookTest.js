@@ -9,10 +9,10 @@ const url3 = "https://www.parkwaydigihealth.com/sdh/book-covid19-test?source=PSP
 const url4 = "https://www.centralclinic.com.sg/book-antigen-rapid-test"
 
 const number = `+65 67819033`
-
+{/*
 const zoom = Platform.select ({
     default: 'https://zoom.us/signin',
-});
+});*/}
 
 
 

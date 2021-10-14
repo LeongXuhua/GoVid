@@ -1,7 +1,7 @@
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
-import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-web-swiper';
 
 
 const CovidTestScreen = () => {

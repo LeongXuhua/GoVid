@@ -12,7 +12,7 @@ import firebase from 'firebase';
 import "firebase/firestore";
 import 'firebase/firebase-storage';
 
-const UploadARTScreen = () =>{
+const UploadARTScreen = (props) =>{
 
   var result = [
     {label: "Negative", value: 'negative'},
@@ -51,15 +51,15 @@ const UploadARTScreen = () =>{
   
   //select image
   const pickImage = async () => {
-      result = await ImagePicker.launchImageLibraryAsync({
+      var imageResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
     });
-    console.log(result);
+    console.log(imageResult);
 
-    if (!result.cancelled) {
-      setSelectedImage(result.uri);
-      console.log(result.uri);
+    if (!imageResult.cancelled) {
+      setSelectedImage(imageResult.uri);
+      console.log(imageResult.uri);
     }
   };
 
@@ -120,7 +120,7 @@ const UploadARTScreen = () =>{
               "ARTDate" : date,
               "ARTResult" : downloadURL,
           }).then((function () {
-              props.navigation.popToTop()
+              alert('ART results successfully uploaded!')
           }))
 
   };

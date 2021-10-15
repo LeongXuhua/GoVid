@@ -25,6 +25,7 @@ import CasesCountriesScreen from './screens/CasesCountries';
 import RegisterEmployeeScreen from './screens/RegisterEmployee';
 import RegisterAdminScreen from './screens/RegisterAdmin';
 import uploadARTScreen from './screens/UploadART';
+import uploadVaccinationScreen from './screens/UploadVaccination';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
@@ -110,6 +111,22 @@ function Root({navigation}){
       component={uploadARTScreen}
       options={{
       drawerLabel: 'Upload ART Result',
+      }}
+    />
+
+    <Drawer.Screen
+      name="uploadVaccination"
+      component={uploadVaccinationScreen}
+      options={{
+      drawerLabel: 'upload Vaccination',
+      headerStyle: {
+        backgroundColor: '#30659c', //Set Header color
+      },
+      headerTintColor: '#fff', //Set Header text color
+      headerTitleStyle: {
+        fontWeight: 'bold', //Set Header text style
+      },
+
       }}
     />
 

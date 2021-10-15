@@ -14,8 +14,6 @@ const LoginScreen = ({navigation}) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log(result);
-                setEmail("");
-                setPassword("");
                 navigation.navigate('Root');
             })
             .catch((error) => {

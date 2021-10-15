@@ -36,7 +36,7 @@ const CustomSidebarMenu = (props) => {
         source={require("../assets/logo.png")}
         style={styles.sideMenuProfileIcon}
       />
-      <Text> {orgId} </Text>
+      <Text style={{marginTop: -10, marginBottom: -60}}> {orgId} </Text>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 100 / 2,
     alignSelf: 'center',
+    marginTop: 30,
   },
   iconStyle: {
     width: 15,

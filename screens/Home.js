@@ -1,10 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Button, TouchableOpacity, ScrollView, FlatList, Linking } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, FlatList, Linking } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const HomeScreen = ({navigation}) => {
   const url = "https://wrapapi.com/use/yx/moh/covidstatistic/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
@@ -74,13 +70,11 @@ const HomeScreen = ({navigation}) => {
 <ScrollView>
 
 <SafeAreaView style={styles.container}>
-        <Image source={require("../assets/logo.png")} style={styles.logo}/>
-
         {/*Statistic*/}
         <View
           style={styles.statusContainer}>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="account-multiple" size={30} style={{color:"blue"}}/>
+              <MaterialCommunityIcons name="account-multiple" size={25} style={{color:"blue"}}/>
               <Text style={styles.topText}>
               <Text>Daily Cases</Text>
               </Text>
@@ -89,7 +83,7 @@ const HomeScreen = ({navigation}) => {
               </Text>
             </View>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="hospital-building" size={30} style={{color:"blue"}}/>
+              <MaterialCommunityIcons name="hospital-building" size={25} style={{color:"blue"}}/>
               <Text style={styles.topText}>
               <Text>Hospitalised</Text>
               </Text>
@@ -98,9 +92,9 @@ const HomeScreen = ({navigation}) => {
               </Text>
             </View>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="emoticon-dead" size={30} style={{color:"black"}}/>
+              <MaterialCommunityIcons name="emoticon-dead" size={25} style={{color:"black"}}/>
               <Text style={styles.topText}>
-              <Text>Deaths</Text>
+              <Text>Total Deaths</Text>
               </Text>
               <Text style={styles.baseText}>
               <Text>{data? data.data.deaths : 0}</Text>
@@ -118,7 +112,7 @@ const HomeScreen = ({navigation}) => {
           }
           }>
            <Text style={styles.countriesText}>
-         <Text>World Covid-19 tracker</Text>
+         <Text>World Covid-19 Tracker</Text>
          </Text>
           </TouchableOpacity>
         </View>
@@ -144,11 +138,6 @@ const HomeScreen = ({navigation}) => {
                 <Text style={styles.topText}> Vaccinated</Text>
                 <MaterialCommunityIcons name="account-check" size={45} style={{color:"green"}}/>
                 {/*<Image source={require("../assets/tick.png")} style={styles.statusIcon}/>*/}
-            </View>
-
-            <View style={styles.statusBox}>
-                <Text style={styles.topText}> No Exposure</Text>
-                <MaterialCommunityIcons name="check-circle" size={45} style={{color:"green"}}/>
             </View>
 
             <View style={styles.statusBox}>
@@ -182,7 +171,7 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('Root', {screen: 'CheckSymptoms'})
+            navigation.navigate('Root', {screen: 'HealthDeclaration'})
           }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
@@ -280,19 +269,6 @@ const HomeScreen = ({navigation}) => {
 
       </View>
 
-            <View style={styles.menuBox}>
-                <Button title="Book Covid Testing" />
-            </View>
-            
-            <View style={styles.menuBox}>
-                <Button title="Book Covid Testing" />
-            </View>
-
-            <View style={styles.menuBox}>
-                <Button title="Book Vaccination" />
-            </View>
-
-        <StatusBar style="auto" />
         
         </SafeAreaView>
       </ScrollView>

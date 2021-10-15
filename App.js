@@ -47,15 +47,16 @@ const NavigationDrawerStructure = (props) => {
   };
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row', }}>
       <TouchableOpacity onPress={toggleDrawer}>
         {/*Donute Button Image */}
-        <Image
+        <Image 
+          style={{width: 25, height: 25, marginLeft: 55}}
           source={{
             uri:
               'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
           }}
-          style={{width: 25, height: 25, marginLeft: 5}}
+          
         />
       </TouchableOpacity>
     </View>
@@ -73,11 +74,19 @@ function Root({navigation}){
       itemStyle: {marginVertical: 5},
       headerStyle: {
         backgroundColor: '#30659c', //Set Header color
+        height: 95
+      },
+      headerTitleContainerStyle: {
+        marginBottom: 5,
       },
       headerTintColor: '#fff', //Set Header text color
       headerTitleStyle: {
         fontWeight: 'bold', //Set Header text style
       },
+      drawerStyle:{
+        width: 220,
+      },
+      
     }}
     drawerContent={(props) => <CustomSidebarMenu {...props} />}>
     
@@ -86,150 +95,77 @@ function Root({navigation}){
       component={HomeScreen}
       options={{
       drawerLabel: 'Home',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-       // backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
       }}
     />
     <Drawer.Screen
-      name="ScanQR"
+      name="Scan QR"
       component={ScanQRScreen}
       options={{
       drawerLabel: 'Scan QR',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
-
       }}
     />
 
     <Drawer.Screen
-      name="uploadART"
+      name="Upload ART Result"
       component={uploadARTScreen}
       options={{
-      drawerLabel: 'upload ART',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
-
+      drawerLabel: 'Upload ART Result',
       }}
     />
 
     <Drawer.Screen
-      name="HealthDeclaration"
+      name="Health Declaration"
       component={HealthDeclarationScreen}
       options={{
       drawerLabel: 'Health Declaration',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
       }}
     />
 
     <Drawer.Screen
-      name="CovidTest"
+      name="Covid Test Result"
       component={CovidTestScreen}
       options={{
-      drawerLabel: 'Covid Test',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
+      drawerLabel: 'Covid Test Result',
       }}
     />
 
     <Drawer.Screen
-      name="BookVaccination"
+      name="Book Vaccination"
       component={BookVaccinationScreen}
       options={{
       drawerLabel: 'Book Vaccination',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
       }}
     />
 
     <Drawer.Screen
-      name="BookTest"
+      name="Book PCR Swab Test"
       component={BookTestScreen}
       options={{
-      drawerLabel: 'Book Swab Test',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
+      drawerLabel: 'Book PCR Swab Test',
       }}
     />
 
     <Drawer.Screen
-      name="CheckCrowd"
+      name="Check Crowd"
       component={CheckCrowdScreen}
       options={{
       drawerLabel: 'Check Crowd',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
       }}
     />
 
     <Drawer.Screen
-      name="TravelInformation"
+      name="Travel Information"
       component={TravelInformationScreen}
       options={{
       drawerLabel: 'Travel Information',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
       }}
     />
 
     <Drawer.Screen
-      name="CasesCountries"
+      name="World Covid-19 Tracker"
       component={CasesCountriesScreen}
       options={{
-      drawerLabel: 'Cases by Countries',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-        fontWeight: 'bold', //Set Header text style
-      },
+      drawerLabel: 'World Covid-19 Tracker',
       }}
     />
     
@@ -238,13 +174,6 @@ function Root({navigation}){
       component={RegisterEmployeeScreen}
       options={{
       drawerLabel: 'Register Employee',
-      headerStyle: {
-        backgroundColor: '#30659c', //Set Header color
-      },
-      headerTintColor: '#fff', //Set Header text color
-      headerTitleStyle: {
-       fontWeight: 'bold', //Set Header text style
-      },
       }}
     />
 

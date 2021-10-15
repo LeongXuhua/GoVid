@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase'
 import RegisterAdminScreen from './RegisterAdmin';
 
@@ -31,20 +32,22 @@ const LoginScreen = ({navigation}) => {
       
       <View style={styles.loginTitleView}>
         <Text style={styles.loginTitle}>
-          Login
+          Welcome!
         </Text>
       </View>
 
       <View style={styles.inputLabelView}>
         <Text style={styles.inputLabel}>
-          email 
+          Email 
         </Text>
       </View>
       <View style={styles.inputView}>
+      <MaterialCommunityIcons name="account-outline" size={20} style={styles.texticon}/>
         <TextInput
           style={styles.TextInput}
-          placeholder="email"
+          placeholder="Your Email"
           placeholderTextColor="grey"
+          autoCapitalize="none"
           onChangeText={(email) => setEmail(email)}
         />
       </View>
@@ -55,10 +58,12 @@ const LoginScreen = ({navigation}) => {
         </Text>
       </View>
       <View style={styles.inputView}>
+      <MaterialCommunityIcons name="lock-outline" size={20} style={styles.texticon}/>
         <TextInput
           style={styles.TextInput}
-          placeholder="Password"
+          placeholder="Your Password"
           placeholderTextColor="grey"
+          autoCapitalize="none"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
@@ -75,7 +80,7 @@ const LoginScreen = ({navigation}) => {
       </View>
     
       <View style={styles.registerView}>
-        <Text >Don't have an account? </Text>
+        <Text> Don't have an account? </Text>
         <Text style={{textDecorationLine:'underline'}} onPress={()=>navigation.navigate('RegisterAdmin')}>Register</Text>
       </View>
 
@@ -101,9 +106,8 @@ const styles = StyleSheet.create({
   },
 
   loginTitle: {
-    width: "70%",
-    color: "#AAAAAA",
-    fontSize: 28,
+    color: "#EEEEEE",
+    fontSize: 32,
   },
 
   loginTitleView: {
@@ -124,17 +128,22 @@ const styles = StyleSheet.create({
   inputView: {
     backgroundColor: "#FFFFFF",
     width: "70%",
-    height: 45,
+    height: 40,
     borderRadius: 10,
     marginBottom: 20,
-    alignItems: "center",
+    marginTop: 5,
+    flexDirection: "row",
+  },
+
+  texticon: {
+    color: "black",
+    height: 40,
+    padding: 10,
   },
   
   TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
+    height: 40,
+    width: "100%",
   },
 
   buttonView: {

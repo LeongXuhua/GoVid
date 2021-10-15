@@ -36,6 +36,7 @@ const RegisterAdminScreen = ({navigation}) => {
                     .set({
                         name:name,
                         email:email,
+                        role:'admin',
                     })
                     alert('An account for '+name+' of '+orgName+' has been successfully created!')
                     navigation.navigate('Login')

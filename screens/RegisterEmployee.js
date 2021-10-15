@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Button, Picker } from 'react-native';
 import firebase from 'firebase';
 import "firebase/firestore";
 
@@ -22,6 +22,7 @@ const RegisterEmployeeScreen = () => {
     const [role, setRole]=useState('');
     const [managerId, setManagerId]=useState('');
     const [managerName, setManagerName]=useState('');
+
 
     const [orgId, setOrgId] = useState();
 
@@ -61,8 +62,55 @@ const RegisterEmployeeScreen = () => {
                     department:department,
                     role:role,
                     managerId:managerId,
-                    managerName:managerName
+                    managerName:managerName,
+                    ARTDate: null,
+                    ARTResult: null,
+                    VaccinationResult: null,
                 });
+
+                //add manager record / add into manager's record
+                if (role=='manager'){
+                    firebase.firestore().collection("organisations")
+                    .doc(orgId)
+                    .collection('managers')
+                    .doc(secondaryApp.auth().currentUser.uid)
+                    .set({
+                        name:name,
+                        id:id,
+                    });
+                    alert('An account for '+name+' has been successfully created!')
+                }else{
+                    
+                    //get manager's UID
+                    firebase.firestore().collection("organisations")
+                    .doc(orgId)
+                    .collection('managers')
+                    .where("id", "==", managerId)
+                    .get()
+                    .then((snapshot)=>{
+                        snapshot.forEach((doc)=>{
+                            
+                            //update manager's collection of employees
+                            firebase.firestore().collection("organisations")
+                                .doc(orgId)
+                                .collection('managers')
+                                .doc(doc.id)
+                                .collection('employees')
+                                .doc(secondaryApp.auth().currentUser.uid)
+                                .set({
+                                    name:name,
+                                    id:id,
+                                });
+
+                            alert('An account for '+name+' has been successfully created!')
+                            })
+                        
+                        });
+                    
+                    
+                    
+                    
+                }
 
             })
         };
@@ -136,12 +184,15 @@ const RegisterEmployeeScreen = () => {
                 Employment Type
             </Text>
             <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Employee or Manager"
+                <Picker
+                    selectedValue={role}
                     style={styles.textInput}
                     value={role}
-                    onChangeText={(value)=>setRole(value)}
-                />
+                    onValueChange={(value, index)=>setRole(value)}
+                >
+                    <Picker.item label="employee" value="employee"/>
+                    <Picker.item label="manager" value="manager"/>
+                </Picker>
             </View>
 
             <Text style={styles.text}>

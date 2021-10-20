@@ -53,23 +53,21 @@ const CasesCountiesScreen = () =>{
     console.log(data);
     return(
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}> Covid cases by Countires</Text>
-            <View
-            style={{
-            flexDirection: "row", 
-            padding: 5,}}>
-                <View>
-                    <MaterialCommunityIcons name="web" size={70} style={{color:"white"}}/>
+            <Text style={styles.title}> Cases by Countires</Text>
+            <View style={styles.globalContainer}>
+                <View >
+                    <MaterialCommunityIcons name="web" size={70} style={{color:"#007AFF", marginLeft: -15, marginTop: 10}}/>
+                   
                 </View>    
-                <View >
-                    <MaterialCommunityIcons name="pulse" size={30} style={{color:"white"}}/>
-                    <Text>Total Global Cases</Text>
-                    <Text>{data? data.Global.TotalConfirmed : 0}</Text>
+                <View style={styles.globalCasesBox}>
+                    <MaterialCommunityIcons name="pulse" size={30} style={{color:"#007AFF"}}/>
+                    <Text style={{fontWeight: "bold",}}>Global Cases</Text>
+                    <Text style={{color: "#ff8000",fontWeight: 'bold', marginTop: 5, alignSelf: 'center'}}>{data? data.Global.TotalConfirmed : 0}</Text>
                 </View>
-                <View >
-                    <MaterialCommunityIcons name="coffin" size={30} style={{color:"white"}}/>
-                    <Text>Total Global Death</Text>
-                    <Text>{data? data.Global.TotalDeaths : 0}</Text>
+                <View style={styles.globalCasesBox}>
+                    <MaterialCommunityIcons name="coffin" size={30} style={{color:"#007AFF"}}/>
+                    <Text style={{fontWeight: "bold",}}>Global Deaths</Text>
+                    <Text style={{color: "#ff8000",fontWeight: 'bold', marginTop: 5, alignSelf: 'center'}}>{data? data.Global.TotalDeaths : 0}</Text>
                 </View>  
             </View>
             <View style={styles.flatList}>
@@ -97,7 +95,21 @@ const styles = StyleSheet.create({
     title: {
         color: "#EEEEEE",
         fontSize: 30,
-        marginTop:100
+        marginTop:130,
+        paddingBottom: 10
+    },
+
+    globalContainer: {
+        flexDirection: "row", 
+    },
+
+    globalCasesBox: {
+        backgroundColor: "#ffffff", 
+        width: "35%", 
+        height: "100%",  
+        borderRadius: 25, 
+        marginLeft: 10,
+        padding: 10,
     },
 
     flatList:{

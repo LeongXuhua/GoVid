@@ -1,7 +1,7 @@
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
-import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-web-swiper';
 
 
 const CovidTestScreen = () => {
@@ -28,7 +28,9 @@ backgroundColor: 'grey',
 }}></View>
 }
 >
-
+<Text>Slide 1</Text>
+<Text>Slide 2</Text>
+{/*
 <Image
 source={require("../assets/Sample2.jpeg")}
 
@@ -38,7 +40,7 @@ style={styles.image}
 source={require("../assets/Sample1.jpeg")}
 
 style={styles.image}
-  />
+/>*/}
   
   </Swiper>
 

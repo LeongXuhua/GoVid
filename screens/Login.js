@@ -78,8 +78,9 @@ const LoginScreen = ({navigation}) => {
       </View>
     
       <View style={styles.registerView}>
-        <Text> Don't have an account? </Text>
-        <Text style={{textDecorationLine:'underline'}} onPress={()=>navigation.navigate('RegisterAdmin')}>Register</Text>
+        <Text style={{color:'white'}}>Don't have a business account? </Text>
+        <Text style={{color:'white'}} onPress={()=>navigation.navigate('RegisterAdmin')}><Text style={{textDecorationLine:'underline'}}>Register </Text>here for your company </Text>
+        <Text style={{color:'white'}}> </Text>
       </View>
 
       <StatusBar style="auto" />
@@ -157,8 +158,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     marginTop: 20,
-    alignItems: "center",
-    flexDirection:"row",
   },
 
 

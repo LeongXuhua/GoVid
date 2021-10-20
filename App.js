@@ -26,6 +26,8 @@ import RegisterEmployeeScreen from './screens/RegisterEmployee';
 import RegisterAdminScreen from './screens/RegisterAdmin';
 import uploadARTScreen from './screens/UploadART';
 import uploadVaccinationScreen from './screens/UploadVaccination';
+import OrgAdminHomeScreen from './screens/OrgAdminHome';
+import CheckInLogScreen from './screens/CheckInLog';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
@@ -194,7 +196,21 @@ function Root({navigation}){
       }}
     />
 
+    <Drawer.Screen
+      name="Organisation Admin Home"
+      component={OrgAdminHomeScreen}
+      options={{
+      drawerLabel: 'Organisation Admin Home',
+      }}
+    />
 
+    <Drawer.Screen
+      name="Check-In Log"
+      component={CheckInLogScreen}
+      options={{
+      drawerLabel: 'Check-In Log',
+      }}
+    />  
 
       
   </Drawer.Navigator>

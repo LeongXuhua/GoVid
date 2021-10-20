@@ -71,10 +71,9 @@ const HomeScreen = ({navigation}) => {
 
 <SafeAreaView style={styles.container}>
         {/*Statistic*/}
-        <View
-          style={styles.statusContainer}>
+        <View style={styles.statusContainer}>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="account-multiple" size={25} style={{color:"blue"}}/>
+              <MaterialCommunityIcons name="account-multiple" size={25} style={{color:"#007AFF"}}/>
               <Text style={styles.topText}>
               <Text>Daily Cases</Text>
               </Text>
@@ -83,7 +82,7 @@ const HomeScreen = ({navigation}) => {
               </Text>
             </View>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="hospital-building" size={25} style={{color:"blue"}}/>
+              <MaterialCommunityIcons name="hospital-building" size={25} style={{color:"#007AFF"}}/>
               <Text style={styles.topText}>
               <Text>Hospitalised</Text>
               </Text>
@@ -92,7 +91,7 @@ const HomeScreen = ({navigation}) => {
               </Text>
             </View>
             <View style={styles.covidCasesBox}>
-              <MaterialCommunityIcons name="emoticon-dead" size={25} style={{color:"black"}}/>
+              <MaterialCommunityIcons name="emoticon-dead" size={25} style={{color:"#007AFF"}}/>
               <Text style={styles.topText}>
               <Text>Total Deaths</Text>
               </Text>
@@ -420,7 +419,7 @@ const styles = StyleSheet.create({
   },
 
   baseText:{
-    color:"#ff0000", //red
+    color:"#ff8000", //orange
     fontWeight: 'bold',
     marginTop: 5,
     alignSelf: 'center',

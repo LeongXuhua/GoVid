@@ -28,6 +28,8 @@ import uploadARTScreen from './screens/UploadART';
 import uploadVaccinationScreen from './screens/UploadVaccination';
 import OrgAdminHomeScreen from './screens/OrgAdminHome';
 import CheckInLogScreen from './screens/CheckInLog';
+import VerifyVaccineScreen from './screens/VerifyVaccine';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
@@ -108,6 +110,15 @@ function Root({navigation}){
       }}
     />
 
+<Drawer.Screen
+      name="Verify Vaccine"
+      component={VerifyVaccineScreen}
+      options={{
+      drawerLabel: 'Verify Vaccine',
+      }}
+    />
+
+
     <Drawer.Screen
       name="Upload ART Result"
       component={uploadARTScreen}
@@ -117,7 +128,7 @@ function Root({navigation}){
     />
 
     <Drawer.Screen
-      name="uploadVaccination"
+      name="UploadVaccination"
       component={uploadVaccinationScreen}
       options={{
       drawerLabel: 'upload Vaccination',
@@ -131,6 +142,9 @@ function Root({navigation}){
 
       }}
     />
+
+
+
 
     <Drawer.Screen
       name="Health Declaration"

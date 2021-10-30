@@ -28,6 +28,7 @@ import uploadARTScreen from './screens/UploadART';
 import uploadVaccinationScreen from './screens/UploadVaccination';
 import OrgAdminHomeScreen from './screens/OrgAdminHome';
 import CheckInLogScreen from './screens/CheckInLog';
+import EmployeeInfoScreen from './screens/EmployeeInfo';
 import VerifyVaccineScreen from './screens/VerifyVaccine';
 
 
@@ -224,8 +225,15 @@ function Root({navigation}){
       options={{
       drawerLabel: 'Check-In Log',
       }}
-    />  
+    />
 
+    <Drawer.Screen
+      name="Employee Information"
+      component={EmployeeInfoScreen}
+      options={{
+      drawerLabel: 'Employee Information',
+      }}
+    />  
       
   </Drawer.Navigator>
   /*<Drawer.Navigator

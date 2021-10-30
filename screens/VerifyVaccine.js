@@ -8,7 +8,7 @@ const VerifyVaccineScreen = ({navigation}) => {
   const [tableData, setTableData] = useState([
     { name:"Mary Tan", id: 12388, department:"Finance", vaccinated:"Yes", num: 2, date:"08/08/2021", certificate: "vaccine1.jpg"   },
     { name:"John Jones", id: 12399, department:"HR", vaccinated:"Yes", num: 2, date:"09/09/2021", certificate: "vaccine1.jpg"   },
-    { name:"Bruce Wayne", id: 12377, department:"Logistics", vaccinated:"Yes", num: 2, date:"07/07/2021", certificate: "vaccine1.jpg"   },
+    { name:"Bruce Wayne", id: 12377, department:"Logistics", vaccinated:"No", num: 2, date:"07/07/2021", certificate: "vaccine1.jpg"   },
     { name:"Tony Stark", id: 12366, department:"Research", vaccinated:"Yes", num: 3, date:"06/06/2021", certificate: "vaccine1.jpg"   },
     
   ])
@@ -28,11 +28,10 @@ const VerifyVaccineScreen = ({navigation}) => {
   
   ]
   return (
-    <div>
     <ScrollView>
 
-      <h1 align="center">Verify Vaccine</h1>
-      <h4 align='center'>Super Admin </h4>
+      <View align="center">Verify Vaccine</View>
+      <View align='center'>Super Admin </View>
 
       <MaterialTable columns={columns} data={tableData}
     
@@ -72,10 +71,8 @@ const VerifyVaccineScreen = ({navigation}) => {
           headerStyle: { background: "#51a4fb",color:"#fff"}
         }}
         title="Vaccination Information"/>
-        <h2>Footer</h2>
         </ScrollView>
 
-    </div>
 
  
   );

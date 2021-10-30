@@ -3,25 +3,25 @@ import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput } from "rea
 import { FlatList } from "react-native-gesture-handler";
 import { DataTable } from 'react-native-paper';
 
-const CheckInLogScreen = ({ navigation }) => {
+const EmployeeInfoScreen = ({ navigation }) => {
   const [tableData, setTableData] = useState([
-    { time: "10.00AM", name: "Mary Tan", email: "abc@test.com", location: "Block A", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "11.00AM", name: "John Jones", email: "test@test.com", location: "Block B", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "12.00PM", name: "Bob", email: "zxc@test.com", location: "Block A", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { time: "13.00PM", name: "Tony Stark", email: "123@test.com", location: "Block D", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: 1, name: "Mary Tan", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: 2, name: "John Jones", email: "abc@test.com", managerID: 1, managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: 3, name: "Tony Stark", email: "abc@test.com", managerID: 5, managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: 5, name: "MBob", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
   ])
 
   const [filteredData, setFilteredData] = useState([
-    { time: "10.00AM", name: "Mary Tan", email: "abc@test.com", location: "Block A", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "11.00AM", name: "John Jones", email: "test@test.com", location: "Block B", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "12.00PM", name: "Bob", email: "zxc@test.com", location: "Block A", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { time: "13.00PM", name: "Tony Stark", email: "123@test.com", location: "Block D", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: 1, name: "Mary Tan", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: 2, name: "John Jones", email: "abc@test.com", managerID: 1, managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: 3, name: "Tony Stark", email: "abc@test.com", managerID: 5, managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: 5, name: "MBob", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
   ])
 
-  const searchTime = (text) => {
+  const searchEmployeeID = (text) => {
     if (text) {
       const newData = tableData.filter((item) => {
-        const itemData = item.time ? item.time.toUpperCase() : "".toUpperCase();
+        const itemData = item.id ? item.id.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -32,7 +32,7 @@ const CheckInLogScreen = ({ navigation }) => {
     }
   }
 
-  const searchName = (text) => {
+  const searchEmployeeName = (text) => {
     if (text) {
       const newData = tableData.filter((item) => {
         const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
@@ -60,10 +60,24 @@ const CheckInLogScreen = ({ navigation }) => {
     }
   }
 
-  const searchLocation = (text) => {
+  const searchManagerID = (text) => {
     if (text) {
       const newData = tableData.filter((item) => {
-        const itemData = item.location ? item.location.toUpperCase() : "".toUpperCase();
+        const itemData = item.managerID ? item.managerID.toUpperCase() : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+    }
+    else {
+      setFilteredData(tableData);
+    }
+  }
+
+  const searchManagerName = (text) => {
+    if (text) {
+      const newData = tableData.filter((item) => {
+        const itemData = item.managerName ? item.managerName.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -101,6 +115,55 @@ const CheckInLogScreen = ({ navigation }) => {
       setFilteredData(tableData);
     }
   }
+  const [editedItem, setEditedItem] = useState("");
+
+  const editName = (text) => {
+    if(text){
+      const newData = tableData.map((item) => {
+        if(item.id === editedItem){
+          item.name = text;
+          return item;
+        }
+        return item;
+      });
+      setFilteredData(newData);
+    }
+    else{
+      setFilteredData(tableData);
+    }
+  }
+
+  const editManagerID = (text) => {
+    if(text){
+      const newData = tableData.map((item) => {
+        if(item.id === editedItem){
+          item.managerID = text;
+          return item;
+        }
+        return item;
+      });
+      setFilteredData(newData);
+    }
+    else{
+      setFilteredData(tableData);
+    }
+  }
+
+  const editManagerName = (text) => {
+    if(text){
+      const newData = tableData.map((item) => {
+        if(item.id === editedItem){
+          item.managerName = text;
+          return item;
+        }
+        return item;
+      });
+      setFilteredData(newData);
+    }
+    else{
+      setFilteredData(tableData);
+    }
+  }
 
   return (
     <SafeAreaView>
@@ -109,21 +172,25 @@ const CheckInLogScreen = ({ navigation }) => {
         <DataTable.Header>
 
           <DataTable.Title><TextInput
-            placeholder="Time"
+            placeholder="Employee ID"
             style={{padding: 2.5}}
-            onChangeText={(text) => searchTime(text)} /></DataTable.Title>
+            onChangeText={(text) => searchEmployeeID(text)} /></DataTable.Title>
           <DataTable.Title><TextInput
             placeholder="Name"
             style={{padding: 2.5}}
-            onChangeText={(text) => searchName(text)} /></DataTable.Title>
+            onChangeText={(text) => searchEmployeeName(text)} /></DataTable.Title>
           <DataTable.Title><TextInput
             placeholder="Email"
             style={{padding: 2.5}}
             onChangeText={(text) => searchEmail(text)} /></DataTable.Title>
           <DataTable.Title><TextInput
-            placeholder="Check-In Location"
+            placeholder="Manager ID"
             style={{padding: 2.5}}
-            onChangeText={(text) => searchLocation(text)} /></DataTable.Title>
+            onChangeText={(text) => searchManagerID(text)} /></DataTable.Title>
+          <DataTable.Title><TextInput
+            placeholder="Manager Name"
+            style={{padding: 2.5}}
+            onChangeText={(text) => searchManagerName(text)} /></DataTable.Title>
           <DataTable.Title><TextInput
             placeholder="Vaccinated"
             style={{padding: 2.5}}
@@ -140,7 +207,10 @@ const CheckInLogScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <DataTable.Row>
               <DataTable.Cell>{item.time}</DataTable.Cell>
-              <DataTable.Cell>{item.name}</DataTable.Cell>
+              <DataTable.Cell><TextInput
+                style={{padding: 5}}
+                value={item.name}
+                onChangeText={(text) => {editName(text), setEditedItem(item.id)}} /></DataTable.Cell>
               <DataTable.Cell>{item.email}</DataTable.Cell>
               <DataTable.Cell>{item.location}</DataTable.Cell>
               <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
@@ -153,7 +223,7 @@ const CheckInLogScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 }
-export default CheckInLogScreen;
+export default EmployeeInfoScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,8 +1,7 @@
-
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, FlatList, Linking } from 'react-native';
-import MaterialTable from 'material-table';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { DataTable } from 'react-native-paper';
 
 const VerifyVaccineScreen = ({navigation}) => {
   const [tableData, setTableData] = useState([
@@ -12,70 +11,85 @@ const VerifyVaccineScreen = ({navigation}) => {
     { name:"Tony Stark", id: 12366, department:"Research", vaccinated:"Yes", num: 3, date:"06/06/2021", certificate: "vaccine1.jpg"   },
     
   ])
-  const columns = [
 
-    /*{ title: "Name", field: "name", sorting: false, filtering: false, cellStyle: { background:"#009688" }, headerStyle: { color: "#fff" } },
-    { title: "Id", field: "id", filterPlaceholder: "filter", defaultSort:"asc"},*/
+  const searchEmployeeID = (text) => {
+    if (text) {
+      const newData = tableData.filter((item) => {
+        const itemData = item.id ? item.id.toUpperCase() : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+    }
+    else {
+      setFilteredData(tableData);
+    }
+  }
 
-    { title: "Name", field: "name"},
-    { title: "Id", field: "id" , align: "center"},
-    { title: "Department", field: "department", align: "center" },
-    { title: "Vaccinated", field: "vaccinated" },
-    { title: "No. of doses", field: "num", align: "center",  },
-    { title: "Last dose", field: "date",},
-    { title: "Certificate", field: "certificate", align: "center" },
-  
-  
-  ]
+  const searchEmployeeName = (text) => {
+    if (text) {
+      const newData = tableData.filter((item) => {
+        const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+    }
+    else {
+      setFilteredData(tableData);
+    }
+  }
+
   return (
+    <SafeAreaView>
     <ScrollView>
+      <DataTable>
+        <DataTable.Header>
 
-      <View align="center">Verify Vaccine</View>
-      <View align='center'>Super Admin </View>
+          <DataTable.Title><TextInput
+            placeholder="Employee ID"
+            style={{padding: 2.5}}
+            onChangeText={(text) => searchEmployeeID(text)} /></DataTable.Title>
+          <DataTable.Title><TextInput
+            placeholder="Name"
+            style={{padding: 2.5}}
+            onChangeText={(text) => searchEmployeeName(text)} /></DataTable.Title>
+       
+        </DataTable.Header>
 
-      <MaterialTable columns={columns} data={tableData}
-    
-        actions={[
-          {
-            icon: () => <GetAppIcon />,
-            tooltip: "Click me",
-            onClick: (e, data) => console.log(data),
-            isFreeAction:true
-          }
-        ]}
-        onSelectionChange={(selectedRows) => console.log(selectedRows)}
-        options={{
-          search: true,
-          searchFieldAlignment: "right", 
-          searchAutoFocus: true, 
-          searchFieldVariant: "standard",
-          paging: true, 
-          pageSizeOptions: [5, 10], 
-          pageSize: 5,
-          paginationType: "stepped", 
-          showFirstLastPageButtons: false, 
-          paginationPosition: "both", 
-          exportButton: true,
-          exportAllData: true, 
-          exportFileName: "TableData", 
-          addRowPosition: "first", 
-          actionsColumnIndex: -1, 
-          selection: false,
-           selectionProps: rowData => ({
-            disabled: rowData.age == null,
-          
-          }),
-          columnsButton: true,
-          // row Color.black : Color.white
-          rowStyle: (data, index) => index % 2 === 0 ? { background: "#f5f5f5" } : null, 
-          headerStyle: { background: "#51a4fb",color:"#fff"}
-        }}
-        title="Vaccination Information"/>
-        </ScrollView>
-
-
- 
+        <FlatList
+          data={filteredData}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <DataTable.Row>
+              <DataTable.Cell><TextInput
+                style={{padding: 5}}
+                value={item.name}
+                onChangeText={(text) => {editName(text), setEditedItem(item.id)}} /></DataTable.Cell>
+              <DataTable.Cell>{item.department}</DataTable.Cell>
+              <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
+              <DataTable.Cell>{item.num}</DataTable.Cell>
+              <DataTable.Cell>{item.date}</DataTable.Cell>
+              <DataTable.Cell>{item.certificate}</DataTable.Cell>
+            </DataTable.Row>
+          )}
+        />
+      </DataTable>
+    </ScrollView>
+    </SafeAreaView>
   );
 }
 export default VerifyVaccineScreen;
 
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#51a4fb",
+  },
+
+  title: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "white",
+    paddingLeft: 10
+  },
+});

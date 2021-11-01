@@ -146,6 +146,22 @@ const HomeScreen = ({ navigation }) => {
             <MaterialCommunityIcons name="account-check" size={45} style={{ color: "green" }} />
           </View>
 
+            {/*ART Positive*/}
+        <View style={styles.statusContainer}>
+          <View style={styles.statusBox}>
+            <Text style={styles.topText}> ART </Text>
+            <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
+          </View>
+         
+
+                 {/*ART Negative*/}
+        <View style={styles.statusContainer}>
+          <View style={styles.statusBox}>
+            <Text style={styles.topText}> ART </Text>
+            <MaterialCommunityIcons name="account-check" size={45} style={{ color: "green" }} />
+          </View>
+      
+
           <View style={styles.statusBox}>
             <TouchableOpacity
               onPress={togglehWorkStatus}>
@@ -153,8 +169,10 @@ const HomeScreen = ({ navigation }) => {
               <MaterialCommunityIcons name={workStatus} size={45} style={{ color: workColor }} />
             </TouchableOpacity>
           </View>
+       
         </View>
-
+       </View>
+     </View>
         <View style={styles.divider} />
 
         {/* MENU BUTTONS */}
@@ -277,6 +295,7 @@ const HomeScreen = ({ navigation }) => {
 
 
         </View>
+
 
 
       </SafeAreaView>

@@ -10,11 +10,34 @@ const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
   function login(email, password){
     firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log(result);
-                navigation.navigate('Root');
+                firebase.firestore().collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .get().then((snapshot)=>{
+                  const orgId = snapshot.data().organisationId;
+                  firebase.firestore()
+                  .collection('organisations')
+                  .doc(orgId)
+                  .collection('employees')
+                  .doc(firebase.auth().currentUser.uid)
+                  .get().then((snapshot)=>{
+                    const role = snapshot.data().role;
+                    if (role=='admin'){
+                      navigation.navigate('Admin');
+                    }else if(role=='manager'){
+                      navigation.navigate('Manager');
+                    }else{
+                      navigation.navigate('Employee');
+                    }
+                  })
+                })
+
+
+                
             })
             .catch((error) => {
                 alert(error)

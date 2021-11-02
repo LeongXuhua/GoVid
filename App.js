@@ -72,7 +72,142 @@ const NavigationDrawerStructure = (props) => {
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function Root({navigation}){
+function Employee({navigation}){
+  return (
+    <Drawer.Navigator
+    screenOptions={{
+      activeTintColor: '#fff',
+      itemStyle: {marginVertical: 5},
+      headerStyle: {
+        backgroundColor: '#30659c', //Set Header color
+        height: 95
+      },
+      headerTitleContainerStyle: {
+        marginBottom: 5,
+      },
+      headerTintColor: '#fff', //Set Header text color
+      headerTitleStyle: {
+        fontWeight: 'bold', //Set Header text style
+      },
+      drawerStyle:{
+        width: 220,
+      },
+      
+    }}
+    drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+    
+    <Drawer.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+      drawerLabel: 'Home',
+      }}
+    />
+    <Drawer.Screen
+      name="Scan QR"
+      component={ScanQRScreen}
+      options={{
+      drawerLabel: 'Scan QR',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Upload ART Result"
+      component={uploadARTScreen}
+      options={{
+      drawerLabel: 'Upload ART Result',
+      }}
+    />
+
+    <Drawer.Screen
+      name="UploadVaccination"
+      component={uploadVaccinationScreen}
+      options={{
+      drawerLabel: 'upload Vaccination',
+      headerStyle: {
+        backgroundColor: '#30659c', //Set Header color
+      },
+      headerTintColor: '#fff', //Set Header text color
+      headerTitleStyle: {
+        fontWeight: 'bold', //Set Header text style
+      },
+
+      }}
+    />
+
+    <Drawer.Screen
+      name="Health Declaration"
+      component={HealthDeclarationScreen}
+      options={{
+      drawerLabel: 'Health Declaration',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Covid Test Result"
+      component={CovidTestScreen}
+      options={{
+      drawerLabel: 'Covid Test Result',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Book Vaccination"
+      component={BookVaccinationScreen}
+      options={{
+      drawerLabel: 'Book Vaccination',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Book PCR Swab Test"
+      component={BookTestScreen}
+      options={{
+      drawerLabel: 'Book PCR Swab Test',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Check Crowd"
+      component={CheckCrowdScreen}
+      options={{
+      drawerLabel: 'Check Crowd',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Travel Information"
+      component={TravelInformationScreen}
+      options={{
+      drawerLabel: 'Travel Information',
+      }}
+    />
+
+    <Drawer.Screen
+      name="World Covid-19 Tracker"
+      component={CasesCountriesScreen}
+      options={{
+      drawerLabel: 'World Covid-19 Tracker',
+      }}
+    />
+      
+  </Drawer.Navigator>
+  /*<Drawer.Navigator
+    initialRouteName={"Home"}
+    screenOptions={({ navigation})=>({
+      headerStyle:{
+        backgroundColor:'#30659c',
+        headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
+        headerLeft: ()=> <Button title="MENU" onPress={navigation.toggleDrawer}/>,
+      },
+    })}
+  >
+    <Drawer.Screen name="Home" component={HomeScreen}/>
+  </Drawer.Navigator>*/
+);
+}
+
+function Manager({navigation}){
   return (
     <Drawer.Navigator
     screenOptions={{
@@ -144,9 +279,6 @@ function Root({navigation}){
       }}
     />
 
-
-
-
     <Drawer.Screen
       name="Health Declaration"
       component={HealthDeclarationScreen}
@@ -202,20 +334,108 @@ function Root({navigation}){
       drawerLabel: 'World Covid-19 Tracker',
       }}
     />
+
+    <Drawer.Screen
+      name="Check-In Log"
+      component={CheckInLogScreen}
+      options={{
+      drawerLabel: 'Check-In Log',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Employee Information"
+      component={EmployeeInfoScreen}
+      options={{
+      drawerLabel: 'Employee Information',
+      }}
+    />  
+      
+  </Drawer.Navigator>
+  /*<Drawer.Navigator
+    initialRouteName={"Home"}
+    screenOptions={({ navigation})=>({
+      headerStyle:{
+        backgroundColor:'#30659c',
+        headerRight: ()=> <Button title="Logout" onPress={()=>navigation.navigate('Login')}/>,
+        headerLeft: ()=> <Button title="MENU" onPress={navigation.toggleDrawer}/>,
+      },
+    })}
+  >
+    <Drawer.Screen name="Home" component={HomeScreen}/>
+  </Drawer.Navigator>*/
+);
+}
+
+function Admin({navigation}){
+  return (
+    <Drawer.Navigator
+    screenOptions={{
+      activeTintColor: '#fff',
+      itemStyle: {marginVertical: 5},
+      headerStyle: {
+        backgroundColor: '#30659c', //Set Header color
+        height: 95
+      },
+      headerTitleContainerStyle: {
+        marginBottom: 5,
+      },
+      headerTintColor: '#fff', //Set Header text color
+      headerTitleStyle: {
+        fontWeight: 'bold', //Set Header text style
+      },
+      drawerStyle:{
+        width: 220,
+      },
+      
+    }}
+    drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+    
+    <Drawer.Screen
+      name="Home"
+      component={OrgAdminHomeScreen}
+      options={{
+      drawerLabel: 'Home',
+      }}
+    />
+
+<Drawer.Screen
+      name="Verify Vaccine"
+      component={VerifyVaccineScreen}
+      options={{
+      drawerLabel: 'Verify Vaccine',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Check Crowd"
+      component={CheckCrowdScreen}
+      options={{
+      drawerLabel: 'Check Crowd',
+      }}
+    />
+
+    <Drawer.Screen
+      name="Travel Information"
+      component={TravelInformationScreen}
+      options={{
+      drawerLabel: 'Travel Information',
+      }}
+    />
+
+    <Drawer.Screen
+      name="World Covid-19 Tracker"
+      component={CasesCountriesScreen}
+      options={{
+      drawerLabel: 'World Covid-19 Tracker',
+      }}
+    />
     
     <Drawer.Screen
       name="Register Employee"
       component={RegisterEmployeeScreen}
       options={{
       drawerLabel: 'Register Employee',
-      }}
-    />
-
-    <Drawer.Screen
-      name="Organisation Admin Home"
-      component={OrgAdminHomeScreen}
-      options={{
-      drawerLabel: 'Organisation Admin Home',
       }}
     />
 
@@ -265,7 +485,9 @@ function App(){
           headerLeft: ()=> <Button title="MENU" onPress={navigation.toggleDrawer}/>,*/
           })}
       >
-        <Stack.Screen name="Root" component={Root}/>
+        <Stack.Screen name="Employee" component={Employee}/>
+        <Stack.Screen name="Admin" component={Admin}/>
+        <Stack.Screen name="Manager" component={Manager}/>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerRight:()=>{}, headerLeft:()=>{}}}/>
         <Stack.Screen name="RegisterAdmin" component={RegisterAdminScreen} 
         options={

@@ -5,7 +5,7 @@ import { DataTable } from 'react-native-paper';
 import ActivityRings from "react-native-activity-rings";
 import { FlatList } from "react-native-gesture-handler";
 
-const HealthDeclarationScreen = ({ navigation }) => {
+const OrgAdminHomeScreen = ({ navigation }) => {
   const windowWidth = Dimensions.get('screen').width;
   const [configRing, setConfigRing] = useState(true);
   const [ring, setRing] = useState();
@@ -231,7 +231,7 @@ const HealthDeclarationScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 }
-export default HealthDeclarationScreen;
+export default OrgAdminHomeScreen;
 
 const styles = StyleSheet.create({
   container: {

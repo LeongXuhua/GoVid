@@ -1,40 +1,70 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Button, Picker } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Button, Picker} from 'react-native';
 import firebase from 'firebase';
 import "firebase/firestore";
-
-const firebaseConfig2 = {
-    apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
-    authDomain: "govid-fcb26.firebaseapp.com",
-    databaseURL: "https://govid-fcb26-default-rtdb.asia-southeast1.firebasedatabase.app",
-};
-if (firebase.apps.length < 2) {
-    var secondaryApp = firebase.initializeApp(firebaseConfig2, "Secondary");
-  }
-
+import { secondaryApp } from '../App';
+import { ActivityIndicator } from 'react-native-paper';
 
 const RegisterEmployeeScreen = () => {
     const [id, setId]=useState('');
     const [name, setName]=useState('');
     const [email, setEmail]=useState('');
     const [password, setPassword]=useState('');
-    const [department, setDepartment]=useState('');
     const [role, setRole]=useState('');
     const [managerId, setManagerId]=useState('');
     const [managerName, setManagerName]=useState('');
-
-
     const [orgId, setOrgId] = useState();
+    const [managerList, setManagerList] = useState({});
+    const [isLoading, setIsloading] = useState(false);
+    const [testData, setTestData] = useState('no data');
+    const [manager, setManager] = useState('no manager');
+    const [managerDoc, setManagerDoc] = useState();
 
-    function getOrganisationId(userId){
-        firebase.firestore()
-        .collection('users')
-        .doc(userId)
-        .get().then((snapshot)=>{setOrgId(snapshot.data().organisationId)})
-    };
+    const managerDict={'key':'value'};
 
-    getOrganisationId(firebase.auth().currentUser.uid);
+    useEffect(() => {
+        const fetchData = async () => {
+          setIsloading(true);
+          try {
+            const snapshot = await firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .get()
+
+            const organisationId = await snapshot.data().organisationId;
+            setOrgId(organisationId);
+
+            const snapshot2 = await firebase.firestore()
+                .collection('organisations')
+                .doc(orgId)
+                .collection('managers')
+                .get().then((snapshot)=>{
+                    snapshot.forEach((doc)=>{
+                        managerDict[doc.id]=doc.data().name;
+                        //setManager(doc.data().name);
+                        setManagerList(managerDict);
+                        
+                    })
+                    setIsloading(false);
+                })
+
+            setManagerDoc(snapshot2);
+            for await(const doc of snapshot2){
+                mangerDict[doc.id]=doc.data().name;
+            }
+
+
+            setIsloading(false);
+            
+          }
+          catch (e) {
+            console.log(e)
+          }
+        }
+        fetchData();
+      }, []);
     
+
     registerUser = () => {
         
         if (0!=0){
@@ -59,7 +89,6 @@ const RegisterEmployeeScreen = () => {
                     id:id,
                     name:name,
                     email:email,
-                    department:department,
                     role:role,
                     managerId:managerId,
                     managerName:managerName,
@@ -116,6 +145,9 @@ const RegisterEmployeeScreen = () => {
         };
     };
 
+    if (isLoading){
+        return <ActivityIndicator />;
+    }else{
     return (
         
         <SafeAreaView><ScrollView>
@@ -169,18 +201,6 @@ const RegisterEmployeeScreen = () => {
             </View>
 
             <Text style={styles.text}>
-                Department
-            </Text>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Department"
-                    style={styles.textInput}
-                    value={department}
-                    onChangeText={(value)=>setDepartment(value)}
-                />
-            </View>
-
-            <Text style={styles.text}>
                 Employment Type
             </Text>
             <View style={styles.inputContainer}>
@@ -198,13 +218,26 @@ const RegisterEmployeeScreen = () => {
             <Text style={styles.text}>
                     Manager ID
             </Text>
+
+            <Text> {manager}</Text>
+            <Text> {orgId}</Text>
+            <Text> {testData} </Text>
+
             <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Manager ID"
+
+            <Picker
+                    selectedValue={managerId}
                     style={styles.textInput}
                     value={managerId}
-                    onChangeText={(value)=>setManagerId(value)}
-                />
+                    onValueChange={(value, index)=>setManagerId(value)}
+                >
+                    
+                    {Object.keys(managerList).map((key)=>(
+                        <Picker.item label={managerList[key]} value={key}/>
+                    ))}
+                </Picker>
+
+                
             </View>
 
             <Text style={styles.text}>
@@ -229,7 +262,7 @@ const RegisterEmployeeScreen = () => {
         </ScrollView></SafeAreaView>
     )
 }
-    
+}    
 export default RegisterEmployeeScreen;
 
 const styles = StyleSheet.create({

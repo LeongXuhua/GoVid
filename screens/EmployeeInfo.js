@@ -20,6 +20,7 @@ const EmployeeInfoScreen = ({ navigation }) => {
       const organisationId = await snapshot.data().organisationId;
       setOrgId(organisationId);
     }
+    
     catch (e) {
       console.log(e)
     }

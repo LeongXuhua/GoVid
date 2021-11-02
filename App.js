@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
 //import React, {useState} from 'react';
 import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, Button, TextInput, TouchableOpacity, LogBox } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -31,6 +31,8 @@ import CheckInLogScreen from './screens/CheckInLog';
 import EmployeeInfoScreen from './screens/EmployeeInfo';
 import VerifyVaccineScreen from './screens/VerifyVaccine';
 
+LogBox.ignoreAllLogs();
+console.warn = ()=>{};
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
@@ -44,6 +46,13 @@ const firebaseConfig = {
 if (firebase.apps.length < 2) {
   firebase.initializeApp(firebaseConfig)
 }
+
+const firebaseConfig2 = {
+  apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
+  authDomain: "govid-fcb26.firebaseapp.com",
+  databaseURL: "https://govid-fcb26-default-rtdb.asia-southeast1.firebasedatabase.app",
+};
+export const secondaryApp = firebase.initializeApp(firebaseConfig2, 'secondary');
 
 const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer

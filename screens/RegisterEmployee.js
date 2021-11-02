@@ -14,57 +14,107 @@ const RegisterEmployeeScreen = () => {
     const [managerId, setManagerId]=useState('');
     const [managerName, setManagerName]=useState('');
     const [orgId, setOrgId] = useState();
-    const [managerList, setManagerList] = useState({});
-    const [isLoading, setIsloading] = useState(false);
-    const [testData, setTestData] = useState('no data');
-    const [manager, setManager] = useState('no manager');
-    const [managerDoc, setManagerDoc] = useState();
+    const [managerList, setManagerList] = useState([]);
+    const [isLoading, setIsloading] = useState(true);
+/*    const fetchData = async () => {
+        setIsloading(true);
+        try {
+          const snapshot = await firebase.firestore()
+          .collection('users')
+          .doc(firebase.auth().currentUser.uid)
+          .get()
 
-    const managerDict={'key':'value'};
+          const organisationId = await snapshot.data().organisationId;
+          setOrgId(organisationId);            
+        }
+        catch (e) {
+          console.log(e)
+        }
+      }
 
-    useEffect(() => {
-        const fetchData = async () => {
-          setIsloading(true);
+    useEffect(() => {  
+        fetchData();
+      }, []);
+    
+      useEffect(() => {
+        const fetchData2 = async () => {
           try {
-            const snapshot = await firebase.firestore()
-            .collection('users')
-            .doc(firebase.auth().currentUser.uid)
-            .get()
-
-            const organisationId = await snapshot.data().organisationId;
-            setOrgId(organisationId);
-
+            const managers = [];
             const snapshot2 = await firebase.firestore()
                 .collection('organisations')
                 .doc(orgId)
                 .collection('managers')
-                .get().then((snapshot)=>{
-                    snapshot.forEach((doc)=>{
-                        managerDict[doc.id]=doc.data().name;
-                        //setManager(doc.data().name);
-                        setManagerList(managerDict);
-                        setIsloading(true);
-                        
-                    })
-                    setIsloading(false);
-                })
-
-            setManagerDoc(snapshot2);
-            for await(const doc of snapshot2){
-                mangerDict[doc.id]=doc.data().name;
-            }
-
-
-            //setIsloading(false);
+                .get()
             
+            snapshot2.docs.map(function(doc){
+                console.log(doc.id+"@@@"+doc.data().name)
+                        managers.push({
+                            id: doc.data().id,
+                            name: doc.data().name,
+                            uid: doc.id
+                        })
+                        setManagerList(managers)
+                    })
+                    
+                    setIsloading(false);
           }
           catch (e) {
             console.log(e)
           }
         }
+        fetchData2();
+        console.log(managerList)
+      }, [orgId]);*/
+
+
+
+      const fetchData = async () => {
+        setIsloading(true);
+        try {
+          const snapshot = await firebase.firestore()
+          .collection('users')
+          .doc(firebase.auth().currentUser.uid)
+          .get()
+    
+          const organisationId = await snapshot.data().organisationId;
+          setOrgId(organisationId);
+        }
+        catch (e) {
+          console.log(e)
+        }
+      }
+    
+      useEffect(() => {
         fetchData();
       }, []);
     
+      useEffect(()=>{
+        const fetchEmployee = async()=>{
+        const manager =[];
+    
+        const snapshot2 = await firebase.firestore()
+            .collection('organisations')
+            .doc(orgId)
+            .collection('managers').orderBy('id')
+            .get()
+    
+        snapshot2.docs.map(function(doc){
+                manager.push(
+                  {
+                    //add employee fields into here
+                    id: doc.data().id,
+                    name: doc.data().name,
+                    uid: doc.id,
+                  }
+                )
+              setManagerList(manager)
+            })
+        setIsloading(false)
+    }
+        fetchEmployee();
+      }, [orgId])
+
+
 
     registerUser = () => {
         
@@ -95,7 +145,8 @@ const RegisterEmployeeScreen = () => {
                     managerName:managerName,
                     ARTDate: null,
                     ARTResult: null,
-                    VaccinationResult: null,
+                    vaccinationResult: null,
+                    vaccinated: 'Not Vaccinated',
                 });
 
                 //add manager record / add into manager's record
@@ -220,10 +271,6 @@ const RegisterEmployeeScreen = () => {
                     Manager ID
             </Text>
 
-            <Text> {manager}</Text>
-            <Text> {orgId}</Text>
-            <Text> {testData} </Text>
-
             <View style={styles.inputContainer}>
 
             <Picker
@@ -232,10 +279,10 @@ const RegisterEmployeeScreen = () => {
                     value={managerId}
                     onValueChange={(value, index)=>setManagerId(value)}
                 >
-                    
-                    {Object.keys(managerList).map((key)=>(
-                        <Picker.item label={managerList[key]} value={key}/>
-                    ))}
+                    <Picker.item label="No Manager" value=''/>
+                {managerList.map((manager)=>(
+                    <Picker.item label={manager.id+" "+manager.name} value={manager.uid}/>
+                ))}
                 </Picker>
 
                 

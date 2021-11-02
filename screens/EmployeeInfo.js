@@ -1,21 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { DataTable } from 'react-native-paper';
+import { ActivityIndicator, DataTable } from 'react-native-paper';
+import firebase from 'firebase';
+import "firebase/firestore";
 
 const EmployeeInfoScreen = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [orgId, setOrgId]= useState();
+  
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const snapshot = await firebase.firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+
+      const organisationId = await snapshot.data().organisationId;
+      setOrgId(organisationId);
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(()=>{
+    const fetchEmployee = async()=>{
+    const employee =[];
+
+    const snapshot2 = await firebase.firestore()
+        .collection('organisations')
+        .doc(orgId)
+        .collection('employees').orderBy('id')
+        .get()
+
+    snapshot2.docs.map(function(doc){
+            employee.push(
+              {
+                //add employee fields into here
+                id: doc.data().id,
+                name: doc.data().name,
+                email: doc.data().email,
+                managerID: doc.data().managerId,
+                managerName: doc.data().managerName,
+                vaccinated: doc.data().vaccinated,
+                artResult: doc.data().artResult,
+                uid: doc.id,
+              }
+            )
+          setTableData(employee)
+          setFilteredData(employee)
+          setIsLoading(false)
+        })
+        
+        
+    setIsLoading(false)}
+    fetchEmployee();
+  }, [orgId])
+
   const [tableData, setTableData] = useState([
-    { id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    /*{ id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
     { id: "2", name: "John Jones", email: "abc@test.com", managerID: "1", managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
     { id: "3", name: "Tony Stark", email: "abc@test.com", managerID: "5", managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },*/
   ])
 
   const [filteredData, setFilteredData] = useState([
-    { id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    /*{ id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
     { id: "2", name: "John Jones", email: "abc@test.com", managerID: "1", managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
     { id: "3", name: "Tony Stark", email: "abc@test.com", managerID: "5", managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },*/
   ])
 
   const searchEmployeeID = (text) => {
@@ -121,20 +180,16 @@ const EmployeeInfoScreen = ({ navigation }) => {
     setEditedItem(item.id)
   }
 
-  const editName = (text) => {
-      const newData = tableData.map((item) => {
-        if(item.id === editedItem){
-          item.name = text;
-          return item;
-        }
-        return item;
-      });
-      setFilteredData(newData);
-  }
-
   const editManagerID = (text) => {
       const newData = tableData.map((item) => {
         if(item.id === editedItem){
+          //get employee's uid
+          //remove from old manager's list
+
+          //add to new manager's list
+
+          //update employee's manager record
+
           item.managerID = text;
           return item;
         }
@@ -153,6 +208,10 @@ const EmployeeInfoScreen = ({ navigation }) => {
       });
       setFilteredData(newData);
   }
+
+if (isLoading){
+  return <ActivityIndicator />
+}
 
   return (
     <SafeAreaView>

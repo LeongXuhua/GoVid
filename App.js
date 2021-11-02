@@ -288,14 +288,6 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="Covid Test Result"
-      component={CovidTestScreen}
-      options={{
-      drawerLabel: 'Covid Test Result',
-      }}
-    />
-
-    <Drawer.Screen
       name="Book Vaccination"
       component={BookVaccinationScreen}
       options={{
@@ -332,14 +324,6 @@ function Manager({navigation}){
       component={CasesCountriesScreen}
       options={{
       drawerLabel: 'World Covid-19 Tracker',
-      }}
-    />
-
-    <Drawer.Screen
-      name="Check-In Log"
-      component={CheckInLogScreen}
-      options={{
-      drawerLabel: 'Check-In Log',
       }}
     />
 
@@ -412,22 +396,6 @@ function Admin({navigation}){
       component={CheckCrowdScreen}
       options={{
       drawerLabel: 'Check Crowd',
-      }}
-    />
-
-    <Drawer.Screen
-      name="Travel Information"
-      component={TravelInformationScreen}
-      options={{
-      drawerLabel: 'Travel Information',
-      }}
-    />
-
-    <Drawer.Screen
-      name="World Covid-19 Tracker"
-      component={CasesCountriesScreen}
-      options={{
-      drawerLabel: 'World Covid-19 Tracker',
       }}
     />
     

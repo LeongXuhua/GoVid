@@ -43,6 +43,7 @@ const RegisterEmployeeScreen = () => {
                         managerDict[doc.id]=doc.data().name;
                         //setManager(doc.data().name);
                         setManagerList(managerDict);
+                        setIsloading(true);
                         
                     })
                     setIsloading(false);
@@ -54,7 +55,7 @@ const RegisterEmployeeScreen = () => {
             }
 
 
-            setIsloading(false);
+            //setIsloading(false);
             
           }
           catch (e) {

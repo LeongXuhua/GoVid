@@ -1,9 +1,70 @@
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button, Linking } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { DataTable } from 'react-native-paper';
+import { ActivityIndicator, DataTable } from 'react-native-paper';
+import firebase from 'firebase';
+import "firebase/firestore";
 
 const VerifyVaccineScreen = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [orgId, setOrgId]= useState();
+  
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const snapshot = await firebase.firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+
+      const organisationId = await snapshot.data().organisationId;
+      setOrgId(organisationId);
+    }
+
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(()=>{
+    const fetchEmployee = async()=>{
+    const employee =[];
+
+    const snapshot2 = await firebase.firestore()
+        .collection('organisations')
+        .doc(orgId)
+        .collection('employees').orderBy('id')
+        .get()
+
+    snapshot2.docs.map(function(doc){
+            employee.push(
+              {
+                //add employee fields into here
+                id: doc.data().id,
+                name: doc.data().name,
+                vaccinated: doc.data().vaccinationResult,
+                num: doc.data().vaccinationDose,
+                date: doc.data().vaccinationDate,
+                certificate: doc.data().vaccinationResultLink,
+                uid: doc.id,
+              }
+            )
+          setTableData(employee)
+          setFilteredData(employee)
+          setIsLoading(false)
+        })
+        
+        
+    setIsLoading(false)}
+    fetchEmployee();
+  }, [orgId])
+
+
+
   const [tableData, setTableData] = useState([
     { id: "12388", name:"Mary Tan", department:"Finance", vaccinated:"Yes", num: "2", date:"08/08/2021", certificate: "vaccine1.jpg"   },
     {  id: "12399", name:"John Jones", department:"HR", vaccinated:"Yes", num: "2", date:"09/09/2021", certificate: "vaccine1.jpg"   },
@@ -39,21 +100,6 @@ const VerifyVaccineScreen = ({navigation}) => {
     if (text) {
       const newData = tableData.filter((item) => {
         const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredData(newData);
-    }
-    else {
-      setFilteredData(tableData);
-    }
-  }
-
-
-  const searchEmployeeDepartment = (text) => {
-    if (text) {
-      const newData = tableData.filter((item) => {
-        const itemData = item.department ? item.department.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -123,7 +169,9 @@ const VerifyVaccineScreen = ({navigation}) => {
 
 
 
-
+  if (isLoading){
+    return <ActivityIndicator />
+  }
   return (
     <SafeAreaView>
     <ScrollView horizontal>
@@ -138,10 +186,6 @@ const VerifyVaccineScreen = ({navigation}) => {
             placeholder="Name"
             style={{padding: 2.5, width: 100}}
             onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></DataTable.Title>
-            <DataTable.Title><TouchableOpacity><TextInput
-            placeholder="Department"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeDepartment(text)} /></TouchableOpacity></DataTable.Title>
             <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Vaccine Status"
             style={{padding: 2.5, width: 100}}
@@ -175,7 +219,7 @@ const VerifyVaccineScreen = ({navigation}) => {
               <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
               <DataTable.Cell>{item.num}</DataTable.Cell>
               <DataTable.Cell>{item.date}</DataTable.Cell>
-              <DataTable.Cell>{item.certificate}</DataTable.Cell>
+              <DataTable.Cell>{item.certificate?<Button title="Download" onPress={()=>{Linking.openURL(item.certificate)}}/>:<Text>No Certificate Found</Text>}</DataTable.Cell>
             </DataTable.Row>
           )}
         />

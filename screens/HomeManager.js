@@ -195,7 +195,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="account-multiple-plus"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -210,7 +210,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="account-multiple-check"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -225,7 +225,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="newspaper-plus"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -244,7 +244,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="shield-check"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -261,7 +261,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="qrcode-scan"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -278,7 +278,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="format-list-checks"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -297,7 +297,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="newspaper-plus"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -314,7 +314,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="doctor"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -331,7 +331,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="medical-bag"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -350,7 +350,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="account-group"
-                size={20}
+                size={30}
                 color="black"
               />
             </View>
@@ -366,7 +366,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
                 name="airplane-takeoff"
-                size={20}
+                size={30}
                 color="#000000"
               />
             </View>
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
 
   statusContainer: {
     flexDirection: "row",
-    padding: 20,
+    padding: 30,
   },
 
   logo: {
@@ -438,7 +438,7 @@ const styles = StyleSheet.create({
     borderColor: 'lightgrey',
     backgroundColor: 'white',
     height: 80,
-    width: 220,
+    width: 230,
   },
 
   newsTitle: {

@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { DataTable } from 'react-native-paper';
 
 const VerifyVaccineScreen = ({navigation}) => {
   const [tableData, setTableData] = useState([
-    { id: 12388, name:"Mary Tan", department:"Finance", vaccinated:"Yes", num: 2, date:"08/08/2021", certificate: "vaccine1.jpg"   },
-    {  id: 12399, name:"John Jones", department:"HR", vaccinated:"Yes", num: 2, date:"09/09/2021", certificate: "vaccine1.jpg"   },
-    { id: 12377, name:"Bruce Wayne", department:"Logistics", vaccinated:"No", num: 2, date:"07/07/2021", certificate: "vaccine1.jpg"   },
-    { id: 12366, name:"Tony Stark",  department:"Research", vaccinated:"Yes", num: 3, date:"06/06/2021", certificate: "vaccine1.jpg"   },
+    { id: "12388", name:"Mary Tan", department:"Finance", vaccinated:"Yes", num: "2", date:"08/08/2021", certificate: "vaccine1.jpg"   },
+    {  id: "12399", name:"John Jones", department:"HR", vaccinated:"Yes", num: "2", date:"09/09/2021", certificate: "vaccine1.jpg"   },
+    { id: "12377", name:"Bruce Wayne", department:"Logistics", vaccinated:"No", num: "2", date:"07/07/2021", certificate: "vaccine1.jpg"   },
+    { id: "12366", name:"Tony Stark",  department:"Research", vaccinated:"Yes", num: "3", date:"06/06/2021", certificate: "vaccine1.jpg"   },
     
   ])
 
   const [filteredData, setFilteredData] = useState([
-    { id: 12388, name:"Mary Tan", department:"Finance", vaccinated:"Yes", num: 2, date:"08/08/2021", certificate: "vaccine1.jpg"   },
-    {  id: 12399, name:"John Jones", department:"HR", vaccinated:"Yes", num: 2, date:"09/09/2021", certificate: "vaccine1.jpg"   },
-    { id: 12377, name:"Bruce Wayne", department:"Logistics", vaccinated:"No", num: 2, date:"07/07/2021", certificate: "vaccine1.jpg"   },
-    { id: 12366, name:"Tony Stark",  department:"Research", vaccinated:"Yes", num: 3, date:"06/06/2021", certificate: "vaccine1.jpg"   },
+    { id: "12388", name:"Mary Tan", department:"Finance", vaccinated:"Yes", num: "2", date:"08/08/2021", certificate: "vaccine1.jpg"   },
+    {  id: "12399", name:"John Jones", department:"HR", vaccinated:"Yes", num: "2", date:"09/09/2021", certificate: "vaccine1.jpg"   },
+    { id: "12377", name:"Bruce Wayne", department:"Logistics", vaccinated:"No", num: "2", date:"07/07/2021", certificate: "vaccine1.jpg"   },
+    { id: "12366", name:"Tony Stark",  department:"Research", vaccinated:"Yes", num: "3", date:"06/06/2021", certificate: "vaccine1.jpg"   },
     
   ])
 
@@ -126,38 +126,38 @@ const VerifyVaccineScreen = ({navigation}) => {
 
   return (
     <SafeAreaView>
-    <ScrollView>
+    <ScrollView horizontal>
       <DataTable>
         <DataTable.Header>
 
-          <DataTable.Title><TextInput
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Employee ID"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeID(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeID(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Name"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeName(text)} /></DataTable.Title>
-            <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></DataTable.Title>
+            <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Department"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeDepartment(text)} /></DataTable.Title>
-            <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeDepartment(text)} /></TouchableOpacity></DataTable.Title>
+            <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Vaccine Status"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeVaccinated(text)} /></DataTable.Title>
-            <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeVaccinated(text)} /></TouchableOpacity></DataTable.Title>
+            <DataTable.Title><TouchableOpacity><TextInput
             placeholder="No. of Dose"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeNum(text)} /></DataTable.Title>
-            <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeNum(text)} /></TouchableOpacity></DataTable.Title>
+            <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Date"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeDate(text)} /></DataTable.Title>
-            <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeDate(text)} /></TouchableOpacity></DataTable.Title>
+            <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Certificate"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeCertificate(text)} /></DataTable.Title>
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeCertificate(text)} /></TouchableOpacity></DataTable.Title>
        
        
        
@@ -170,10 +170,7 @@ const VerifyVaccineScreen = ({navigation}) => {
           renderItem={({ item }) => (
             <DataTable.Row>
               <DataTable.Cell>{item.id}</DataTable.Cell>
-              <DataTable.Cell><TextInput
-                style={{padding: 5}}
-                value={item.name}
-                onChangeText={(text) => {editName(text), setEditedItem(item.id)}} /></DataTable.Cell>
+              <DataTable.Cell>{item.name}</DataTable.Cell>
               <DataTable.Cell>{item.department}</DataTable.Cell>
               <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
               <DataTable.Cell>{item.num}</DataTable.Cell>

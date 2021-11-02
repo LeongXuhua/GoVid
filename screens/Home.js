@@ -109,7 +109,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
         <Text style={{ fontSize: 10, marginTop: -20, marginLeft: -180 }}>
-          {data ? data.data.date[0] : "null"}
+          {data ? data.data.date : "null"}
         </Text>
 
         <View style={styles.casesCountries}>
@@ -147,7 +147,6 @@ const HomeScreen = ({ navigation }) => {
           </View>
 
             {/*ART Positive*/}
-        <View style={styles.statusContainer}>
           <View style={styles.statusBox}>
             <Text style={styles.topText}> ART </Text>
             <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
@@ -155,7 +154,6 @@ const HomeScreen = ({ navigation }) => {
          
 
                  {/*ART Negative*/}
-        <View style={styles.statusContainer}>
           <View style={styles.statusBox}>
             <Text style={styles.topText}> ART </Text>
             <MaterialCommunityIcons name="account-check" size={45} style={{ color: "green" }} />
@@ -171,8 +169,6 @@ const HomeScreen = ({ navigation }) => {
           </View>
        
         </View>
-       </View>
-     </View>
         <View style={styles.divider} />
 
         {/* MENU BUTTONS */}

@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { DataTable } from 'react-native-paper';
 
 const EmployeeInfoScreen = ({ navigation }) => {
   const [tableData, setTableData] = useState([
-    { id: 1, name: "Mary Tan", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { id: 2, name: "John Jones", email: "abc@test.com", managerID: 1, managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: 3, name: "Tony Stark", email: "abc@test.com", managerID: 5, managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: 5, name: "MBob", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: "2", name: "John Jones", email: "abc@test.com", managerID: "1", managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: "3", name: "Tony Stark", email: "abc@test.com", managerID: "5", managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
   ])
 
   const [filteredData, setFilteredData] = useState([
-    { id: 1, name: "Mary Tan", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { id: 2, name: "John Jones", email: "abc@test.com", managerID: 1, managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: 3, name: "Tony Stark", email: "abc@test.com", managerID: 5, managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: 5, name: "MBob", email: "abc@test.com", managerID: 11, managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
+    { id: "2", name: "John Jones", email: "abc@test.com", managerID: "1", managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: "3", name: "Tony Stark", email: "abc@test.com", managerID: "5", managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
+    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
   ])
 
   const searchEmployeeID = (text) => {
@@ -117,8 +117,11 @@ const EmployeeInfoScreen = ({ navigation }) => {
   }
   const [editedItem, setEditedItem] = useState("");
 
+  const onPressItem = (item) => {
+    setEditedItem(item.id)
+  }
+
   const editName = (text) => {
-    if(text){
       const newData = tableData.map((item) => {
         if(item.id === editedItem){
           item.name = text;
@@ -127,14 +130,9 @@ const EmployeeInfoScreen = ({ navigation }) => {
         return item;
       });
       setFilteredData(newData);
-    }
-    else{
-      setFilteredData(tableData);
-    }
   }
 
   const editManagerID = (text) => {
-    if(text){
       const newData = tableData.map((item) => {
         if(item.id === editedItem){
           item.managerID = text;
@@ -143,14 +141,9 @@ const EmployeeInfoScreen = ({ navigation }) => {
         return item;
       });
       setFilteredData(newData);
-    }
-    else{
-      setFilteredData(tableData);
-    }
   }
 
   const editManagerName = (text) => {
-    if(text){
       const newData = tableData.map((item) => {
         if(item.id === editedItem){
           item.managerName = text;
@@ -159,66 +152,79 @@ const EmployeeInfoScreen = ({ navigation }) => {
         return item;
       });
       setFilteredData(newData);
-    }
-    else{
-      setFilteredData(tableData);
-    }
   }
 
   return (
     <SafeAreaView>
-    <ScrollView>
+    <ScrollView horizontal>
+    <View>
       <DataTable>
-        <DataTable.Header>
-
-          <DataTable.Title><TextInput
-            placeholder="Employee ID"
+      <DataTable.Header>
+          
+          <DataTable.Title><TouchableOpacity><TextInput
+            placeholder="ID"
             style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeID(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            onChangeText={(text) => searchEmployeeID(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Name"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeName(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Email"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmail(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmail(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Manager ID"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchManagerID(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchManagerID(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Manager Name"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchManagerName(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 140}}
+            onChangeText={(text) => searchManagerName(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Vaccinated"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchVaccinated(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 140}}
+            onChangeText={(text) => searchVaccinated(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="ART Result"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchArtResult(text)} /></DataTable.Title>
+            style={{padding: 2.5, width: 140}}
+            onChangeText={(text) => searchArtResult(text)} /></TouchableOpacity></DataTable.Title>
         </DataTable.Header>
 
         <FlatList
           data={filteredData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
+            
             <DataTable.Row>
-              <DataTable.Cell>{item.time}</DataTable.Cell>
-              <DataTable.Cell><TextInput
-                style={{padding: 5}}
-                value={item.name}
-                onChangeText={(text) => {editName(text), setEditedItem(item.id)}} /></DataTable.Cell>
-              <DataTable.Cell>{item.email}</DataTable.Cell>
-              <DataTable.Cell>{item.location}</DataTable.Cell>
+              <DataTable.Cell >{item.id}</DataTable.Cell>
+              <DataTable.Cell >{item.name}</DataTable.Cell>
+                  <DataTable.Cell >{item.email}</DataTable.Cell>
+                  <DataTable.Cell><TouchableOpacity
+                    onPress={()=> onPressItem(item)}>
+                  <TextInput
+                    style={{ padding: 5}}
+                    value={item.managerID}
+                    keyExtractor={item => item.id}
+                    onChangeText={(text) => {editManagerID(text)}}
+                  />
+                  </TouchableOpacity></DataTable.Cell>
+                <DataTable.Cell><TouchableOpacity
+                    onPress={()=> onPressItem(item)}>
+                  <TextInput
+                    style={{ padding: 5, width: 100}}
+                    value={item.managerName}
+                    keyExtractor={item => item.id}
+                    onChangeText={(text) => {editManagerName(text)}}
+                  />
+                  </TouchableOpacity></DataTable.Cell>
               <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
               <DataTable.Cell>{item.artResult}</DataTable.Cell>
             </DataTable.Row>
           )}
         />
       </DataTable>
+      </View>
     </ScrollView>
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { DataTable } from 'react-native-paper';
 
@@ -104,34 +104,34 @@ const CheckInLogScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-    <ScrollView>
+    <ScrollView horizontal>
       <DataTable>
         <DataTable.Header>
 
-          <DataTable.Title><TextInput
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Time"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchTime(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchTime(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Name"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchName(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchName(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Email"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmail(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmail(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Check-In Location"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchLocation(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchLocation(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Vaccinated"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchVaccinated(text)} /></DataTable.Title>
-          <DataTable.Title><TextInput
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchVaccinated(text)} /></TouchableOpacity></DataTable.Title>
+          <DataTable.Title><TouchableOpacity><TextInput
             placeholder="ART Result"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchArtResult(text)} /></DataTable.Title>
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchArtResult(text)} /></TouchableOpacity></DataTable.Title>
         </DataTable.Header>
 
         <FlatList

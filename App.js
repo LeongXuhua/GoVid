@@ -31,6 +31,7 @@ import CheckInLogScreen from './screens/CheckInLog';
 import EmployeeInfoScreen from './screens/EmployeeInfo';
 import VerifyVaccineScreen from './screens/VerifyVaccine';
 import VerifyARTScreen from './screens/VerifyART';
+import NotificationScreen from './screens/Notification';
 
 LogBox.ignoreAllLogs();
 console.warn = ()=>{};

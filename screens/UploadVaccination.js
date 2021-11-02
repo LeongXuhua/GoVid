@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { StyleSheet, Text, View, picker, SafeAreaView, ScrollView, Button} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import * as DocumentPicker from 'expo-document-picker';
@@ -15,6 +15,14 @@ import "firebase/firestore";
 import 'firebase/firebase-storage';
 
 const UploadVaccinationScreen = () =>{
+
+  useEffect(()=>{
+    if(vaccinationResult==='Not Vaccinated'){
+      setDose(null);
+      setType(null);
+      setDate(new Date());
+    }
+  },[vaccinationResult])
 
   const [dose, setDose]= useState('1')
   const [type, setType]= useState('Pfizer')
@@ -86,6 +94,21 @@ const UploadVaccinationScreen = () =>{
     if(0!=0){ //SET CONDITIONS FOR REJECT UPLOAD
 
     }else{
+      if(vaccinationResult==='Not Vaccinated'){
+        firebase.firestore()
+          .collection('organisations')
+          .doc(orgId)
+          .collection("employees")
+          .doc(userId)
+          .update({
+              "vaccinationResultLink" : null,
+              "vaccinationResult": vaccinationResult,
+              "vaccinationType": null,
+              "vaccinationDose": null,
+          }).then((function () {
+              alert('Vaccination results successfully uploaded!')
+          }))
+      }else{
       //upload document to storage
       const uri = document;
       const childPath = `${orgId}/vaccinationResult/${userId}`;
@@ -116,10 +139,9 @@ const UploadVaccinationScreen = () =>{
 
       task.on("state_changed", taskProgress, taskError, taskCompleted);
     }
-
+  }
     //save vaccine date and download link
     const saveUploadData = (downloadURL) => {
-
       firebase.firestore()
           .collection('organisations')
           .doc(orgId)
@@ -133,27 +155,9 @@ const UploadVaccinationScreen = () =>{
           }).then((function () {
               alert('Vaccination results successfully uploaded!')
           }))
-
   };
 
   }
-
-    //save art date and download link
-    const saveUploadData = (downloadURL) => {
-
-      firebase.firestore()
-          .collection('organisations')
-          .doc(orgId)
-          .collection("employees")
-          .doc(userId)
-          .update({
-              "ARTDate" : date,
-              "ARTResult" : downloadURL,
-          }).then((function () {
-              alert('ART results successfully uploaded!')
-          }))
-
-  };
 
   return (
     <View style={styles.container}>

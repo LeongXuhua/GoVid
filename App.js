@@ -31,6 +31,7 @@ import CheckInLogScreen from './screens/CheckInLog';
 import EmployeeInfoScreen from './screens/EmployeeInfo';
 import VerifyVaccineScreen from './screens/VerifyVaccine';
 import VerifyARTScreen from './screens/VerifyART';
+import HomeManagerScreen from './screens/HomeManager'
 
 LogBox.ignoreAllLogs();
 console.warn = ()=>{};
@@ -243,7 +244,7 @@ function Manager({navigation}){
     
     <Drawer.Screen
       name="Home"
-      component={HomeScreen}
+      component={HomeManagerScreen}
       options={{
       drawerLabel: 'Home',
       }}

@@ -4,11 +4,20 @@ import { FlatList } from "react-native-gesture-handler";
 import { ActivityIndicator, DataTable } from 'react-native-paper';
 import firebase from 'firebase';
 import "firebase/firestore";
+import * as WebBrowser from 'expo-web-browser';
 
 const VerifyVaccineScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orgId, setOrgId]= useState();
-  
+  const [webResult, setWebResult] = useState(null);
+
+  const _handlePressButtonAsync = async (url) => {
+    console.log(url)
+    const webResult = await WebBrowser.openBrowserAsync(url);
+    setWebResult(webResult);
+    console.log(webResult)
+  };
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -219,11 +228,15 @@ const VerifyVaccineScreen = ({navigation}) => {
               <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
               <DataTable.Cell>{item.num}</DataTable.Cell>
               <DataTable.Cell>{item.date}</DataTable.Cell>
-              <DataTable.Cell>{item.certificate?<Button title="Download" onPress={()=>{Linking.openURL(item.certificate)}}/>:<Text>No Certificate Found</Text>}</DataTable.Cell>
+              <DataTable.Cell>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</DataTable.Cell>
             </DataTable.Row>
           )}
         />
       </DataTable>
+      <View style={styles.container}>
+        <Text> SAMPLE TEXT HERE </Text>
+      <Text>{webResult && JSON.stringify(webResult)}</Text>
+    </View>
     </ScrollView>
     </SafeAreaView>
   );

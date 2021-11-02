@@ -7,6 +7,7 @@ import {
   Text,
   Linking,
   Button,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -14,7 +15,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase';
 
 
@@ -44,7 +45,12 @@ const CustomSidebarMenu = (props) => {
         source={require("../assets/logo.png")}
         style={styles.sideMenuProfileIcon}
       />
-      <Text style={{marginTop: 0, marginBottom: 0}}> {name} </Text>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{marginTop: 0, marginBottom: 0}}> {name} </Text>
+        <TouchableOpacity>
+          <MaterialCommunityIcons name="bell" size={30} style={{ color: "#007AFF", marginLeft: 95 }} />
+        </TouchableOpacity>
+      </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>

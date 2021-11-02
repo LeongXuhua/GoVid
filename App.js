@@ -30,6 +30,7 @@ import OrgAdminHomeScreen from './screens/OrgAdminHome';
 import CheckInLogScreen from './screens/CheckInLog';
 import EmployeeInfoScreen from './screens/EmployeeInfo';
 import VerifyVaccineScreen from './screens/VerifyVaccine';
+import VerifyARTScreen from './screens/VerifyART';
 
 LogBox.ignoreAllLogs();
 console.warn = ()=>{};
@@ -263,6 +264,15 @@ function Manager({navigation}){
       }}
     />
 
+<Drawer.Screen
+      name="Verify ART"
+      component={VerifyARTScreen}
+      options={{
+      drawerLabel: 'Verify ART',
+      }}
+    />
+
+
 
     <Drawer.Screen
       name="Upload ART Result"
@@ -397,6 +407,14 @@ function Admin({navigation}){
       component={VerifyVaccineScreen}
       options={{
       drawerLabel: 'Verify Vaccine',
+      }}
+    />
+
+<Drawer.Screen
+      name="Verify ART"
+      component={VerifyARTScreen}
+      options={{
+      drawerLabel: 'Verify ART',
       }}
     />
 

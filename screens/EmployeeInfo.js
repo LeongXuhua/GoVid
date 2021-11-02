@@ -20,7 +20,7 @@ const EmployeeInfoScreen = ({ navigation }) => {
       const organisationId = await snapshot.data().organisationId;
       setOrgId(organisationId);
     }
-    
+
     catch (e) {
       console.log(e)
     }
@@ -49,8 +49,8 @@ const EmployeeInfoScreen = ({ navigation }) => {
                 email: doc.data().email,
                 managerID: doc.data().managerId,
                 managerName: doc.data().managerName,
-                vaccinated: doc.data().vaccinated,
-                artResult: doc.data().artResult,
+                vaccinated: doc.data().vaccinationResult,
+                artResult: doc.data().ARTResult,
                 uid: doc.id,
               }
             )

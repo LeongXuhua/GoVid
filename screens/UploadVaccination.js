@@ -16,14 +16,15 @@ import 'firebase/firebase-storage';
 
 const UploadVaccinationScreen = () =>{
 
-  const [dose, setDose]= useState('Pfizer')
+  const [dose, setDose]= useState('1')
   const [type, setType]= useState('Pfizer')
 
   var result = [
-    {label: "Yes", value: 'yes'},
-    {label: "No", value: 'no'},
+    {label: "Yes", value: 'Fully Vaccinated'},
+    {label: "Partial", value: "Partially Vaccinated"},
+    {label: "No", value: 'Not Vaccinated'},
   ];
-  const [testResult, setTestResult]=useState('yes');
+  const [vaccinationResult, setVaccinationResult]=useState('Not Vaccinated');
   const [selectedImage, setSelectedImage] = useState('');
 
 
@@ -116,7 +117,7 @@ const UploadVaccinationScreen = () =>{
       task.on("state_changed", taskProgress, taskError, taskCompleted);
     }
 
-    //save art date and download link
+    //save vaccine date and download link
     const saveUploadData = (downloadURL) => {
 
       firebase.firestore()
@@ -125,7 +126,10 @@ const UploadVaccinationScreen = () =>{
           .collection("employees")
           .doc(userId)
           .update({
-              "VaccinationResult" : downloadURL,
+              "vaccinationResultLink" : downloadURL,
+              "vaccinationResult": vaccinationResult,
+              "vaccinationType": type,
+              "vaccinationDose": dose,
           }).then((function () {
               alert('Vaccination results successfully uploaded!')
           }))
@@ -159,7 +163,7 @@ const UploadVaccinationScreen = () =>{
         <RadioForm
               radio_props={result}
               initial={2}
-              onPress={(value) => {setTestResult(value)}}
+              onPress={(value) => {setVaccinationResult(value)}}
               buttonSize={10}
               buttonOuterSize={20}
               selectedButtonColor={'white'}
@@ -168,29 +172,25 @@ const UploadVaccinationScreen = () =>{
               disabled={false}
               formHorizontal={false}
             />
+{vaccinationResult==="Not Vaccinated"?<Text/>:[
+<Text style={styles.questionText}> Vaccine Type?  </Text>,
 
-<Text style={styles.questionText}> Vaccine Type?  </Text>
+<View style={styles.container}> 
+  <Picker
 
-<View style={styles.container}>
-<Picker
+  selectedValue={type}
+  style={styles.picker}
+  value={type}
+  onValueChange={(value, index)=>setType(value)}
+  >
+  <Picker.item label="Pfizer" value="Pfizer"/>
+  <Picker.item label="Moderna" value="Moderna"/>
+  <Picker.item label="Sinovac" value="Sinovac"/>
 
-                 selectedValue={type}
-                 style={styles.picker}
-                 value={type}
-                 onValueChange={(value, index)=>setType(value)}
-             >
-                 <Picker.item label="Pfizer" value="Pfizer"/>
-                 <Picker.item label="Moderna" value="Moderna"/>
-                 <Picker.item label="Sinovac" value="Sinovac"/>
+  </Picker>
+      </View>,
 
-             </Picker>
-
-
-
-             
-      </View>
-
-      <Text style={styles.questionText}> No. of doses taken </Text>
+      <Text style={styles.questionText}> No. of doses taken </Text>,
 
 <View style={styles.container}>
 <Picker
@@ -204,15 +204,15 @@ const UploadVaccinationScreen = () =>{
                  <Picker.item label="3" value="3"/>
 
              </Picker>
-      </View>
+      </View>,
 
 
-    <Text style={styles.questionText}> Please enter date of latest dose.  </Text>
+    <Text style={styles.questionText}> Please enter date of latest dose.  </Text>,
 
-    <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{text}</Text>
+    <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{text}</Text>,
     <View style={{ margin: 10 }}>
       <Button onPress={() => showMode('date')} title="Select Date" />
-      </View>
+      </View>]}
           
           {show && (
             <DateTimePicker
@@ -225,13 +225,13 @@ const UploadVaccinationScreen = () =>{
             />
           )}
 
- <Text style={styles.questionText}> Please Upload Certificate.</Text>
+{vaccinationResult==="Not Vaccinated"?<Text/>:[<Text style={styles.questionText}> Please Upload Certificate.</Text>,
 
 <View style={styles.container}>
 <Text>Selected File: {docName}</Text>
 <View style={{ margin: 10 }}></View>
 <Button title="Upload Document" onPress={pickDocument}/>
-</View>
+</View>]}
  <View style={styles.buttonContainer}>
               <Button title="Submit" onPress={()=>{uploadResult(selectedDocument)}} color = "yellowgreen" />
           </View>

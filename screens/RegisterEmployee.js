@@ -16,59 +16,8 @@ const RegisterEmployeeScreen = () => {
     const [orgId, setOrgId] = useState();
     const [managerList, setManagerList] = useState([]);
     const [isLoading, setIsloading] = useState(true);
-/*    const fetchData = async () => {
-        setIsloading(true);
-        try {
-          const snapshot = await firebase.firestore()
-          .collection('users')
-          .doc(firebase.auth().currentUser.uid)
-          .get()
 
-          const organisationId = await snapshot.data().organisationId;
-          setOrgId(organisationId);            
-        }
-        catch (e) {
-          console.log(e)
-        }
-      }
-
-    useEffect(() => {  
-        fetchData();
-      }, []);
-    
-      useEffect(() => {
-        const fetchData2 = async () => {
-          try {
-            const managers = [];
-            const snapshot2 = await firebase.firestore()
-                .collection('organisations')
-                .doc(orgId)
-                .collection('managers')
-                .get()
-            
-            snapshot2.docs.map(function(doc){
-                console.log(doc.id+"@@@"+doc.data().name)
-                        managers.push({
-                            id: doc.data().id,
-                            name: doc.data().name,
-                            uid: doc.id
-                        })
-                        setManagerList(managers)
-                    })
-                    
-                    setIsloading(false);
-          }
-          catch (e) {
-            console.log(e)
-          }
-        }
-        fetchData2();
-        console.log(managerList)
-      }, [orgId]);*/
-
-
-
-      const fetchData = async () => {
+    const fetchData = async () => {
         setIsloading(true);
         try {
           const snapshot = await firebase.firestore()
@@ -101,7 +50,6 @@ const RegisterEmployeeScreen = () => {
         snapshot2.docs.map(function(doc){
                 manager.push(
                   {
-                    //add employee fields into here
                     id: doc.data().id,
                     name: doc.data().name,
                     uid: doc.id,
@@ -116,7 +64,7 @@ const RegisterEmployeeScreen = () => {
 
 
 
-    registerUser = () => {
+var    registerUser = () => {
         
         if (0!=0){
             //logic to catch invalid registration
@@ -145,8 +93,13 @@ const RegisterEmployeeScreen = () => {
                     managerName:managerName,
                     ARTDate: null,
                     ARTResult: null,
-                    vaccinationResult: null,
-                    vaccinated: 'Not Vaccinated',
+                    ARTResultLink: null,
+                    vaccinationResultLink: null,
+                    vaccinationResult: 'Not Vaccinated',
+                    vaccinationDose: 0,
+                    vaccinationDate: null,
+                    vaccinationType: null,
+
                 });
 
                 //add manager record / add into manager's record

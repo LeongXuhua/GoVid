@@ -78,7 +78,7 @@ const UploadARTScreen = (props) =>{
     }else{
       //upload image to storage
       const uri = image;
-      const childPath = `${orgId}/testResult/${userId}`;
+      const childPath = `${orgId}/ARTResult/${userId}`;
       console.log(childPath)
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -118,7 +118,8 @@ const UploadARTScreen = (props) =>{
           .doc(userId)
           .update({
               "ARTDate" : date,
-              "ARTResult" : downloadURL,
+              "ARTResultLink" : downloadURL,
+              "ARTResult": testResult,
           }).then((function () {
               alert('ART results successfully uploaded!')
           }))

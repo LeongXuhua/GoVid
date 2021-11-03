@@ -14,7 +14,7 @@ const LoginScreen = ({navigation}) => {
   function login(email, password){
     firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) => {
-                console.log(result);
+                //console.log(result);
                 firebase.firestore().collection('users')
                 .doc(firebase.auth().currentUser.uid)
                 .get().then((snapshot)=>{

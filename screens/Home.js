@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, FlatList, Linking } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import firebase from 'firebase';
+import "firebase/firestore";
+import { ActivityIndicator } from 'react-native-paper';
 
 const HomeScreen = ({ navigation }) => {
   const url = "https://wrapapi.com/use/yx/moh/covidstatistic/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
   const [data, setData] = useState();
   const [isLoading, setIsloading] = useState(false);
+  const [orgId, setOrgId] = useState();
+  const [user, setUser]=useState();
 
   useEffect(() => {
     const fetchCovidData = async () => {
@@ -15,6 +20,14 @@ const HomeScreen = ({ navigation }) => {
         const response = await result.json();
         setData(response)
         setIsloading(false);
+        
+        const snapshot = await firebase.firestore()
+          .collection('users')
+          .doc(firebase.auth().currentUser.uid)
+          .get()
+    
+        const organisationId = await snapshot.data().organisationId;
+        setOrgId(organisationId);
       }
       catch (e) {
         console.log(e)
@@ -22,6 +35,29 @@ const HomeScreen = ({ navigation }) => {
     }
     fetchCovidData();
   }, []);
+
+  useEffect(()=>{
+    try{
+      const fetchWorkStatus = async () => {
+      const snapshot = await firebase.firestore()
+          .collection('organisations')
+          .doc(orgId)
+          .collection('employees')
+          .doc(firebase.auth().currentUser.uid)
+          .get()
+
+      setUser(snapshot.data());
+      const workStatus = await snapshot.data().workStatus;
+      setWorkStatus(workStatus)
+      setIsloading(false);
+      }
+      fetchWorkStatus();
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }, [orgId])
+
 
   const urlNews = "https://newsapi.org/v2/top-headlines?country=sg&q=covid&apiKey=88ccbf5968f446d1a11595782665a8d4";
   const [news, setNews] = useState();
@@ -66,14 +102,35 @@ const HomeScreen = ({ navigation }) => {
     );
   }
 
-  const [workStatus, setWorkstatus]=useState("office-building");
+  const [workStatus, setWorkStatus]=useState("office");
   const [workColor, setWorkColor]= useState("#007AFF")
 
-  const togglehWorkStatus = () => {
-    setWorkstatus(workStatus === "home" ? "office-building" : "home");
-    setWorkColor(workColor === "green" ? "#007AFF" : "green")
+  const toggleWorkStatus = () => {
+    /*setWorkStatus(workStatus === "home" ? "office" : "home");
+    setWorkColor(workColor === "green" ? "#007AFF" : "green")*/
+    if (workStatus=='home'){
+      setWorkStatus('office')
+      firebase.firestore().collection("organisations")
+      .doc(orgId)
+      .collection('employees')
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+          workStatus: 'office',
+      })
+    }else{
+      setWorkStatus('home')
+      firebase.firestore().collection("organisations")
+      .doc(orgId)
+      .collection('employees')
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+          workStatus: 'home',
+      })
+    }
   }
-
+if (isLoading){
+  return <ActivityIndicator/>
+}
   return (
     <ScrollView>
 
@@ -115,7 +172,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.casesCountries}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Root', { screen: 'CasesCountries' });
+              navigation.navigate('Employee', { screen: 'CasesCountries' });
             }
             }>
             <Text style={styles.countriesText}>
@@ -139,26 +196,17 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={styles.divider} />
 
- {/*  
-        <View style={styles.statusContainer}>
-          <View style={styles.statusBox}>
-            <Text style={styles.topText}> Vaccinated</Text>
-            <MaterialCommunityIcons name="account-check" size={45} style={{ color: "green" }} />
-          </View>
-   */}
-
-
-
  <View style={styles.statusContainer}>
           <View style={styles.statusBox}>
-            <Text style={styles.topText}> Not Vaccinated</Text>
+            <Text style={styles.topText}> {user?user.vaccinationResult:'No results'}</Text>
             <MaterialCommunityIcons name="account-remove" size={45} style={{ color: "green" }} />
+            <Text style={styles.topText}> {user?user.vaccinationVerified:''}</Text>
           </View>
      
 
             {/*ART Positive*/}
           <View style={styles.statusBox}>
-            <Text style={styles.topText}> Test Status </Text>
+            <Text style={styles.topText}> {user?user.ARTResult:'No results'} </Text>
             <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
           </View>
          
@@ -172,9 +220,9 @@ const HomeScreen = ({ navigation }) => {
 
           <View style={styles.statusBox}>
             <TouchableOpacity
-              onPress={togglehWorkStatus}>
+              onPress={toggleWorkStatus}>
               <Text style={styles.topText}>Work Status</Text>
-              <MaterialCommunityIcons name={workStatus} size={45} style={{ color: workColor }} />
+              {workStatus==='office'?[<MaterialCommunityIcons name='office-building' size={45} style={{ color: '#007AFF' }} />,<Text>Office</Text>]:[<MaterialCommunityIcons name='home' size={45} style={{ color: 'green' }} />,<Text>Home</Text>]}
             </TouchableOpacity>
           </View>
        
@@ -189,7 +237,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Root', { screen: 'ScanQR' })
+              navigation.navigate('Employee', { screen: 'ScanQR' })
             }>
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
@@ -204,7 +252,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Root', { screen: 'HealthDeclaration' })
+              navigation.navigate('Employee', { screen: 'HealthDeclaration' })
             }>
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
@@ -219,7 +267,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Root', { screen: 'UploadART' })
+              navigation.navigate('Employee', { screen: 'UploadART' })
             }>
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
@@ -237,7 +285,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Root', { screen: 'BookVaccination' })
+              navigation.navigate('Employee', { screen: 'BookVaccination' })
             }>
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
@@ -252,7 +300,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Root', { screen: 'BookTest' })
+              navigation.navigate('Employee', { screen: 'BookTest' })
             }>
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
@@ -267,7 +315,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Root', { screen: 'CheckCrowd' })
+              navigation.navigate('Employee', { screen: 'CheckCrowd' })
             }>
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons
@@ -286,7 +334,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Root', { screen: 'TravelInformation' })
+              navigation.navigate('Employee', { screen: 'TravelInformation' })
             }>
             <View style={styles.categoryIcon}>
               <MaterialCommunityIcons

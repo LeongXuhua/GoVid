@@ -16,6 +16,7 @@ const RegisterEmployeeScreen = () => {
     const [orgId, setOrgId] = useState();
     const [managerList, setManagerList] = useState([]);
     const [isLoading, setIsloading] = useState(true);
+    const [managerUid, setManagerUid] = useState();
 
     const fetchData = async () => {
         setIsloading(true);
@@ -55,14 +56,23 @@ const RegisterEmployeeScreen = () => {
                     uid: doc.id,
                   }
                 )
-              setManagerList(manager)
+              setManagerList([...manager])
             })
         setIsloading(false)
     }
         fetchEmployee();
       }, [orgId])
 
+      const setManagerDetail= async (uid)=>{
+        const manager = await firebase.firestore()
+        .collection("organisations")
+        .doc(orgId)
+        .collection("managers")
+        .doc(uid).get()
 
+        setManagerName(manager.data().name)
+        setManagerId(manager.data().id)
+      }
 
 var    registerUser = () => {
         
@@ -79,6 +89,14 @@ var    registerUser = () => {
                     email
                 });
                 
+                //check if theres manager data
+                if(managerUid){
+                    setManagerDetail(managerUid)
+                }else{
+                    setManagerName(null)
+                    setManagerId(null)
+                };
+
                 //add user details into org's collection
                 firebase.firestore().collection("organisations")
                 .doc(orgId)
@@ -94,11 +112,14 @@ var    registerUser = () => {
                     ARTDate: null,
                     ARTResult: null,
                     ARTResultLink: null,
+                    ARTVerified: false,
                     vaccinationResultLink: null,
                     vaccinationResult: 'Not Vaccinated',
                     vaccinationDose: 0,
                     vaccinationDate: null,
                     vaccinationType: null,
+                    vaccinationVerified: false,
+                    workStatus: 'office',
 
                 });
 
@@ -114,38 +135,20 @@ var    registerUser = () => {
                     });
                     alert('An account for '+name+' has been successfully created!')
                 }else{
-                    
-                    //get manager's UID
+                    //update manager's collection of employees
                     firebase.firestore().collection("organisations")
-                    .doc(orgId)
-                    .collection('managers')
-                    .where("id", "==", managerId)
-                    .get()
-                    .then((snapshot)=>{
-                        snapshot.forEach((doc)=>{
-                            
-                            //update manager's collection of employees
-                            firebase.firestore().collection("organisations")
-                                .doc(orgId)
-                                .collection('managers')
-                                .doc(doc.id)
-                                .collection('employees')
-                                .doc(secondaryApp.auth().currentUser.uid)
-                                .set({
-                                    name:name,
-                                    id:id,
-                                });
-
-                            alert('An account for '+name+' has been successfully created!')
-                            })
-                        
+                        .doc(orgId)
+                        .collection('managers')
+                        .doc(managerUid)
+                        .collection('employees')
+                        .doc(secondaryApp.auth().currentUser.uid)
+                        .set({
+                            name:name,
+                            id:id,
                         });
-                    
-                    
-                    
-                    
-                }
 
+                    alert('An account for '+name+' has been successfully created!')
+                    }                   
             })
         };
     };
@@ -227,10 +230,10 @@ var    registerUser = () => {
             <View style={styles.inputContainer}>
 
             <Picker
-                    selectedValue={managerId}
+                    selectedValue={managerUid}
                     style={styles.textInput}
-                    value={managerId}
-                    onValueChange={(value, index)=>setManagerId(value)}
+                    value={managerUid}
+                    onValueChange={(value, index)=>setManagerUid(value)}
                 >
                     <Picker.item label="No Manager" value=''/>
                 {managerList.map((manager)=>(
@@ -239,19 +242,6 @@ var    registerUser = () => {
                 </Picker>
 
                 
-            </View>
-
-            <Text style={styles.text}>
-                    Manager Name
-            </Text>
-            <View style={styles.inputContainer}>
-                
-                <TextInput
-                    placeholder="Full Name"
-                    style={styles.textInput}
-                    value={managerName}
-                    onChangeText={(value)=>setManagerName(value)}
-                />
             </View>
 
             <View style={styles.button}>

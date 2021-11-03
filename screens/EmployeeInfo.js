@@ -54,8 +54,8 @@ const EmployeeInfoScreen = ({ navigation }) => {
                 uid: doc.id,
               }
             )
-          setTableData(employee)
-          setFilteredData(employee)
+          setTableData([...employee])
+          setFilteredData([...employee])
           setIsLoading(false)
         })
         

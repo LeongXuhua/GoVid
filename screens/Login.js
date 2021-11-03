@@ -42,16 +42,13 @@ const LoginScreen = ({navigation}) => {
             .catch((error) => {
               if(email == '' && password == '')
               {
-                console.log(email + "++1" + password)
                 alert("Email and Password fields are empty! Please try again")
               }
               else if(email == '' && password !== ''){
-                console.log(email + "++2" + password)
                 alert("Email field is empty! Please try again")
               }
               else if(password == '' && email !== ''){
-                console.log(email + "++3" + password)
-                alert("Email field is empty! Please try again")
+                alert("Password field is empty! Please try again")
               }
               else{
                 alert(error)

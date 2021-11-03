@@ -234,8 +234,6 @@ const VerifyVaccineScreen = ({navigation}) => {
         />
       </DataTable>
       <View style={styles.container}>
-        <Text> SAMPLE TEXT HERE </Text>
-      <Text>{webResult && JSON.stringify(webResult)}</Text>
     </View>
     </ScrollView>
     </SafeAreaView>

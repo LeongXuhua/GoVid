@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -25,17 +25,46 @@ const CustomSidebarMenu = (props) => {
   const [orgId, setOrgId] = useState();
   const [name, setName] = useState();
 
-        firebase.firestore()
-        .collection('users')
-        .doc(firebase.auth().currentUser.uid)
-        .get().then((snapshot)=>{setOrgId(snapshot.data().organisationId)})
+  const fetchData = async () => {
+    try {
+      const snapshot = await firebase.firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
 
-        firebase.firestore()
-        .collection('organisations')
-        .doc(orgId)
-        .collection('employees')
-        .doc(firebase.auth().currentUser.uid)
-        .get().then((snapshot)=>{setName(snapshot.data().name)})
+      const organisationId = await snapshot.data().organisationId;
+      setOrgId(organisationId);
+    }
+
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+const fetchName= async () => {
+  try{
+    const snapshot = await firebase.firestore()
+    .collection('organisations')
+    .doc(orgId)
+    .collection('employees')
+    .doc(firebase.auth().currentUser.uid)
+    .get()
+    const name = await snapshot.data().name
+    setName(name);
+  }catch (e) {
+      console.log(e)
+    }
+}
+
+  useEffect(() => {
+    fetchName();
+  }, [orgId]);
+
+        
 
 
   return (

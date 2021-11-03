@@ -356,6 +356,13 @@ function Manager({navigation}){
       drawerLabel: 'Employee Information',
       }}
     />  
+    <Drawer.Screen
+      name="Notification"
+      component={NotificationScreen}
+      options={{
+      drawerLabel: 'Notification',
+      }}
+    /> 
       
   </Drawer.Navigator>
   /*<Drawer.Navigator

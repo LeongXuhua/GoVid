@@ -53,8 +53,8 @@ const RegisterAdminScreen = ({navigation}) => {
     
     return (
         
-        <SafeAreaView><ScrollView>
-
+        <SafeAreaView style={styles.container}><ScrollView>
+            <Text style={styles.title}>Register Your Company</Text>
             <Text style={styles.text}>
                 Organisation Name
             </Text>
@@ -119,28 +119,40 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#51a4fb',
-        alignItems: 'center',
-        justifyContent: 'center',
+    },
+
+    title: {
+        marginTop: 80,
+        marginBottom: 30,
+        color: "#EEEEEE",
+        fontSize: 32,
+        alignSelf: "center"
     },
 
     text: {
         marginTop: 10,
-        marginLeft: 10,
+        marginLeft: 40,
+        
     },
 
     inputContainer: {
         borderWidth: 1,
         borderColor: 'lightgrey',
+        backgroundColor: 'white',
         paddingBottom: 5,
         paddingLeft: 10,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        marginTop: 5,
+        borderRadius: 10,
+        height: 40,
+        width: "80%",
+        alignSelf: "center"
     },
 
     textInput: {
-        paddingLeft: 10,
+        paddingLeft: 5,
         height: 40,
-        padding: 10,
         color: 'grey',
     },
 

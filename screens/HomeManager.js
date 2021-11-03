@@ -206,7 +206,7 @@ const HomeScreen = ({ navigation }) => {
 
             {/*ART Positive*/}
           <View style={styles.statusBox}>
-            <Text style={styles.topText}> Test Status </Text>
+          <Text style={styles.topText}> {user?user.ARTResult:'No results'} </Text>
             <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
           </View>
          

@@ -187,21 +187,7 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={styles.categoryContainer}>
 
-       <TouchableOpacity
-            style={styles.categoryBtn}
-            onPress={() =>
-              navigation.navigate('Root', { screen: 'RegisterEmployee' })
-            }>
-            <View style={styles.categoryIcon}>
-              <MaterialCommunityIcons
-                name="account-multiple-plus"
-                size={30}
-                color="black"
-              />
-            </View>
-            <Text style={styles.categoryBtnTxt}>Register Employee</Text>
-          </TouchableOpacity>
-
+ 
        <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
@@ -232,9 +218,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.categoryBtnTxt}>Verify ART</Text>
           </TouchableOpacity>
 
-        </View>
-        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
-
+        
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -251,6 +235,8 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.categoryBtnTxt}>Verify Vaccine</Text>
           </TouchableOpacity>
 
+</View>
+        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
 
     
           <TouchableOpacity
@@ -285,10 +271,6 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.categoryBtnTxt}>Health Declaration</Text>
           </TouchableOpacity>
 
-      </View>
-        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
-
- 
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
@@ -304,7 +286,9 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.categoryBtnTxt}>Upload ART</Text>
           </TouchableOpacity>
 
-    
+    </View>
+        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
+
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -338,10 +322,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.categoryBtnTxt}>Book PCR Test</Text>
           </TouchableOpacity>
 
-     </View>
-        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
 
- 
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
@@ -356,6 +337,8 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <Text style={styles.categoryBtnTxt}>Cluster & Crowd</Text>
           </TouchableOpacity>
+</View>
+        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
 
   
           <TouchableOpacity

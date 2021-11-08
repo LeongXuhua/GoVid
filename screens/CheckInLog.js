@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Platform } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { DataTable } from 'react-native-paper';
 
@@ -104,33 +104,35 @@ const CheckInLogScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
+      <Text>Click on the table header to search</Text>
     <ScrollView horizontal>
+      
       <DataTable>
         <DataTable.Header>
 
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Time"
-            style={{padding: 2.5, width: 100}}
+            style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchTime(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Name"
-            style={{padding: 2.5, width: 100}}
+            style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchName(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Email"
-            style={{padding: 2.5, width: 100}}
+            style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchEmail(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Check-In Location"
-            style={{padding: 2.5, width: 100}}
+            style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchLocation(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Vaccinated"
-            style={{padding: 2.5, width: 100}}
+            style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchVaccinated(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="ART Result"
-            style={{padding: 2.5, width: 100}}
+            style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchArtResult(text)} /></TouchableOpacity></DataTable.Title>
         </DataTable.Header>
 
@@ -139,12 +141,12 @@ const CheckInLogScreen = ({ navigation }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <DataTable.Row>
-              <DataTable.Cell>{item.time}</DataTable.Cell>
-              <DataTable.Cell>{item.name}</DataTable.Cell>
-              <DataTable.Cell>{item.email}</DataTable.Cell>
-              <DataTable.Cell>{item.location}</DataTable.Cell>
-              <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
-              <DataTable.Cell>{item.artResult}</DataTable.Cell>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.time}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.name}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.email}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.location}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.vaccinated}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.artResult}</Text></View>
             </DataTable.Row>
           )}
         />

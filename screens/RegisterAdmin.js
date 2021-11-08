@@ -41,7 +41,15 @@ const RegisterAdminScreen = ({navigation}) => {
                     alert('An account for '+name+' of '+orgName+' has been successfully created!')
                     navigation.navigate('Login')
                 }).catch((error) => {
-                    alert(error)
+                    if(orgName == '' && name == '' && email == '' && password == ''){
+                        alert("All fields are empty! Please try again")
+                    }
+                    else if(orgName == '' || name == '' || email == '' || password == ''){
+                        alert("One of the fields if empty! Please try again")
+                    }else{
+                        alert(error)
+                    }
+                    
                 });
                 
             });

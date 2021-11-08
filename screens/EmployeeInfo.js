@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Modal, Platform } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { ActivityIndicator, DataTable } from 'react-native-paper';
 import firebase from 'firebase';
@@ -64,19 +64,9 @@ const EmployeeInfoScreen = ({ navigation }) => {
     fetchEmployee();
   }, [orgId])
 
-  const [tableData, setTableData] = useState([
-    /*{ id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { id: "2", name: "John Jones", email: "abc@test.com", managerID: "1", managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: "3", name: "Tony Stark", email: "abc@test.com", managerID: "5", managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },*/
-  ])
+  const [tableData, setTableData] = useState([])
 
-  const [filteredData, setFilteredData] = useState([
-    /*{ id: "1", name: "Mary Tan", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { id: "2", name: "John Jones", email: "abc@test.com", managerID: "1", managerName: "Mary Tan", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: "3", name: "Tony Stark", email: "abc@test.com", managerID: "5", managerName: "MBob", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { id: "5", name: "MBob", email: "abc@test.com", managerID: "11", managerName: "Tim", vaccinated: "Fully Vaccinated", artResult: "Negative" },*/
-  ])
+  const [filteredData, setFilteredData] = useState([])
 
   const searchEmployeeID = (text) => {
     if (text) {
@@ -175,13 +165,36 @@ const EmployeeInfoScreen = ({ navigation }) => {
       setFilteredData(tableData);
     }
   }
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [editedItem, setEditedItem] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [onPressType, setOnPressType] = useState("");
 
-  const onPressItem = (item) => {
-    setEditedItem(item.id)
+  const onPressManagerID = (item) => {
+    setIsModalVisible(true);
+    setInputText(item.managerID);
+    setEditedItem(item.id);
+    setOnPressType("id");
+  }
+  const onPressManagerName = (item) => {
+    setIsModalVisible(true);
+    setInputText(item.managerName);
+    setEditedItem(item.id);
+    setOnPressType("name");
   }
 
-  const editManagerID = (text) => {
+  const onPressSaveEdit = () => {
+    if(onPressType === "id"){
+      editManagerID(editedItem);
+      setIsModalVisible(false);
+    }
+    else if(onPressType === "name"){
+      editManagerName(editedItem);
+      setIsModalVisible(false);
+    }
+  }
+
+  const editManagerID = () => {
       const newData = tableData.map((item) => {
         if(item.id === editedItem){
           //get employee's uid
@@ -191,7 +204,7 @@ const EmployeeInfoScreen = ({ navigation }) => {
 
           //update employee's manager record
 
-          item.managerID = text;
+          item.managerID = inputText;
           return item;
         }
         return item;
@@ -199,10 +212,10 @@ const EmployeeInfoScreen = ({ navigation }) => {
       setFilteredData(newData);
   }
 
-  const editManagerName = (text) => {
+  const editManagerName = () => {
       const newData = tableData.map((item) => {
         if(item.id === editedItem){
-          item.managerName = text;
+          item.managerName = inputText;
           return item;
         }
         return item;
@@ -218,37 +231,38 @@ if (isLoading){
     <SafeAreaView>
     <ScrollView horizontal>
     <View>
+      <Text>Click on the table header to search</Text>
       <DataTable>
       <DataTable.Header>
           
-          <DataTable.Title><TouchableOpacity><TextInput
+          <View><TouchableOpacity><TextInput
             placeholder="ID"
-            style={{padding: 2.5}}
-            onChangeText={(text) => searchEmployeeID(text)} /></TouchableOpacity></DataTable.Title>
-          <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 25:100, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmployeeID(text)} /></TouchableOpacity></View>
+          <View><TouchableOpacity><TextInput
             placeholder="Name"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></DataTable.Title>
-          <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></View>
+          <View><TouchableOpacity><TextInput
             placeholder="Email"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmail(text)} /></TouchableOpacity></DataTable.Title>
-          <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmail(text)} /></TouchableOpacity></View>
+          <View><TouchableOpacity><TextInput
             placeholder="Manager ID"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchManagerID(text)} /></TouchableOpacity></DataTable.Title>
-          <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            onChangeText={(text) => searchManagerID(text)} /></TouchableOpacity></View>
+          <View><TouchableOpacity><TextInput
             placeholder="Manager Name"
-            style={{padding: 2.5, width: 140}}
-            onChangeText={(text) => searchManagerName(text)} /></TouchableOpacity></DataTable.Title>
-          <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            onChangeText={(text) => searchManagerName(text)} /></TouchableOpacity></View>
+          <View><TouchableOpacity><TextInput
             placeholder="Vaccinated"
-            style={{padding: 2.5, width: 140}}
-            onChangeText={(text) => searchVaccinated(text)} /></TouchableOpacity></DataTable.Title>
-          <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            onChangeText={(text) => searchVaccinated(text)} /></TouchableOpacity></View>
+          <View><TouchableOpacity><TextInput
             placeholder="ART Result"
-            style={{padding: 2.5, width: 140}}
-            onChangeText={(text) => searchArtResult(text)} /></TouchableOpacity></DataTable.Title>
+            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            onChangeText={(text) => searchArtResult(text)} /></TouchableOpacity></View>
         </DataTable.Header>
 
         <FlatList
@@ -257,32 +271,42 @@ if (isLoading){
           renderItem={({ item }) => (
             
             <DataTable.Row>
-              <DataTable.Cell >{item.id}</DataTable.Cell>
-              <DataTable.Cell >{item.name}</DataTable.Cell>
-                  <DataTable.Cell >{item.email}</DataTable.Cell>
-                  <DataTable.Cell><TouchableOpacity
-                    onPress={()=> onPressItem(item)}>
-                  <TextInput
-                    style={{ padding: 5}}
-                    value={item.managerID}
-                    keyExtractor={item => item.id}
-                    onChangeText={(text) => {editManagerID(text)}}
-                  />
-                  </TouchableOpacity></DataTable.Cell>
-                <DataTable.Cell><TouchableOpacity
-                    onPress={()=> onPressItem(item)}>
-                  <TextInput
-                    style={{ padding: 5, width: 100}}
-                    value={item.managerName}
-                    keyExtractor={item => item.id}
-                    onChangeText={(text) => {editManagerName(text)}}
-                  />
-                  </TouchableOpacity></DataTable.Cell>
-              <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
-              <DataTable.Cell>{item.artResult}</DataTable.Cell>
+              <View style={{width: Platform.OS === 'android' ? 25:100}}><Text>{item.id}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.name}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.email}</Text></View>
+              <TouchableOpacity onPress={()=> onPressManagerID(item)} style={{width: Platform.OS === 'android' ? 100:200}}>
+                <Text>{item.managerID}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={()=> onPressManagerName(item)} style={{width: Platform.OS === 'android' ? 100:200}}>
+                <Text>{item.managerName}</Text>
+              </TouchableOpacity>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.vaccinated}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.artResult}</Text></View>
             </DataTable.Row>
           )}
         />
+        <Modal
+          animationType='slide'
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={() => setIsModalVisible(false)}
+        >
+          <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Change Text:</Text>
+            <TextInput
+            style={styles.modalInput}
+            onChangeText={(text) => setInputText(text)}
+            defaultValue={inputText}></TextInput>
+          
+          <TouchableOpacity
+            style={styles.modalSaveButton}
+            onPress={()=> onPressSaveEdit()}>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>Save Edit</Text>
+          </TouchableOpacity>
+          </View>
+          </View>
+        </Modal>
       </DataTable>
       </View>
     </ScrollView>
@@ -293,7 +317,7 @@ export default EmployeeInfoScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#51a4fb",
+    backgroundColor: '#51a4fb',
   },
 
   title: {
@@ -302,4 +326,43 @@ const styles = StyleSheet.create({
     color: "white",
     paddingLeft: 10
   },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    elevation: 24
+  },
+
+  modalText: {
+    fontSize: 15,
+    textAlign: 'center',
+  },
+
+  modalInput: {
+    fontSize: 15,
+    height: 30,
+    width: 100,
+    borderWidth: 1,
+    borderColor: 'grey',
+    marginTop: 20,
+  }, 
+
+  modalSaveButton: {
+    backgroundColor: '#51a4fb',
+    borderRadius: 20,
+    padding: 10,
+    marginTop: 20,
+    elevation: 2
+  }
+
 });

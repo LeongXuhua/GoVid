@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { DataTable } from 'react-native-paper';
+import { DataTable, Switch, Subheading } from 'react-native-paper';
 
 const VerifyARTScreen = ({navigation}) => {
   const [tableData, setTableData] = useState([
@@ -123,7 +123,11 @@ const VerifyARTScreen = ({navigation}) => {
             placeholder="image"
             style={{padding: 2.5, width: 100}}
             onChangeText={(text) => searchEmployeeImage(text)} /></TouchableOpacity></DataTable.Title>
-       
+            <DataTable.Title><TouchableOpacity><TextInput
+            placeholder="Status"
+            style={{padding: 2.5, width: 200}}
+             /></TouchableOpacity></DataTable.Title>
+
        
        
        
@@ -139,6 +143,13 @@ const VerifyARTScreen = ({navigation}) => {
               <DataTable.Cell>{item.art}</DataTable.Cell>
               <DataTable.Cell>{item.date}</DataTable.Cell>
               <DataTable.Cell>{item.image}</DataTable.Cell>
+              <DataTable.Cell>
+               <Switch
+                 value={value}
+                   onValueChange={() => setValue(!value)}
+                />
+                 <Subheading>{switchValueLabel}</Subheading>
+                 </DataTable.Cell>
             </DataTable.Row>
           )}
         />

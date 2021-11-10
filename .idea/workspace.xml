@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3d609c3-1103-47fb-8b25-2e826958db64" name="Default Changelist" comment="" />
+    <list default="true" id="a3d609c3-1103-47fb-8b25-2e826958db64" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/VerifyART.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VerifyART.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/VerifyVaccine.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VerifyVaccine.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

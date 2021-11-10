@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button, Linking } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { ActivityIndicator, DataTable } from 'react-native-paper';
+import { ActivityIndicator,DataTable, Switch, Colors, Subheading } from 'react-native-paper';
+
 import firebase from 'firebase';
 import "firebase/firestore";
 import * as WebBrowser from 'expo-web-browser';
@@ -89,6 +90,13 @@ const VerifyVaccineScreen = ({navigation}) => {
     { id: "12366", name:"Tony Stark",  department:"Research", vaccinated:"Yes", num: "3", date:"06/06/2021", certificate: "vaccine1.jpg"   },
     
   ])
+
+  
+  const [value, setValue] = React.useState(false);
+
+  const switchValueLabel = `  ${
+    value === true ? 'Approve' : 'Pending'
+  }`;
 
 
   const searchEmployeeID = (text) => {
@@ -181,6 +189,7 @@ const VerifyVaccineScreen = ({navigation}) => {
   if (isLoading){
     return <ActivityIndicator />
   }
+
   return (
     <SafeAreaView>
     <ScrollView horizontal>
@@ -211,9 +220,11 @@ const VerifyVaccineScreen = ({navigation}) => {
             placeholder="Certificate"
             style={{padding: 2.5, width: 100}}
             onChangeText={(text) => searchEmployeeCertificate(text)} /></TouchableOpacity></DataTable.Title>
-       
-       
-       
+           <DataTable.Title><TouchableOpacity><TextInput
+            placeholder="Status"
+            style={{padding: 2.5, width: 200}}
+             /></TouchableOpacity></DataTable.Title>
+
        
         </DataTable.Header>
 
@@ -229,6 +240,13 @@ const VerifyVaccineScreen = ({navigation}) => {
               <DataTable.Cell>{item.num}</DataTable.Cell>
               <DataTable.Cell>{item.date}</DataTable.Cell>
               <DataTable.Cell>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</DataTable.Cell>
+              <DataTable.Cell>
+               <Switch
+                 value={value}
+                   onValueChange={() => setValue(!value)}
+                />
+                 <Subheading>{switchValueLabel}</Subheading>
+                 </DataTable.Cell>
             </DataTable.Row>
           )}
         />

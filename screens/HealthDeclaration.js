@@ -148,7 +148,7 @@ const openUrl = async (url) => {
         
             
                         <View style={styles.buttonContainer}>
-                        <Button title="Book a Covid test" onPress={() =>navigation.navigate('Root', {screen: 'BookTest'})} />
+                        <Button title="Book a Covid test" onPress={() =>navigation.navigate('Employee', {screen: 'BookTest'})} />
                         </View>
                         <View style={styles.buttonContainer}></View>
                         <Button title="Restart" onPress={restart}/>

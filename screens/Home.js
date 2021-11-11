@@ -102,6 +102,7 @@ const HomeScreen = ({ navigation }) => {
     );
   }
 
+
   const [workStatus, setWorkStatus]=useState("office");
   const [workColor, setWorkColor]= useState("#007AFF")
 
@@ -196,7 +197,8 @@ if (isLoading){
 
         <View style={styles.divider} />
 
- <View style={styles.statusContainer}>
+ <View style={styles.statusContainer2}>
+
           <View style={styles.statusBox}>
             <Text style={styles.topText}> {user?user.vaccinationResult:'No results'}</Text>
             <MaterialCommunityIcons name="account-remove" size={45} style={{ color: "green" }} />
@@ -209,15 +211,12 @@ if (isLoading){
             <Text style={styles.topText}> {user?user.ARTResult:'No results'} </Text>
             <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
           </View>
-         
-  
-   {/*  
-          <View style={styles.statusBox}>
-            <Text style={styles.topText}> ART </Text>
-            <MaterialCommunityIcons name="account-check" size={45} style={{ color: "green" }} />
-          </View>
-        */}
 
+     </View>
+
+   <View style={styles.statusContainer2}>
+
+ {/*Work Status*/}
           <View style={styles.statusBox}>
             <TouchableOpacity
               onPress={toggleWorkStatus}>
@@ -225,8 +224,17 @@ if (isLoading){
               {workStatus==='office'?[<MaterialCommunityIcons name='office-building' size={45} style={{ color: '#007AFF' }} />,<Text>Office</Text>]:[<MaterialCommunityIcons name='home' size={45} style={{ color: 'green' }} />,<Text>Home</Text>]}
             </TouchableOpacity>
           </View>
-       
+
+ {/*Check Out*/}
+          <View style={styles.statusBox}>
+          <Text style={styles.topText}>Check Out</Text>
+            <MaterialCommunityIcons name="exit-to-app" size={45} style={{ color: "green" }} />
+          </View>
+
         </View>
+
+
+
         <View style={styles.divider} />
 
         {/* MENU BUTTONS */}
@@ -249,21 +257,7 @@ if (isLoading){
             <Text style={styles.categoryBtnTxt}>Scan QR</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.categoryBtn}
-            onPress={() =>
-              navigation.navigate('Employee', { screen: 'HealthDeclaration' })
-            }>
-            <View style={styles.categoryIcon}>
-              <MaterialCommunityIcons
-                name="format-list-checks"
-                size={30}
-                color="black"
-              />
-            </View>
-            <Text style={styles.categoryBtnTxt}>Health Declaration</Text>
-          </TouchableOpacity>
-
+       
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
@@ -279,8 +273,40 @@ if (isLoading){
             <Text style={styles.categoryBtnTxt}>Upload ART</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate('Employee', { screen: 'UploadVaccination' })
+            }>
+            <View style={styles.categoryIcon}>
+              <MaterialCommunityIcons
+                name="note-plus"
+                size={30}
+                color="black"
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Upload Vaccination</Text>
+          </TouchableOpacity>
+
+
         </View>
         <View style={[styles.categoryContainer, { marginTop: 10 }]}>
+
+        <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate('Employee', { screen: 'HealthDeclaration' })
+            }>
+            <View style={styles.categoryIcon}>
+              <MaterialCommunityIcons
+                name="format-list-checks"
+                size={30}
+                color="black"
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Health Declaration</Text>
+          </TouchableOpacity>
+
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -310,21 +336,6 @@ if (isLoading){
               />
             </View>
             <Text style={styles.categoryBtnTxt}>Book PCR Test</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.categoryBtn}
-            onPress={() =>
-              navigation.navigate('Employee', { screen: 'CheckCrowd' })
-            }>
-            <View style={styles.categoryIcon}>
-              <MaterialCommunityIcons
-                name="account-group"
-                size={30}
-                color="black"
-              />
-            </View>
-            <Text style={styles.categoryBtnTxt}>Cluster & Crowd</Text>
           </TouchableOpacity>
 
 
@@ -381,6 +392,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 30,
   },
+
+    statusContainer2: {
+      flexDirection: "row",
+      padding: 10,
+    },
+
 
   logo: {
     width: '100%',
@@ -473,6 +490,13 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 10,
   },
+   categoryContainer2: {
+     flexDirection: 'row',
+      width: '90%',
+
+      marginTop: 25,
+      marginBottom: 10,
+    },
   categoryBtn: {
     flex: 1,
     width: '30%',

@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 30,
         borderColor:'blue',
-        color: 'red',
+        color: 'black',
        
     }
 

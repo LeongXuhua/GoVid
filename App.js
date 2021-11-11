@@ -33,7 +33,8 @@ import VerifyVaccineScreen from './screens/VerifyVaccine';
 import VerifyARTScreen from './screens/VerifyART';
 import HomeManagerScreen from './screens/HomeManager'
 import NotificationScreen from './screens/Notification';
-
+import ManageCheckInScreen from './screens/ManageCheckIn';
+import QrCodeScreen from './screens/QrCode';
 
 LogBox.ignoreAllLogs();
 console.warn = ()=>{};
@@ -117,7 +118,7 @@ function Employee({navigation}){
       }}
     />
     <Drawer.Screen
-      name="Scan QR"
+      name="ScanQR"
       component={ScanQRScreen}
       options={{
       drawerLabel: 'Scan QR',
@@ -125,7 +126,7 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="Upload ART Result"
+      name="UploadART"
       component={uploadARTScreen}
       options={{
       drawerLabel: 'Upload ART Result',
@@ -136,7 +137,7 @@ function Employee({navigation}){
       name="UploadVaccination"
       component={uploadVaccinationScreen}
       options={{
-      drawerLabel: 'upload Vaccination',
+      drawerLabel: 'Upload Vaccination',
       headerStyle: {
         backgroundColor: '#30659c', //Set Header color
       },
@@ -149,7 +150,7 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="Health Declaration"
+      name="HealthDeclaration"
       component={HealthDeclarationScreen}
       options={{
       drawerLabel: 'Health Declaration',
@@ -157,7 +158,7 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="Covid Test Result"
+      name="CovidTest"
       component={CovidTestScreen}
       options={{
       drawerLabel: 'Covid Test Result',
@@ -165,7 +166,7 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="Book Vaccination"
+      name="BookVaccination"
       component={BookVaccinationScreen}
       options={{
       drawerLabel: 'Book Vaccination',
@@ -173,7 +174,7 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="Book PCR Swab Test"
+      name="BookTest"
       component={BookTestScreen}
       options={{
       drawerLabel: 'Book PCR Swab Test',
@@ -181,7 +182,7 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="Check Crowd"
+      name="CheckCrowd"
       component={CheckCrowdScreen}
       options={{
       drawerLabel: 'Check Crowd',
@@ -189,7 +190,7 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="Travel Information"
+      name="TravelInformation"
       component={TravelInformationScreen}
       options={{
       drawerLabel: 'Travel Information',
@@ -252,7 +253,7 @@ function Manager({navigation}){
       }}
     />
     <Drawer.Screen
-      name="Scan QR"
+      name="ScanQR"
       component={ScanQRScreen}
       options={{
       drawerLabel: 'Scan QR',
@@ -260,7 +261,7 @@ function Manager({navigation}){
     />
 
 <Drawer.Screen
-      name="Verify Vaccine"
+      name="VerifyVaccine"
       component={VerifyVaccineScreen}
       options={{
       drawerLabel: 'Verify Vaccine',
@@ -268,7 +269,7 @@ function Manager({navigation}){
     />
 
 <Drawer.Screen
-      name="Verify ART"
+      name="VerifyART"
       component={VerifyARTScreen}
       options={{
       drawerLabel: 'Verify ART',
@@ -278,7 +279,7 @@ function Manager({navigation}){
 
 
     <Drawer.Screen
-      name="Upload ART Result"
+      name="UploadART"
       component={uploadARTScreen}
       options={{
       drawerLabel: 'Upload ART Result',
@@ -302,7 +303,7 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="Health Declaration"
+      name="HealthDeclaration"
       component={HealthDeclarationScreen}
       options={{
       drawerLabel: 'Health Declaration',
@@ -310,7 +311,7 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="Book Vaccination"
+      name="BookVaccination"
       component={BookVaccinationScreen}
       options={{
       drawerLabel: 'Book Vaccination',
@@ -318,7 +319,7 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="Book PCR Swab Test"
+      name="BookTest"
       component={BookTestScreen}
       options={{
       drawerLabel: 'Book PCR Swab Test',
@@ -326,7 +327,7 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="Check Crowd"
+      name="CheckCrowd"
       component={CheckCrowdScreen}
       options={{
       drawerLabel: 'Check Crowd',
@@ -334,7 +335,7 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="Travel Information"
+      name="TravelInformation"
       component={TravelInformationScreen}
       options={{
       drawerLabel: 'Travel Information',
@@ -350,7 +351,7 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="Employee Information"
+      name="EmployeeInfo"
       component={EmployeeInfoScreen}
       options={{
       drawerLabel: 'Employee Information',
@@ -413,7 +414,15 @@ function Admin({navigation}){
     />
 
 <Drawer.Screen
-      name="Verify Vaccine"
+      name="ManageCheckIn"
+      component={ManageCheckInScreen}
+      options={{
+      drawerLabel: 'Manage Locations',
+      }}
+    />
+
+<Drawer.Screen
+      name="VerifyVaccine"
       component={VerifyVaccineScreen}
       options={{
       drawerLabel: 'Verify Vaccine',
@@ -421,7 +430,7 @@ function Admin({navigation}){
     />
 
 <Drawer.Screen
-      name="Verify ART"
+      name="VerifyART"
       component={VerifyARTScreen}
       options={{
       drawerLabel: 'Verify ART',
@@ -429,7 +438,7 @@ function Admin({navigation}){
     />
 
     <Drawer.Screen
-      name="Check Crowd"
+      name="CheckCrowd"
       component={CheckCrowdScreen}
       options={{
       drawerLabel: 'Check Crowd',
@@ -437,7 +446,7 @@ function Admin({navigation}){
     />
     
     <Drawer.Screen
-      name="Register Employee"
+      name="RegisterEmployee"
       component={RegisterEmployeeScreen}
       options={{
       drawerLabel: 'Register Employee',
@@ -445,7 +454,7 @@ function Admin({navigation}){
     />
 
     <Drawer.Screen
-      name="Check-In Log"
+      name="CheckInLog"
       component={CheckInLogScreen}
       options={{
       drawerLabel: 'Check-In Log',
@@ -453,13 +462,22 @@ function Admin({navigation}){
     />
 
     <Drawer.Screen
-      name="Employee Information"
+      name="EmployeeInfo"
       component={EmployeeInfoScreen}
       options={{
       drawerLabel: 'Employee Information',
       }}
     />  
-      
+
+
+<Drawer.Screen
+      name="QrCode"
+      component={QrCodeScreen}
+      options={{
+      drawerLabel: '',
+      }}
+    />
+
   </Drawer.Navigator>
   /*<Drawer.Navigator
     initialRouteName={"Home"}

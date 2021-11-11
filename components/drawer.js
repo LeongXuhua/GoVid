@@ -24,6 +24,7 @@ const CustomSidebarMenu = (props) => {
   
   const [orgId, setOrgId] = useState();
   const [name, setName] = useState();
+  const [role, setRole] = useState('employee');
 
   const fetchData = async () => {
     try {
@@ -54,7 +55,9 @@ const fetchName= async () => {
     .doc(firebase.auth().currentUser.uid)
     .get()
     const name = await snapshot.data().name
+    const role = await snapshot.data().role
     setName(name);
+    setRole(role);
   }catch (e) {
       console.log(e)
     }
@@ -76,9 +79,10 @@ const fetchName= async () => {
       />
       <View style={{flexDirection: 'row'}}>
         <Text style={{marginTop: 0, marginBottom: 0}}> {name} </Text>
-        <TouchableOpacity>
+        {role=='manager'?[<TouchableOpacity onPress={() => props.navigation.navigate('Manager', { screen: 'Notification' })}>
           <MaterialCommunityIcons name="bell" size={30} style={{ color: "#007AFF", marginLeft: 95 }} />
-        </TouchableOpacity>
+        </TouchableOpacity>]:<Text/>}
+        
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />

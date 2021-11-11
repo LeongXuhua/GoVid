@@ -1,13 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, ActivityIndicator, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-
+import firebase from 'firebase';
+import "firebase/firestore";
+import { set } from 'react-native-reanimated';
 
 const ScanQRScreen = () =>{
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [isLoading, setIsloading] = useState(true);
+  const [orgId, setOrgId] = useState();
+  //const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const date = new Date();
+  const [user, setUser] = useState();
 
-  
+  const fetchData = async () => {
+    setIsloading(true);
+    try {
+      const snapshot = await firebase.firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+
+      const organisationId = await snapshot.data().organisationId;
+      setOrgId(organisationId);
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(()=>{
+    const fetchUser = async()=>{
+
+      const snapshot2 = await firebase.firestore()
+        .collection('organisations')
+        .doc(orgId)
+        .collection('employees')
+        .doc(firebase.auth().currentUser.uid)
+        .get().then((snapshot)=>{
+          setUser({
+            id: snapshot.data().id,
+            name: snapshot.data().name,
+            time: date,
+          })
+          setIsloading(false)
+        })
+      
+}
+    fetchUser();
+  }, [orgId])
+
+
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -25,9 +74,25 @@ const ScanQRScreen = () =>{
 
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
-    alert(`QR code with data ${data} has been scanned!`);
+    checkIn(data)
   };
 
+  //check in
+  function checkIn(location){
+    //add to location's collection
+    firebase.firestore().collection("organisations")
+              .doc(orgId)
+              .collection('locations')
+              .doc(location)
+              .collection(date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear())
+              .doc(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+              .set({
+                  id: user.id,
+                  name: user.name,
+                  time: date,
+              });
+    alert(user.name+" has successfully checked-in to "+location)
+  }
 
   //Check permission 
 
@@ -43,12 +108,16 @@ const ScanQRScreen = () =>{
   }
 
   // Return the view 
-
+  if(isLoading){
+    return(
+      <ActivityIndicator/>
+    )
+  }
   return (
     <View style={styles.container}>
 
     <View>
-    <Text style={styles.headertext}> Scan SafeEntry QR code </Text>
+    <Text style={styles.headertext}> Scan check-in QR code </Text>
     </View>
 
     <View style={styles.barcodebox}>

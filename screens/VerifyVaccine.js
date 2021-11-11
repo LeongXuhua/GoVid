@@ -11,6 +11,7 @@ const VerifyVaccineScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orgId, setOrgId]= useState();
   const [webResult, setWebResult] = useState(null);
+  const [counterRefresh, setCounterRefresh] = useState(0);
 
   const _handlePressButtonAsync = async (url) => {
     console.log(url)
@@ -47,10 +48,11 @@ const VerifyVaccineScreen = ({navigation}) => {
     const snapshot2 = await firebase.firestore()
         .collection('organisations')
         .doc(orgId)
-        .collection('employees').orderBy('id')
+        .collection('employees').where("vaccinationVerified","==","Unverified")
         .get()
 
     snapshot2.docs.map(function(doc){
+            console.log(doc.data().name+doc.data().vaccinationVerified)
             employee.push(
               {
                 //add employee fields into here
@@ -60,6 +62,7 @@ const VerifyVaccineScreen = ({navigation}) => {
                 num: doc.data().vaccinationDose,
                 date: doc.data().vaccinationDate,
                 certificate: doc.data().vaccinationResultLink,
+                verified: doc.data().vaccinationVerified,
                 uid: doc.id,
               }
             )
@@ -75,21 +78,9 @@ const VerifyVaccineScreen = ({navigation}) => {
 
 
 
-  const [tableData, setTableData] = useState([
-    { id: "12388", name:"Mary Tan", department:"Finance", vaccinated:"Yes", num: "2", date:"08/08/2021", certificate: "vaccine1.jpg"   },
-    {  id: "12399", name:"John Jones", department:"HR", vaccinated:"Yes", num: "2", date:"09/09/2021", certificate: "vaccine1.jpg"   },
-    { id: "12377", name:"Bruce Wayne", department:"Logistics", vaccinated:"No", num: "2", date:"07/07/2021", certificate: "vaccine1.jpg"   },
-    { id: "12366", name:"Tony Stark",  department:"Research", vaccinated:"Yes", num: "3", date:"06/06/2021", certificate: "vaccine1.jpg"   },
-    
-  ])
+  const [tableData, setTableData] = useState([])
 
-  const [filteredData, setFilteredData] = useState([
-    { id: "12388", name:"Mary Tan", department:"Finance", vaccinated:"Yes", num: "2", date:"08/08/2021", certificate: "vaccine1.jpg"   },
-    {  id: "12399", name:"John Jones", department:"HR", vaccinated:"Yes", num: "2", date:"09/09/2021", certificate: "vaccine1.jpg"   },
-    { id: "12377", name:"Bruce Wayne", department:"Logistics", vaccinated:"No", num: "2", date:"07/07/2021", certificate: "vaccine1.jpg"   },
-    { id: "12366", name:"Tony Stark",  department:"Research", vaccinated:"Yes", num: "3", date:"06/06/2021", certificate: "vaccine1.jpg"   },
-    
-  ])
+  const [filteredData, setFilteredData] = useState([])
 
   
   const [value, setValue] = React.useState(false);
@@ -184,6 +175,20 @@ const VerifyVaccineScreen = ({navigation}) => {
     }
   }
 
+  const processVaccine = (uid, choice)=>{
+    firebase.firestore()
+        .collection('organisations')
+        .doc(orgId)
+        .collection("employees")
+        .doc(uid)
+        .update({
+            "vaccinationVerified": choice,
+        }).then((function () {
+            alert('Vaccination results successfully '+choice+'!')
+            setCounterRefresh(counterRefresh+1)
+        }))
+  }
+
 
 
   if (isLoading){
@@ -241,11 +246,12 @@ const VerifyVaccineScreen = ({navigation}) => {
               <DataTable.Cell>{item.date}</DataTable.Cell>
               <DataTable.Cell>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</DataTable.Cell>
               <DataTable.Cell>
-               <Switch
+               {/*<Switch
                  value={value}
                    onValueChange={() => setValue(!value)}
                 />
-                 <Subheading>{switchValueLabel}</Subheading>
+                 <Subheading>{switchValueLabel}</Subheading>*/}
+                 <Button title="Accept" onPress={()=>{processVaccine(item.uid, 'Verified')}}/> <Button title="Reject" onPress={()=>{processVaccine(item.uid, 'Rejected')}}/>
                  </DataTable.Cell>
             </DataTable.Row>
           )}

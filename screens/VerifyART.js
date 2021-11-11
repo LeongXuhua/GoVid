@@ -20,6 +20,11 @@ const VerifyARTScreen = ({navigation}) => {
     
   ])
 
+  const [value, setValue] = useState(false);
+
+  const switchValueLabel = `  ${
+    value === true ? 'Approve' : 'Pending'
+  }`;
 
   const searchEmployeeID = (text) => {
     if (text) {

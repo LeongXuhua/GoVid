@@ -152,6 +152,7 @@ const UploadVaccinationScreen = () =>{
               "vaccinationResult": vaccinationResult,
               "vaccinationType": type,
               "vaccinationDose": dose,
+              "vaccinationVerified": 'Unverified',
           }).then((function () {
               alert('Vaccination results successfully uploaded!')
           }))
@@ -187,9 +188,9 @@ const UploadVaccinationScreen = () =>{
   value={type}
   onValueChange={(value, index)=>setType(value)}
   >
-  <Picker.item label="Pfizer" value="Pfizer"/>
-  <Picker.item label="Moderna" value="Moderna"/>
-  <Picker.item label="Sinovac" value="Sinovac"/>
+  <Picker.Item label="Pfizer" value="Pfizer"/>
+  <Picker.Item label="Moderna" value="Moderna"/>
+  <Picker.Item label="Sinovac" value="Sinovac"/>
 
   </Picker>
       </View>,
@@ -203,9 +204,9 @@ const UploadVaccinationScreen = () =>{
                  value={dose}
                  onValueChange={(value, index)=>setDose(value)}
              >
-                 <Picker.item label="1" value="1"/>
-                 <Picker.item label="2" value="2"/>
-                 <Picker.item label="3" value="3"/>
+                 <Picker.Item label="1" value="1"/>
+                 <Picker.Item label="2" value="2"/>
+                 <Picker.Item label="3" value="3"/>
 
              </Picker>
       </View>,

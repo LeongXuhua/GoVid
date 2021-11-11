@@ -112,13 +112,13 @@ var    registerUser = () => {
                     ARTDate: null,
                     ARTResult: null,
                     ARTResultLink: null,
-                    ARTVerified: false,
+                    ARTVerified: 'Not Uploaded',
                     vaccinationResultLink: null,
                     vaccinationResult: 'Not Vaccinated',
                     vaccinationDose: 0,
                     vaccinationDate: null,
                     vaccinationType: null,
-                    vaccinationVerified: false,
+                    vaccinationVerified: 'Not Uploaded',
                     workStatus: 'office',
 
                 });
@@ -218,8 +218,8 @@ var    registerUser = () => {
                     value={role}
                     onValueChange={(value, index)=>setRole(value)}
                 >
-                    <Picker.item label="employee" value="employee"/>
-                    <Picker.item label="manager" value="manager"/>
+                    <Picker.Item label="employee" value="employee"/>
+                    <Picker.Item label="manager" value="manager"/>
                 </Picker>
             </View>
 
@@ -235,9 +235,9 @@ var    registerUser = () => {
                     value={managerUid}
                     onValueChange={(value, index)=>setManagerUid(value)}
                 >
-                    <Picker.item label="No Manager" value=''/>
+                    <Picker.Item label="No Manager" value=''/>
                 {managerList.map((manager)=>(
-                    <Picker.item label={manager.id+" "+manager.name} value={manager.uid}/>
+                    <Picker.Item label={manager.id+" "+manager.name} value={manager.uid}/>
                 ))}
                 </Picker>
 

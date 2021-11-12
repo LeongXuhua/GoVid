@@ -157,16 +157,16 @@ if (isLoading){
             </Text>
           </View>
           <View style={styles.covidCasesBox}>
-            <MaterialCommunityIcons name="emoticon-dead" size={25} style={{ color: "#007AFF" }} />
+            <MaterialCommunityIcons name="resistor" size={25} style={{ color: "#007AFF" }} />
             <Text style={styles.topText}>
-              <Text>Total Deaths</Text>
+            <Text style={{fontSize: 10}}>Weekly Infection Growth Rate</Text>
             </Text>
             <Text style={styles.baseText}>
               <Text>{data ? data.data.deaths : 0}</Text>
             </Text>
           </View>
         </View>
-        <Text style={{ fontSize: 10, marginTop: -20, marginLeft: -180 }}>
+        <Text style={{ fontSize: 10, marginTop: -30, marginLeft: -180 }}>
           {data ? data.data.date : "null"}
         </Text>
 

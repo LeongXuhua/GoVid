@@ -48,7 +48,7 @@ const VerifyARTScreen = ({navigation}) => {
     const snapshot2 = await firebase.firestore()
         .collection('organisations')
         .doc(orgId)
-        .collection('employees').where("vaccinationVerified","==","Unverified")
+        .collection('employees').where("ARTVerified","==","Unverified")
         .get()
 
     snapshot2.docs.map(function(doc){

@@ -174,11 +174,9 @@ const VerifyARTScreen = ({navigation}) => {
             "ARTVerified": choice,
         }).then((function () {
             alert('ART results successfully '+choice+'!')
-            console.log(counterRefresh)
         }
         ));
     setCounterRefresh(!counterRefresh);
-    console.log(counterRefresh);
   }
 
 

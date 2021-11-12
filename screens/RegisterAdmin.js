@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, Button, Image, Modal, TouchableOpacity } from 'react-native';
 import firebase from 'firebase';
 import "firebase/firestore";
 
@@ -58,11 +58,23 @@ const RegisterAdminScreen = ({navigation}) => {
             
         };
     };
-    
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showPayment = () => {
+        setIsModalVisible(true);
+    }
+    const onPressSaveEdit = () => {
+        setIsModalVisible(false);
+    }
+
     return (
-        
-        <SafeAreaView style={styles.container}><ScrollView>
+        <SafeAreaView style={styles.container}>
+
+            <Image source={require("../assets/logo.png")} style={styles.logo}/>
+
             <Text style={styles.title}>Register Your Company</Text>
+            <View style={styles.inputLabelView}>
             <Text style={styles.text}>
                 Organisation Name
             </Text>
@@ -74,7 +86,9 @@ const RegisterAdminScreen = ({navigation}) => {
                     onChangeText={(value)=>setOrgName(value)}
                 />
             </View>
+            </View>
 
+            <View style={styles.inputLabelView}>
             <Text style={styles.text}>
                 Administrator Name
             </Text>
@@ -86,7 +100,9 @@ const RegisterAdminScreen = ({navigation}) => {
                     onChangeText={(value)=>setName(value)}
                 />
             </View>
+            </View>
 
+            <View style={styles.inputLabelView}>
             <Text style={styles.text}>
             Administrator Email
             </Text>
@@ -98,7 +114,9 @@ const RegisterAdminScreen = ({navigation}) => {
                     onChangeText={(value)=>setEmail(value)}
                 />
             </View>
+            </View>
 
+            <View style={styles.inputLabelView}>
             <Text style={styles.text}>
                 Password
             </Text>
@@ -110,14 +128,40 @@ const RegisterAdminScreen = ({navigation}) => {
                     onChangeText={(value)=>setPassword(value)}
                 />
             </View>
+            </View>
 
             <View style={styles.button}>
                 <Button
-                    title="Register"
-                    onPress={()=>registerOrg()}
+                    title="     Register     "
+                    onPress={()=>showPayment()}
                 />
             </View>
-        </ScrollView></SafeAreaView>
+            <View style={styles.button}>
+                <Button
+                    title="Back To Login"
+                    onPress={()=>navigation.popToTop()}
+                />
+            </View>
+
+            <Modal
+            animationType='slide'
+            transparent={true}
+            visible={isModalVisible}
+            onRequestClose={() => setIsModalVisible(false)}
+            >
+            <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+                <Text style={styles.modalText}>Please scan the QR code below to make payment:</Text>
+                <Image source={require("../assets/paymentQRcode.jpg")} style={{width: 200, height: 200}}/>
+            <TouchableOpacity
+                style={styles.modalSaveButton}
+                onPress={()=> onPressSaveEdit()}>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>Payment Done</Text>
+            </TouchableOpacity>
+            </View>
+            </View>
+            </Modal>
+            </SafeAreaView>
     )
 }
     
@@ -127,11 +171,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#51a4fb',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
+    logo: {
+        width: '100%',
+        height: '20%',
+        resizeMode: 'contain',
+      },
+
     title: {
-        marginTop: 80,
-        marginBottom: 30,
         color: "#EEEEEE",
         fontSize: 32,
         alignSelf: "center"
@@ -139,9 +189,12 @@ const styles = StyleSheet.create({
 
     text: {
         marginTop: 10,
-        marginLeft: 40,
-        
     },
+
+    inputLabelView: {
+        width: "70%",
+        justifyContent: 'flex-start',
+      },
 
     inputContainer: {
         borderWidth: 1,
@@ -154,7 +207,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         borderRadius: 10,
         height: 40,
-        width: "80%",
+        width: "100%",
         alignSelf: "center"
     },
 
@@ -165,8 +218,41 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        marginTop: 50,
-        paddingRight: 70,
-        paddingLeft: 70,
-    }
+        width: "70%",
+        borderRadius: 10,
+        marginBottom: 20,
+        marginTop: 20,
+        alignItems: "flex-end",
+    },
+
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+    
+      modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        elevation: 24,
+        borderWidth: 1,
+        borderColor: 'grey',
+      },
+    
+      modalText: {
+        fontSize: 15,
+        textAlign: 'center',
+      },
+    
+      modalSaveButton: {
+        backgroundColor: '#51a4fb',
+        borderRadius: 20,
+        padding: 10,
+        marginTop: 20,
+        elevation: 2
+      }
 });

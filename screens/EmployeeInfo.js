@@ -237,31 +237,31 @@ if (isLoading){
           
           <View><TouchableOpacity><TextInput
             placeholder="ID"
-            style={{height: 40, width: Platform.OS === 'android' ? 25:100, fontWeight: 'bold'}}
+            style={{height: 40, width: Platform.OS === 'android' ? 25:150, fontWeight: 'bold'}}
             onChangeText={(text) => searchEmployeeID(text)} /></TouchableOpacity></View>
           <View><TouchableOpacity><TextInput
             placeholder="Name"
-            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
             onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></View>
           <View><TouchableOpacity><TextInput
             placeholder="Email"
-            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
             onChangeText={(text) => searchEmail(text)} /></TouchableOpacity></View>
           <View><TouchableOpacity><TextInput
             placeholder="Manager ID"
-            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
             onChangeText={(text) => searchManagerID(text)} /></TouchableOpacity></View>
           <View><TouchableOpacity><TextInput
             placeholder="Manager Name"
-            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
             onChangeText={(text) => searchManagerName(text)} /></TouchableOpacity></View>
           <View><TouchableOpacity><TextInput
             placeholder="Vaccinated"
-            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
             onChangeText={(text) => searchVaccinated(text)} /></TouchableOpacity></View>
           <View><TouchableOpacity><TextInput
             placeholder="ART Result"
-            style={{height: 40, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
             onChangeText={(text) => searchArtResult(text)} /></TouchableOpacity></View>
         </DataTable.Header>
 
@@ -271,17 +271,17 @@ if (isLoading){
           renderItem={({ item }) => (
             
             <DataTable.Row>
-              <View style={{width: Platform.OS === 'android' ? 25:100}}><Text>{item.id}</Text></View>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.name}</Text></View>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.email}</Text></View>
-              <TouchableOpacity onPress={()=> onPressManagerID(item)} style={{width: Platform.OS === 'android' ? 100:200}}>
+              <View style={{width: Platform.OS === 'android' ? 25:150}}><Text>{item.id}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.name}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.email}</Text></View>
+              <TouchableOpacity onPress={()=> onPressManagerID(item)} style={{width: Platform.OS === 'android' ? 100:250}}>
                 <Text>{item.managerID}</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={()=> onPressManagerName(item)} style={{width: Platform.OS === 'android' ? 100:200}}>
+              <TouchableOpacity onPress={()=> onPressManagerName(item)} style={{width: Platform.OS === 'android' ? 100:250}}>
                 <Text>{item.managerName}</Text>
               </TouchableOpacity>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.vaccinated}</Text></View>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.artResult}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.vaccinated}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.artResult}</Text></View>
             </DataTable.Row>
           )}
         />

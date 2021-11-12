@@ -106,6 +106,7 @@ const UploadVaccinationScreen = () =>{
               "vaccinationType": null,
               "vaccinationDose": null,
               "vaccinationDate": null,
+              "vaccinationVerified": "Unverified",
           }).then((function () {
               alert('Vaccination results successfully uploaded!')
           }))

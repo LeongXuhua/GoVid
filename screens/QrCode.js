@@ -9,11 +9,14 @@ const QrCodeScreen = ({route}) => {
       <SafeAreaView style={styles.container}>        
         <Text style={styles.welcomeText}> {route.params.location} </Text>
 
+
+ <View style={styles.container}>
         <QRCode 
           value={route.params.location}
+
         />
 
-
+   </View>
       </SafeAreaView>
     );
   }
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#51a4fb',
     },
 
-    logo: {
+    logosize: {
       width: '100%',
       height: '20%',
       resizeMode: 'contain',

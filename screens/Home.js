@@ -231,19 +231,53 @@ if (isLoading){
 
  <View style={styles.statusContainer2}>
 
+           {/*Vaccinated*/}
           <View style={styles.statusBox}>
             <Text style={styles.topText}> {user?user.vaccinationResult:'No results'}</Text>
-            <MaterialCommunityIcons name="account-remove" size={45} style={{ color: "green" }} />
+            <MaterialCommunityIcons name="shield-check" size={45} style={{ color: "green" }} />
+            <Text style={styles.topText}> {user?user.vaccinationVerified:''}</Text>
+          </View>
+
+            {/*Vaccinated*/}
+            <View style={styles.statusBox}>
+            <Text style={styles.topText}> Partially Vaccinated</Text>
+            <MaterialCommunityIcons name="shield-half-full" size={45} style={{ color: "green" }} />
+            <Text style={styles.topText}> {user?user.vaccinationVerified:''}</Text>
+          </View>
+
+          </View>
+          <View style={styles.statusContainer2}>
+
+            {/*Unvaccinated*/}
+            <View style={styles.statusBox}>
+            <Text style={styles.topText}> Unvaccinated </Text>
+            <MaterialCommunityIcons name="shield-alert" size={45} style={{ color: "red" }} />
             <Text style={styles.topText}> {user?user.vaccinationVerified:''}</Text>
           </View>
      
-
-            {/*ART Positive*/}
-          <View style={styles.statusBox}>
-            <Text style={styles.topText}> ART {user?user.ARTResult:'No results'} </Text>
-            <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
+       {/*ART Positive*/}
+       <View style={styles.statusBox}>
+            <Text style={styles.topText}> ART Positive </Text>
+            <MaterialCommunityIcons name="account-plus" size={45} style={{ color: "red" }} />
+            <Text style={styles.topText}>Submitted 11/11/21</Text>
             <Text style={styles.topText}> {user?user.ARTVerified:''}</Text>
           </View>
+
+
+
+</View>
+
+<View style={styles.statusContainer2}>
+
+        {/*ART Negative*/}
+        <View style={styles.statusBox}>
+            <Text style={styles.topText}> ART Negative </Text>
+            <MaterialCommunityIcons name="account-check" size={45} style={{ color: "green" }} />
+            <Text style={styles.topText}>Submitted 11/11/21</Text>
+            <Text style={styles.topText}> {user?user.ARTVerified:''}</Text>
+          </View>
+
+
 
      </View>
 
@@ -478,12 +512,12 @@ const styles = StyleSheet.create({
 
   statusBox: {
     backgroundColor: "white",
-    width: "30%",
-    height: "100%",
+    width: "40%",
+    height: "80%",
     alignItems: "center",
     borderRadius: 25,
     padding: 10,
-    marginLeft: 10,
+    margin:10,
   },
 
   statusIcon: {

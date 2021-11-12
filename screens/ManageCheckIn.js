@@ -124,7 +124,7 @@ const ManageCheckInScreen = ({navigation}) =>{
           <Picker.Item label={location.name} value={location.uid}/>
                 ))}
         </Picker>
-        <Button title="Generate QR Code" onPress={()=>{navigation.navigate('Qr Code', {location: locationSelected})}} color = "yellowgreen" />
+        <Button title="Generate QR Code" onPress={()=>{navigation.navigate('QrCode', {location: locationSelected})}} color = "yellowgreen" />
         {locationQrCode?[<QRCode value={locationQrCode} getRef={(ref) => (setSvg(ref))} />,
         <Button title="Save QR Code" onPress={()=>{getDataURL()}} color = "yellowgreen" />]:<Text/>}
       </View>

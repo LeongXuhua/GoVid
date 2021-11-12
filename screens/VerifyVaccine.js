@@ -246,15 +246,13 @@ const VerifyVaccineScreen = ({navigation}) => {
               <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.vaccinated}</Text></View>
               <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.num}</Text></View>
               <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.date}</Text></View>
-              <View style={{width: Platform.OS === 'android' ? 100:250}}>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</View>
-              <View>
-               {/*<Switch
-                 value={value}
-                   onValueChange={() => setValue(!value)}
-                />
-                 <Subheading>{switchValueLabel}</Subheading>*/}
-                 <Button title="Accept" onPress={()=>{processVaccine(item.uid, 'Verified')}}/> <Button title="Reject" onPress={()=>{processVaccine(item.uid, 'Rejected')}}/>
+              <View>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</View>
+              <View style={styles.fixToText}>
+                 <Button title="Accept" onPress={()=>{processVaccine(item.uid, 'Verified')}}/> 
+                 <View style={{paddingLeft: 10}}>
+                 <Button title="Reject" onPress={()=>{processVaccine(item.uid, 'Rejected')}}/>
                  </View>
+              </View>
             </DataTable.Row>
           )}
         />
@@ -276,5 +274,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     paddingLeft: 10
+  },
+  
+  fixToText: {
+    flexDirection: 'row',
+    paddingLeft: Platform.OS === 'android' ? 15:150,
+    height: 35
   },
 });

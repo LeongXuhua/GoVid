@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button, Linking } from "react-native";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button, Platform } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { ActivityIndicator,DataTable, Switch, Colors, Subheading } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/core';
@@ -191,30 +191,30 @@ const VerifyARTScreen = ({navigation}) => {
       <DataTable>
         <DataTable.Header>
 
-          <DataTable.Title><TouchableOpacity><TextInput
-            placeholder="Employee ID"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeID(text)} /></TouchableOpacity></DataTable.Title>
-          <DataTable.Title><TouchableOpacity><TextInput
+          <View><TouchableOpacity><TextInput
+            placeholder="ID"
+            style={{height: 40, width: Platform.OS === 'android' ? 25:150, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmployeeID(text)} /></TouchableOpacity></View>
+          <View><TouchableOpacity><TextInput
             placeholder="Name"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></DataTable.Title>
-            <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></View>
+            <View><TouchableOpacity><TextInput
             placeholder="ART Status"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeResult(text)} /></TouchableOpacity></DataTable.Title>
-            <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmployeeResult(text)} /></TouchableOpacity></View>
+            <View><TouchableOpacity><TextInput
             placeholder="Date"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeDate(text)} /></TouchableOpacity></DataTable.Title>
-            <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmployeeDate(text)} /></TouchableOpacity></View>
+            <View><TouchableOpacity><TextInput
             placeholder="Certificate"
-            style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeCertificate(text)} /></TouchableOpacity></DataTable.Title>
-           <DataTable.Title><TouchableOpacity><TextInput
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
+            onChangeText={(text) => searchEmployeeCertificate(text)} /></TouchableOpacity></View>
+           <View><TouchableOpacity><TextInput
             placeholder="Action"
-            style={{padding: 2.5, width: 200}}
-             /></TouchableOpacity></DataTable.Title>
+            style={{height: 40, width: Platform.OS === 'android' ? 100:250, fontWeight: 'bold'}}
+             /></TouchableOpacity></View>
 
        
         </DataTable.Header>
@@ -224,19 +224,17 @@ const VerifyARTScreen = ({navigation}) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <DataTable.Row>
-              <DataTable.Cell>{item.id}</DataTable.Cell>
-              <DataTable.Cell>{item.name}</DataTable.Cell>
-              <DataTable.Cell>{item.result}</DataTable.Cell>
-              <DataTable.Cell>{item.date}</DataTable.Cell>
-              <DataTable.Cell>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</DataTable.Cell>
-              <DataTable.Cell>
-               {/*<Switch
-                 value={value}
-                   onValueChange={() => setValue(!value)}
-                />
-                 <Subheading>{switchValueLabel}</Subheading>*/}
-                 <Button title="Accept" onPress={()=>{processART(item.uid, 'Verified')}}/> <Button title="Reject" onPress={()=>{processART(item.uid, 'Rejected')}}/>
-                 </DataTable.Cell>
+              <View style={{width: Platform.OS === 'android' ? 25:150}}><Text>{item.id}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.name}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.result}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:250}}><Text>{item.date}</Text></View>
+              <View>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</View>
+              <View style={styles.fixToText}>
+                 <Button title="Accept" onPress={()=>{processART(item.uid, 'Verified')}}/> 
+                 <View style={{paddingLeft: 10}}>
+                 <Button title="Reject" onPress={()=>{processART(item.uid, 'Rejected')}}/>
+                 </View>
+              </View>
             </DataTable.Row>
           )}
         />
@@ -259,5 +257,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     paddingLeft: 10
+  },
+  
+  fixToText: {
+    flexDirection: 'row',
+    paddingLeft: Platform.OS === 'android' ? 15:150,
+    height: 35
   },
 });

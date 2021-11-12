@@ -76,8 +76,11 @@ const RegisterEmployeeScreen = () => {
 
 var    registerUser = () => {
         
-        if (0!=0){
-            //logic to catch invalid registration
+        if (id == '' && name == '' && email == '' && password == '' && role == '' && managerUid == ''){
+            alert("All fields are empty! Please try again")
+        }
+        else if(id == '' || name == '' || email == '' || password == '' || role == '' || managerUid == ''){
+            alert("One of the fields is empty! Please try again")
         }
         else{
             secondaryApp.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
@@ -209,12 +212,12 @@ var    registerUser = () => {
             </View>
 
             <Text style={styles.text}>
-                Employment Type
+                Employment Role
             </Text>
             <View style={styles.inputContainer}>
                 <Picker
                     selectedValue={role}
-                    style={styles.textInput}
+                    style={styles.pickerInput}
                     value={role}
                     onValueChange={(value, index)=>setRole(value)}
                 >
@@ -231,7 +234,7 @@ var    registerUser = () => {
 
             <Picker
                     selectedValue={managerUid}
-                    style={styles.textInput}
+                    style={styles.pickerInput}
                     value={managerUid}
                     onValueChange={(value, index)=>setManagerUid(value)}
                 >
@@ -272,15 +275,17 @@ const styles = StyleSheet.create({
     inputContainer: {
         borderWidth: 1,
         borderColor: 'lightgrey',
-        paddingBottom: 5,
-        paddingLeft: 10,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
     },
 
     textInput: {
-        paddingLeft: 10,
         height: 40,
+        padding: 10,
+        color: 'grey',
+    },
+
+    pickerInput: {
         padding: 10,
         color: 'grey',
     },

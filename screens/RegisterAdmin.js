@@ -45,7 +45,7 @@ const RegisterAdminScreen = ({navigation}) => {
                         alert("All fields are empty! Please try again")
                     }
                     else if(orgName == '' || name == '' || email == '' || password == ''){
-                        alert("One of the fields if empty! Please try again")
+                        alert("One of the fields is empty! Please try again")
                     }else{
                         alert(error)
                     }
@@ -64,7 +64,8 @@ const RegisterAdminScreen = ({navigation}) => {
     const showPayment = () => {
         setIsModalVisible(true);
     }
-    const onPressSaveEdit = () => {
+    const onPressMadePayment = () => {
+        registerOrg();
         setIsModalVisible(false);
     }
 
@@ -155,7 +156,7 @@ const RegisterAdminScreen = ({navigation}) => {
                 <Image source={require("../assets/paymentQRcode.jpg")} style={{width: 200, height: 200}}/>
             <TouchableOpacity
                 style={styles.modalSaveButton}
-                onPress={()=> onPressSaveEdit()}>
+                onPress={()=> onPressMadePayment()}>
                 <Text style={{color: 'white', fontWeight: 'bold'}}>Payment Done</Text>
             </TouchableOpacity>
             </View>

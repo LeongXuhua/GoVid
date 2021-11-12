@@ -102,11 +102,12 @@ const HomeScreen = ({ navigation }) => {
     );
   }
 
-  const [workStatus, setWorkStatus]=useState("office-building");
+
+  const [workStatus, setWorkStatus]=useState("office");
   const [workColor, setWorkColor]= useState("#007AFF")
 
   const toggleWorkStatus = () => {
-    /*setWorkStatus(workStatus === "home" ? "office-building" : "home");
+    /*setWorkStatus(workStatus === "home" ? "office" : "home");
     setWorkColor(workColor === "green" ? "#007AFF" : "green")*/
     if (workStatus=='home'){
       setWorkStatus('office')
@@ -128,9 +129,9 @@ const HomeScreen = ({ navigation }) => {
       })
     }
   }
-  if (isLoading){
-    return <ActivityIndicator/>
-  }
+if (isLoading){
+  return <ActivityIndicator/>
+}
   return (
     <ScrollView>
 
@@ -172,7 +173,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.casesCountries}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Manager', { screen: 'CasesCountries' });
+              navigation.navigate('Employee', { screen: 'CasesCountries' });
             }
             }>
             <Text style={styles.countriesText}>
@@ -196,7 +197,8 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={styles.divider} />
 
-        <View style={styles.statusContainer}>
+ <View style={styles.statusContainer2}>
+
           <View style={styles.statusBox}>
             <Text style={styles.topText}> {user?user.vaccinationResult:'No results'}</Text>
             <MaterialCommunityIcons name="account-remove" size={45} style={{ color: "green" }} />
@@ -206,18 +208,15 @@ const HomeScreen = ({ navigation }) => {
 
             {/*ART Positive*/}
           <View style={styles.statusBox}>
-          <Text style={styles.topText}> {user?user.ARTResult:'No results'} </Text>
+            <Text style={styles.topText}> {user?user.ARTResult:'No results'} </Text>
             <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
           </View>
-         
-  
-   {/*  
-          <View style={styles.statusBox}>
-            <Text style={styles.topText}> ART </Text>
-            <MaterialCommunityIcons name="account-check" size={45} style={{ color: "green" }} />
-          </View>
-        */}
 
+     </View>
+
+   <View style={styles.statusContainer2}>
+
+ {/*Work Status*/}
           <View style={styles.statusBox}>
             <TouchableOpacity
               onPress={toggleWorkStatus}>
@@ -225,8 +224,17 @@ const HomeScreen = ({ navigation }) => {
               {workStatus==='office'?[<MaterialCommunityIcons name='office-building' size={45} style={{ color: '#007AFF' }} />,<Text>Office</Text>]:[<MaterialCommunityIcons name='home' size={45} style={{ color: 'green' }} />,<Text>Home</Text>]}
             </TouchableOpacity>
           </View>
-       
+
+ {/*Check Out*/}
+          <View style={styles.statusBox}>
+          <Text style={styles.topText}>Check Out</Text>
+            <MaterialCommunityIcons name="exit-to-app" size={45} style={{ color: "green" }} />
+          </View>
+
         </View>
+
+
+
         <View style={styles.divider} />
 
         {/* MENU BUTTONS */}
@@ -234,9 +242,7 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.otherText}>What do you want to do today?</Text>
 
         <View style={styles.categoryContainer}>
-
- 
-       <TouchableOpacity
+        <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
               navigation.navigate('Manager', { screen: 'EmployeeInfo' })
@@ -303,6 +309,39 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
    
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate('Employee', { screen: 'UploadVaccination' })
+            }>
+            <View style={styles.categoryIcon}>
+              <MaterialCommunityIcons
+                name="note-plus"
+                size={30}
+                color="black"
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Upload Vaccination</Text>
+          </TouchableOpacity>
+        
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate('Manager', { screen: 'UploadART' })
+            }>
+            <View style={styles.categoryIcon}>
+              <MaterialCommunityIcons
+                name="newspaper-plus"
+                size={30}
+                color="black"
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Upload ART</Text>
+          </TouchableOpacity>
+
+</View>
+        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
+
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -322,25 +361,6 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate('Manager', { screen: 'UploadART' })
-            }>
-            <View style={styles.categoryIcon}>
-              <MaterialCommunityIcons
-                name="newspaper-plus"
-                size={30}
-                color="black"
-              />
-            </View>
-            <Text style={styles.categoryBtnTxt}>Upload ART</Text>
-          </TouchableOpacity>
-
-    </View>
-        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
-
-
-          <TouchableOpacity
-            style={styles.categoryBtn}
-            onPress={() =>
               navigation.navigate('Manager', { screen: 'BookVaccination' })
             }>
             <View style={styles.categoryIcon}>
@@ -352,8 +372,6 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <Text style={styles.categoryBtnTxt}>Book Vaccine</Text>
           </TouchableOpacity>
-
-
       
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -371,20 +389,6 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
 
-          <TouchableOpacity
-            style={styles.categoryBtn}
-            onPress={() =>
-              navigation.navigate('Manager', { screen: 'CheckCrowd' })
-            }>
-            <View style={styles.categoryIcon}>
-              <MaterialCommunityIcons
-                name="account-group"
-                size={30}
-                color="black"
-              />
-            </View>
-            <Text style={styles.categoryBtnTxt}>Cluster & Crowd</Text>
-          </TouchableOpacity>
 </View>
         <View style={[styles.categoryContainer, { marginTop: 10 }]}>
 
@@ -406,6 +410,8 @@ const HomeScreen = ({ navigation }) => {
    
 
         </View>
+
+     
 
       </SafeAreaView>
     </ScrollView>
@@ -436,6 +442,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 30,
   },
+
+    statusContainer2: {
+      flexDirection: "row",
+      padding: 10,
+    },
+
 
   logo: {
     width: '100%',
@@ -528,6 +540,13 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 10,
   },
+   categoryContainer2: {
+     flexDirection: 'row',
+      width: '90%',
+
+      marginTop: 25,
+      marginBottom: 10,
+    },
   categoryBtn: {
     flex: 1,
     width: '30%',

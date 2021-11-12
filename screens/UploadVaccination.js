@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#d4e9ff',
+        backgroundColor: '#51a4fb',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -281,8 +281,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 30,
         borderColor:'blue',
-        color: 'black',
-       
+        color: 'white',
     }
 
 });

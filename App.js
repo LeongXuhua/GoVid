@@ -35,8 +35,8 @@ import NotificationScreen from './screens/Notification';
 import ManageCheckInScreen from './screens/ManageCheckIn';
 import QrCodeScreen from './screens/QrCode';
 
-LogBox.ignoreAllLogs();
-console.warn = ()=>{};
+//LogBox.ignoreAllLogs();
+//console.warn = ()=>{};
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",
@@ -320,14 +320,6 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="CheckCrowd"
-      component={CheckCrowdScreen}
-      options={{
-      drawerLabel: 'Check Crowd',
-      }}
-    />
-
-    <Drawer.Screen
       name="TravelInformation"
       component={TravelInformationScreen}
       options={{
@@ -420,14 +412,6 @@ function Admin({navigation}){
       component={VerifyARTScreen}
       options={{
       drawerLabel: 'Verify ART',
-      }}
-    />
-
-    <Drawer.Screen
-      name="CheckCrowd"
-      component={CheckCrowdScreen}
-      options={{
-      drawerLabel: 'Check Crowd',
       }}
     />
     

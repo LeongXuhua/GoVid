@@ -1,30 +1,94 @@
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button, Linking } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { DataTable, Switch, Subheading } from 'react-native-paper';
+import { ActivityIndicator,DataTable, Switch, Colors, Subheading } from 'react-native-paper';
+
+import firebase from 'firebase';
+import "firebase/firestore";
+import * as WebBrowser from 'expo-web-browser';
 
 const VerifyARTScreen = ({navigation}) => {
-  const [tableData, setTableData] = useState([
-    { id: "12388", name:"Mary Tan", art:"Negative",  date:"08/08/2021", image: "  image1.jpg"   },
-    {  id: "12399", name:"John Jones", art:"Negative",  date:"09/09/2021", image: "  image1.jpg"   },
-    { id: "12377", name:"Bruce Wayne", department:"Logistics", art:"Positive",  date:"07/07/2021", image: "  image1.jpg"   },
-    { id: "12366", name:"Tony Stark", art:"Negative",  date:"06/06/2021", image: "  image1.jpg"   },
-    
-  ])
+  const [isLoading, setIsLoading] = useState(true);
+  const [orgId, setOrgId]= useState();
+  const [webResult, setWebResult] = useState(null);
+  const [counterRefresh, setCounterRefresh] = useState(0);
 
-  const [filteredData, setFilteredData] = useState([
-    { id: "12388", name:"Mary Tan", art:"Negative", date:"08/08/2021", image: "  image1.jpg"   },
-    {  id: "12399", name:"John Jones",  art:"Negative",  date:"09/09/2021", image: "  image1.jpg"   },
-    { id: "12377", name:"Bruce Wayne",art:"Positive",  date:"07/07/2021", image: "  image1.jpg"   },
-    { id: "12366", name:"Tony Stark",  art:"Negative", num: "3", date:"06/06/2021", image: "  image1.jpg"   },
-    
-  ])
+  const _handlePressButtonAsync = async (url) => {
+    console.log(url)
+    const webResult = await WebBrowser.openBrowserAsync(url);
+    setWebResult(webResult);
+    console.log(webResult)
+  };
 
-  const [value, setValue] = useState(false);
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const snapshot = await firebase.firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+
+      const organisationId = await snapshot.data().organisationId;
+      setOrgId(organisationId);
+    }
+
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(()=>{
+    const fetchEmployee = async()=>{
+    const employee =[];
+
+    const snapshot2 = await firebase.firestore()
+        .collection('organisations')
+        .doc(orgId)
+        .collection('employees').where("vaccinationVerified","==","Unverified")
+        .get()
+
+    snapshot2.docs.map(function(doc){
+            console.log(doc.data().name+doc.data().ARTVerified)
+            employee.push(
+              {
+                //add employee fields into here
+                id: doc.data().id,
+                name: doc.data().name,
+                result: doc.data().ARTResult,
+                num: doc.data().vaccinationDose,
+                date: doc.data().ARTDate,
+                certificate: doc.data().ARTResultLink,
+                verified: doc.data().ARTVerified,
+                uid: doc.id,
+              }
+            )
+          setTableData(employee)
+          setFilteredData(employee)
+          setIsLoading(false)
+        })
+        
+        
+    setIsLoading(false)}
+    fetchEmployee();
+  }, [orgId])
+
+
+
+  const [tableData, setTableData] = useState([])
+
+  const [filteredData, setFilteredData] = useState([])
+
+  
+  const [value, setValue] = React.useState(false);
 
   const switchValueLabel = `  ${
     value === true ? 'Approve' : 'Pending'
   }`;
+
 
   const searchEmployeeID = (text) => {
     if (text) {
@@ -54,11 +118,10 @@ const VerifyARTScreen = ({navigation}) => {
     }
   }
 
-
-  const searchEmployeeArt = (text) => {
+  const searchEmployeeVaccinated = (text) => {
     if (text) {
       const newData = tableData.filter((item) => {
-        const itemData = item.art ? item.art.toUpperCase() : "".toUpperCase();
+        const itemData = item.vaccinated ? item.vaccinated.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -68,6 +131,21 @@ const VerifyARTScreen = ({navigation}) => {
       setFilteredData(tableData);
     }
   }
+
+      const searchEmployeeNum = (text) => {
+    if (text) {
+      const newData = tableData.filter((item) => {
+        const itemData = item.num ? item.num.toUpperCase() : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+    }
+    else {
+      setFilteredData(tableData);
+    }
+  }
+
 
     const searchEmployeeDate = (text) => {
     if (text) {
@@ -83,10 +161,10 @@ const VerifyARTScreen = ({navigation}) => {
     }
   }
 
-      const searchEmployeeImage = (text) => {
+      const searchEmployeeCertificate = (text) => {
     if (text) {
       const newData = tableData.filter((item) => {
-        const itemData = item.image ? item.image.toUpperCase() : "".toUpperCase();
+        const itemData = item.certificate ? item.certificate.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -97,8 +175,25 @@ const VerifyARTScreen = ({navigation}) => {
     }
   }
 
+  const processART = (uid, choice)=>{
+    firebase.firestore()
+        .collection('organisations')
+        .doc(orgId)
+        .collection("employees")
+        .doc(uid)
+        .update({
+            "ARTVerified": choice,
+        }).then((function () {
+            alert('ART results successfully '+choice+'!')
+            setCounterRefresh(counterRefresh+1)
+        }))
+  }
 
 
+
+  if (isLoading){
+    return <ActivityIndicator />
+  }
 
   return (
     <SafeAreaView>
@@ -114,27 +209,27 @@ const VerifyARTScreen = ({navigation}) => {
             placeholder="Name"
             style={{padding: 2.5, width: 100}}
             onChangeText={(text) => searchEmployeeName(text)} /></TouchableOpacity></DataTable.Title>
-           
             <DataTable.Title><TouchableOpacity><TextInput
             placeholder="ART Status"
             style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeArt(text)} /></TouchableOpacity></DataTable.Title>
-
+            onChangeText={(text) => searchEmployeeVaccinated(text)} /></TouchableOpacity></DataTable.Title>
+            <DataTable.Title><TouchableOpacity><TextInput
+            placeholder="No. of Dose"
+            style={{padding: 2.5, width: 100}}
+            onChangeText={(text) => searchEmployeeNum(text)} /></TouchableOpacity></DataTable.Title>
             <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Date"
             style={{padding: 2.5, width: 100}}
             onChangeText={(text) => searchEmployeeDate(text)} /></TouchableOpacity></DataTable.Title>
             <DataTable.Title><TouchableOpacity><TextInput
-            placeholder="image"
+            placeholder="Certificate"
             style={{padding: 2.5, width: 100}}
-            onChangeText={(text) => searchEmployeeImage(text)} /></TouchableOpacity></DataTable.Title>
-            <DataTable.Title><TouchableOpacity><TextInput
+            onChangeText={(text) => searchEmployeeCertificate(text)} /></TouchableOpacity></DataTable.Title>
+           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Status"
             style={{padding: 2.5, width: 200}}
              /></TouchableOpacity></DataTable.Title>
 
-       
-       
        
         </DataTable.Header>
 
@@ -145,20 +240,25 @@ const VerifyARTScreen = ({navigation}) => {
             <DataTable.Row>
               <DataTable.Cell>{item.id}</DataTable.Cell>
               <DataTable.Cell>{item.name}</DataTable.Cell>
-              <DataTable.Cell>{item.art}</DataTable.Cell>
+              <DataTable.Cell>{item.department}</DataTable.Cell>
+              <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
+              <DataTable.Cell>{item.num}</DataTable.Cell>
               <DataTable.Cell>{item.date}</DataTable.Cell>
-              <DataTable.Cell>{item.image}</DataTable.Cell>
+              <DataTable.Cell>{item.certificate?<Button title="Download" onPress={()=>{_handlePressButtonAsync(item.certificate)}}/>:<Text>No Certificate Found</Text>}</DataTable.Cell>
               <DataTable.Cell>
-               <Switch
+               {/*<Switch
                  value={value}
                    onValueChange={() => setValue(!value)}
                 />
-                 <Subheading>{switchValueLabel}</Subheading>
+                 <Subheading>{switchValueLabel}</Subheading>*/}
+                 <Button title="Accept" onPress={()=>{processART(item.uid, 'Verified')}}/> <Button title="Reject" onPress={()=>{processART(item.uid, 'Rejected')}}/>
                  </DataTable.Cell>
             </DataTable.Row>
           )}
         />
       </DataTable>
+      <View style={styles.container}>
+    </View>
     </ScrollView>
     </SafeAreaView>
   );

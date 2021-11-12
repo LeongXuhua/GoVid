@@ -117,9 +117,10 @@ const UploadARTScreen = (props) =>{
           .collection("employees")
           .doc(userId)
           .update({
-              "ARTDate" : date,
+              "ARTDate" : text,
               "ARTResultLink" : downloadURL,
               "ARTResult": testResult,
+              "ARTVerified": 'Unverified',
           }).then((function () {
               alert('ART results successfully uploaded!')
           }))

@@ -102,20 +102,23 @@ const ManageCheckInScreen = ({navigation}) =>{
     <View style={styles.container}>
 
       <View style={styles.container}> 
-        <Text> Add a location: </Text>
+        <Text style={styles.otherText}> Add a location: </Text>
         <TextInput
           style= {styles.textInput}
-          placeholder="new location"
+          placeholder="Insert Location"
           value={locationNew}
           onChangeText={(value)=>setLocationNew(value)}
                 />
+                
         <Button title="Add Location" onPress={()=>{addLocation(locationNew)}} color = "yellowgreen" />
       </View>
 
 
       <View style={styles.container}> 
-        <Text> Select Location: </Text>
+        <Text style={styles.otherText}> Select Location: </Text>
+    
         <Picker
+         style={styles.pickerText}
           selectedValue={locationSelected}
           placeholder='Select Location'
           onValueChange={(value, index)=>setLocationSelected(value)}
@@ -124,10 +127,14 @@ const ManageCheckInScreen = ({navigation}) =>{
           <Picker.Item label={location.name} value={location.uid}/>
                 ))}
         </Picker>
+      
+        </View>
+      
+<View style={styles.container}>
         <Button title="Generate QR Code" onPress={()=>{navigation.navigate('QrCode', {location: locationSelected})}} color = "yellowgreen" />
         {locationQrCode?[<QRCode value={locationQrCode} getRef={(ref) => (setSvg(ref))} />,
         <Button title="Save QR Code" onPress={()=>{getDataURL()}} color = "yellowgreen" />]:<Text/>}
-      </View>
+        </View>
     </View>
       );
     };
@@ -138,21 +145,18 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#d4e9ff',
+        backgroundColor: '#51a4fb',
         alignItems: 'center',
         justifyContent: 'center',
     },
 
-
-
-
-  questionText: {
-    color: "#000000",
-    marginTop: 12,
-    marginBottom: 8,
-    fontSize: 18,
-  
-},
+    questionText: {
+      color: "#000000",
+      marginTop: 12,
+      marginBottom: 8,
+      fontSize: 18,
+    
+  },
 
   buttonContainer: {
     marginTop: 30,
@@ -160,10 +164,19 @@ const styles = StyleSheet.create({
   },
 
   textInput: {
-    paddingLeft: 10,
     height: 40,
+    margin: 12,
+    borderWidth: 1,
     padding: 10,
-    color: 'grey',
+    backgroundColor: 'white',
+    fontSize: 18,
+},
+
+
+otherText: {
+  color: "#EEEEEE",
+  fontSize: 24,
+  margin: 10,
 },
 
   text: {
@@ -171,12 +184,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
 },
 
-    picker: {
-        width: 150,
-        height: 30,
-        borderColor:'blue',
-        color: 'red',
-       
-    }
+pickerText:{
+height: 40, 
+width: 150,
+fontSize: 18,
+}
 
 });

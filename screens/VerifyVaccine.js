@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button, Linking } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { ActivityIndicator,DataTable, Switch, Colors, Subheading } from 'react-native-paper';
-
+import { useIsFocused } from '@react-navigation/core';
 import firebase from 'firebase';
 import "firebase/firestore";
 import * as WebBrowser from 'expo-web-browser';
@@ -12,7 +12,7 @@ const VerifyVaccineScreen = ({navigation}) => {
   const [orgId, setOrgId]= useState();
   const [webResult, setWebResult] = useState(null);
   const [counterRefresh, setCounterRefresh] = useState(0);
-
+  const isFocused = useIsFocused();
   const _handlePressButtonAsync = async (url) => {
     console.log(url)
     const webResult = await WebBrowser.openBrowserAsync(url);
@@ -43,38 +43,40 @@ const VerifyVaccineScreen = ({navigation}) => {
 
   useEffect(()=>{
     const fetchEmployee = async()=>{
-    const employee =[];
+      if (orgId){
+        const employee =[];
 
-    const snapshot2 = await firebase.firestore()
-        .collection('organisations')
-        .doc(orgId)
-        .collection('employees').where("vaccinationVerified","==","Unverified")
-        .get()
+        const snapshot2 = await firebase.firestore()
+          .collection('organisations')
+          .doc(orgId)
+          .collection('employees').where("vaccinationVerified","==","Unverified")
+          .get()
 
-    snapshot2.docs.map(function(doc){
-            console.log(doc.data().name+doc.data().vaccinationVerified)
-            employee.push(
-              {
-                //add employee fields into here
-                id: doc.data().id,
-                name: doc.data().name,
-                vaccinated: doc.data().vaccinationResult,
-                num: doc.data().vaccinationDose,
-                date: doc.data().vaccinationDate,
-                certificate: doc.data().vaccinationResultLink,
-                verified: doc.data().vaccinationVerified,
-                uid: doc.id,
-              }
-            )
+        setTableData([]);
+        setFilteredData([]);
+
+        snapshot2.docs.map(function(doc){
+          employee.push(
+            {
+              //add employee fields into here
+              id: doc.data().id,
+              name: doc.data().name,
+              vaccinated: doc.data().vaccinationResult,
+              num: doc.data().vaccinationDose,
+              date: doc.data().vaccinationDate,
+              certificate: doc.data().vaccinationResultLink,
+              verified: doc.data().vaccinationVerified,
+              uid: doc.id,
+            }
+          )
           setTableData(employee)
           setFilteredData(employee)
           setIsLoading(false)
         })
-        
-        
-    setIsLoading(false)}
+        setIsLoading(false)}
+      }
     fetchEmployee();
-  }, [orgId])
+  }, [orgId, isFocused, counterRefresh])
 
 
 
@@ -226,7 +228,7 @@ const VerifyVaccineScreen = ({navigation}) => {
             style={{padding: 2.5, width: 100}}
             onChangeText={(text) => searchEmployeeCertificate(text)} /></TouchableOpacity></DataTable.Title>
            <DataTable.Title><TouchableOpacity><TextInput
-            placeholder="Status"
+            placeholder="Action"
             style={{padding: 2.5, width: 200}}
              /></TouchableOpacity></DataTable.Title>
 
@@ -240,7 +242,6 @@ const VerifyVaccineScreen = ({navigation}) => {
             <DataTable.Row>
               <DataTable.Cell>{item.id}</DataTable.Cell>
               <DataTable.Cell>{item.name}</DataTable.Cell>
-              <DataTable.Cell>{item.department}</DataTable.Cell>
               <DataTable.Cell>{item.vaccinated}</DataTable.Cell>
               <DataTable.Cell>{item.num}</DataTable.Cell>
               <DataTable.Cell>{item.date}</DataTable.Cell>

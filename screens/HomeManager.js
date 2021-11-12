@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ScrollVi
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase';
 import "firebase/firestore";
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator,} from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/core';
 
 const HomeScreen = ({ navigation }) => {
   const url = "https://wrapapi.com/use/yx/moh/covidstatistic/latest?wrapAPIKey=6acPafdyuNtO4dJQlEwc4xLhOGLOzol8";
@@ -11,6 +12,8 @@ const HomeScreen = ({ navigation }) => {
   const [isLoading, setIsloading] = useState(false);
   const [orgId, setOrgId] = useState();
   const [user, setUser]=useState();
+  const [refreshCounter, setRefreshCounter]=useState(false);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchCovidData = async () => {
@@ -39,25 +42,53 @@ const HomeScreen = ({ navigation }) => {
   useEffect(()=>{
     try{
       const fetchWorkStatus = async () => {
-      const snapshot = await firebase.firestore()
-          .collection('organisations')
-          .doc(orgId)
-          .collection('employees')
-          .doc(firebase.auth().currentUser.uid)
-          .get()
+        if (orgId){
+          const snapshot = await firebase.firestore()
+              .collection('organisations')
+              .doc(orgId)
+              .collection('employees')
+              .doc(firebase.auth().currentUser.uid)
+              .get()
 
-      setUser(snapshot.data());
-      const workStatus = await snapshot.data().workStatus;
-      setWorkStatus(workStatus)
-      setIsloading(false);
-      }
+          setUser(snapshot.data());
+          const workStatus = await snapshot.data().workStatus;
+          setWorkStatus(workStatus)
+          setIsloading(false);
+          }
+        }
       fetchWorkStatus();
     }
     catch (e) {
       console.log(e)
     }
-  }, [orgId])
+  }, [orgId, isFocused, refreshCounter])
 
+  const checkOut=()=>{
+    if (user.checkIn){
+      //check out from location's collection
+      firebase.firestore().collection("organisations")
+        .doc(orgId)
+        .collection('locations')
+        .doc(user.checkIn.location)
+        .collection(user.checkIn.date)
+        .doc(user.checkIn.time)
+        .update({
+            checkOut:new Date(),
+        });
+      //check out from employee's collection
+        firebase.firestore().collection("organisations")
+        .doc(orgId)
+        .collection('employees')
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+            checkIn:null,
+        });
+      alert('checked out from '+user.checkIn.location)
+      }else{
+        alert('no locations to check out from!')
+      }
+    setRefreshCounter(!refreshCounter)
+  }
 
   const urlNews = "https://newsapi.org/v2/top-headlines?country=sg&q=covid&apiKey=88ccbf5968f446d1a11595782665a8d4";
   const [news, setNews] = useState();
@@ -104,11 +135,8 @@ const HomeScreen = ({ navigation }) => {
 
 
   const [workStatus, setWorkStatus]=useState("office");
-  const [workColor, setWorkColor]= useState("#007AFF")
 
   const toggleWorkStatus = () => {
-    /*setWorkStatus(workStatus === "home" ? "office" : "home");
-    setWorkColor(workColor === "green" ? "#007AFF" : "green")*/
     if (workStatus=='home'){
       setWorkStatus('office')
       firebase.firestore().collection("organisations")
@@ -127,7 +155,11 @@ const HomeScreen = ({ navigation }) => {
       .update({
           workStatus: 'home',
       })
+      if(user.checkIn){
+        checkOut();
+      }
     }
+    setRefreshCounter(refreshCounter+1)
   }
 if (isLoading){
   return <ActivityIndicator/>
@@ -157,7 +189,7 @@ if (isLoading){
             </Text>
           </View>
           <View style={styles.covidCasesBox}>
-            <MaterialCommunityIcons name="resistor" size={25} style={{ color: "#007AFF" }} />
+          <MaterialCommunityIcons name="resistor" size={25} style={{ color: "#007AFF" }} />
             <Text style={styles.topText}>
             <Text style={{fontSize: 10}}>Weekly Infection Growth Rate</Text>
             </Text>
@@ -173,7 +205,7 @@ if (isLoading){
         <View style={styles.casesCountries}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Employee', { screen: 'CasesCountries' });
+              navigation.navigate('Manager', { screen: 'CasesCountries' });
             }
             }>
             <Text style={styles.countriesText}>
@@ -208,8 +240,9 @@ if (isLoading){
 
             {/*ART Positive*/}
           <View style={styles.statusBox}>
-            <Text style={styles.topText}> {user?user.ARTResult:'No results'} </Text>
+            <Text style={styles.topText}> ART {user?user.ARTResult:'No results'} </Text>
             <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
+            <Text style={styles.topText}> {user?user.ARTVerified:''}</Text>
           </View>
 
      </View>
@@ -221,14 +254,23 @@ if (isLoading){
             <TouchableOpacity
               onPress={toggleWorkStatus}>
               <Text style={styles.topText}>Work Status</Text>
-              {workStatus==='office'?[<MaterialCommunityIcons name='office-building' size={45} style={{ color: '#007AFF' }} />,<Text>Office</Text>]:[<MaterialCommunityIcons name='home' size={45} style={{ color: 'green' }} />,<Text>Home</Text>]}
+              {(!user)
+                ?[<MaterialCommunityIcons name='home' size={45} style={{ color: 'green' }} />,<Text>Home</Text>]
+                :user.checkIn
+                ?[<MaterialCommunityIcons name='office-building' size={45} style={{ color: '#007AFF' }} />,<Text>{user.checkIn.location}</Text>]
+                :workStatus==='office'
+                ?[<MaterialCommunityIcons name='office-building' size={45} style={{ color: '#007AFF' }} />,<Text>Office</Text>]
+                :[<MaterialCommunityIcons name='home' size={45} style={{ color: 'green' }} />,<Text>Home</Text>]}
             </TouchableOpacity>
           </View>
 
  {/*Check Out*/}
           <View style={styles.statusBox}>
-          <Text style={styles.topText}>Check Out</Text>
-            <MaterialCommunityIcons name="exit-to-app" size={45} style={{ color: "green" }} />
+            <TouchableOpacity
+              onPress={checkOut}>
+              <Text style={styles.topText}>Check Out</Text>
+              <MaterialCommunityIcons name="exit-to-app" size={45} style={{ color: "green" }} />
+            </TouchableOpacity>
           </View>
 
         </View>

@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, Button, ActivityIndicator, } from 'react-native
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebase from 'firebase';
 import "firebase/firestore";
-import { set } from 'react-native-reanimated';
 
 const ScanQRScreen = () =>{
   const [hasPermission, setHasPermission] = useState(null);
@@ -14,6 +13,8 @@ const ScanQRScreen = () =>{
   const [time, setTime] = useState();
   const date = new Date();
   const [user, setUser] = useState();
+  const [checkInDetail, setCheckInDetail] =  useState();
+  const [refreshCounter, setRefreshCounter] = useState(0);
 
   const fetchData = async () => {
     setIsloading(true);
@@ -49,12 +50,13 @@ const ScanQRScreen = () =>{
             name: snapshot.data().name,
             time: date,
           })
+          setCheckInDetail(snapshot.data().checkIn)
           setIsloading(false)
         })
       
 }
     fetchUser();
-  }, [orgId])
+  }, [orgId, refreshCounter])
 
 
   useEffect(() => {
@@ -79,19 +81,53 @@ const ScanQRScreen = () =>{
 
   //check in
   function checkIn(location){
+    const fullDate = date
+    const dateName = date.getDate().toString().padStart(2,0) + '-' + (date.getMonth()+1).toString().padStart(2,0) + '-' + date.getFullYear()
+    const timeName = date.getHours().toString().padStart(2,0)+":"+date.getMinutes().toString().padStart(2,0)+":"+date.getSeconds().toString().padStart(2,0)
+
+    //check out of previous location
+    if (checkInDetail){
+      firebase.firestore().collection("organisations")
+        .doc(orgId)
+        .collection('locations')
+        .doc(checkInDetail.location)
+        .collection(checkInDetail.date)
+        .doc(checkInDetail.time)
+        .update({
+            checkOut:date,
+        });
+      }
+
     //add to location's collection
     firebase.firestore().collection("organisations")
               .doc(orgId)
               .collection('locations')
               .doc(location)
-              .collection(date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear())
-              .doc(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+              .collection(dateName)
+              .doc(timeName)
               .set({
                   id: user.id,
                   name: user.name,
-                  time: date,
+                  time: fullDate,
+                  checkOut: null,
               });
+
+    // add to user's collection of current location
+    firebase.firestore().collection("organisations")
+              .doc(orgId)
+              .collection('employees')
+              .doc(firebase.auth().currentUser.uid)
+              .update({
+                  workStatus: 'office',
+                  checkIn: {
+                    location: location,
+                    date: dateName,
+                    time: timeName,
+                  },
+              });
+
     alert(user.name+" has successfully checked-in to "+location)
+    setRefreshCounter(refreshCounter+1)
   }
 
   //Check permission 

@@ -181,18 +181,10 @@ function Employee({navigation}){
     />
 
     <Drawer.Screen
-      name="World Covid-19 Tracker"
+      name="CasesCountries"
       component={CasesCountriesScreen}
       options={{
       drawerLabel: 'World Covid-19 Tracker',
-      }}
-    />
-
-<Drawer.Screen
-      name="CheckCrowd"
-      component={CheckCrowdScreen}
-      options={{
-      drawerLabel: 'Check Crowd',
       }}
     />
       
@@ -344,7 +336,7 @@ function Manager({navigation}){
     />
 
     <Drawer.Screen
-      name="World Covid-19 Tracker"
+      name="CasesCountries"
       component={CasesCountriesScreen}
       options={{
       drawerLabel: 'World Covid-19 Tracker',

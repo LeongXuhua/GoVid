@@ -7,8 +7,6 @@ import firebase from 'firebase';
 import "firebase/firestore";
 import 'firebase/firebase-storage';
 
-import QrCodeScreen from './QrCode';
-
 const ManageCheckInScreen = ({navigation}) =>{
   const [counter, setCounter]=useState(0);
   const [isLoading, setIsLoading] = useState(true);

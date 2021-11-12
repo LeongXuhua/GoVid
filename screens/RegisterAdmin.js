@@ -9,7 +9,7 @@ const RegisterAdminScreen = ({navigation}) => {
     const [email, setEmail]=useState('');
     const [password, setPassword]=useState('');
 
-    registerOrg = () => {
+    const registerOrg = () => {
         if (0!=0){
             //conditionals
         }

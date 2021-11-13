@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
         setVacColor(user.vaccinationVerified==="Verified"?'green':user.vaccinationVerified==="Rejected"?'red':'orange')
         setVacIcon(user.vaccinationResult==='Fully Vaccinated'?'shield-check':user.vaccinationResult==='Partially Vaccinated'?'shield-half-full':'shield-alert')
         setARTColor(user.ARTVerified==="Verified"?'green':user.ARTVerified==="Rejected"?'red':'orange')
-        setARTIcon(user.ARTResult==='negative'?'shield-check':'shield-alert')
+        setARTIcon(user.ARTResult==='negative'?'account-check':'account-plus')
       }
     }
     catch (e) {

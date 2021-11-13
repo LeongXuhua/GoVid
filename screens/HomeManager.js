@@ -268,9 +268,9 @@ if (isLoading){
 
         <View style={styles.statusContainer2}>
 
-          {/*Vaccination*/}
+           {/*Vaccination*/}
           <View style={styles.statusBox}>
-            <Text style={styles.topText}> {user?user.vaccinationResult:'No results'}</Text>
+          <Text style={styles.topText}> {!user?'No Vaccine Results':user.vaccinationResult?user.vaccinationResult:'No Vaccine Results'}</Text>
             <MaterialCommunityIcons name={vacIcon} size={45} style={{ color: vacColor }} />
             <Text style={styles.topText}> {user?user.vaccinationVerified:''}</Text>
           </View>
@@ -279,7 +279,7 @@ if (isLoading){
           <View style={styles.statusBox}>
             <Text style={styles.topText}> ART {user?user.ARTResult:''} </Text>
             <MaterialCommunityIcons name={ARTIcon} size={45} style={{ color: ARTColor }} />
-            <Text style={styles.topText}>Submitted {user?user.ARTDate:''}</Text>
+            <Text style={styles.topText}>{!user?'':user.ARTDate?'Submitted'+user.ARTDate:'no ART submitted'}</Text>
             <Text style={styles.topText}> {user?user.ARTVerified:''}</Text>
           </View>
 

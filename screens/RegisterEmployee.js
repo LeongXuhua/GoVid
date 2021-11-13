@@ -4,19 +4,22 @@ import firebase from 'firebase';
 import "firebase/firestore";
 import { secondaryApp } from '../App';
 import { ActivityIndicator } from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/core';
 
 const RegisterEmployeeScreen = () => {
     const [id, setId]=useState('');
     const [name, setName]=useState('');
     const [email, setEmail]=useState('');
     const [password, setPassword]=useState('');
-    const [role, setRole]=useState('');
+    const [role, setRole]=useState('employee');
     const [managerId, setManagerId]=useState('');
     const [managerName, setManagerName]=useState('');
     const [orgId, setOrgId] = useState();
     const [managerList, setManagerList] = useState([]);
     const [isLoading, setIsloading] = useState(true);
-    const [managerUid, setManagerUid] = useState();
+    const [managerUid, setManagerUid] = useState('');
+    const isFocused = useIsFocused();
+    const [refresh, setRefresh] = useState(false);
 
     const fetchData = async () => {
         setIsloading(true);
@@ -61,7 +64,7 @@ const RegisterEmployeeScreen = () => {
         setIsloading(false)
     }
         fetchEmployee();
-      }, [orgId])
+      }, [orgId, isFocused, refresh])
 
       const setManagerDetail= async (uid)=>{
         const manager = await firebase.firestore()
@@ -79,7 +82,7 @@ var    registerUser = () => {
         if (id == '' && name == '' && email == '' && password == '' && role == '' && managerUid == ''){
             alert("All fields are empty! Please try again")
         }
-        else if(id == '' || name == '' || email == '' || password == '' || role == '' || managerUid == ''){
+        else if(id == '' || name == '' || email == '' || password == '' || role == '' || (role == 'employee' && managerUid == '')){
             alert("One of the fields is empty! Please try again")
         }
         else{
@@ -151,7 +154,15 @@ var    registerUser = () => {
                         });
 
                     alert('An account for '+name+' has been successfully created!')
-                    }                   
+                    } 
+                setRefresh(!refresh);
+                setId('');
+                setName('');
+                setEmail('');
+                setPassword('');
+                setRole('employee');
+                setManagerUid('');
+
             })
         };
     };
@@ -227,7 +238,7 @@ var    registerUser = () => {
             </View>
 
             <Text style={styles.text}>
-                    Manager ID
+                    Manager Details
             </Text>
 
             <View style={styles.inputContainer}>

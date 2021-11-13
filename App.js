@@ -35,8 +35,8 @@ import NotificationScreen from './screens/Notification';
 import ManageCheckInScreen from './screens/ManageCheckIn';
 import QrCodeScreen from './screens/QrCode';
 
-//LogBox.ignoreAllLogs();
-//console.warn = ()=>{};
+LogBox.ignoreAllLogs();
+console.warn = ()=>{};
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaaAbFMM4ki7OOTJbM1sy8ocpplngW0uo",

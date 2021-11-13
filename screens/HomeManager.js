@@ -14,6 +14,10 @@ const HomeScreen = ({ navigation }) => {
   const [user, setUser]=useState();
   const [refreshCounter, setRefreshCounter]=useState(false);
   const isFocused = useIsFocused();
+  const [vacColor, setVacColor]=useState('orange');
+  const [vacIcon, setVacIcon]=useState('shield-alert');
+  const [ARTColor, setARTColor]=useState('orange');
+  const [ARTIcon, setARTIcon]=useState('account-plus')
 
   useEffect(() => {
     const fetchCovidData = async () => {
@@ -63,6 +67,22 @@ const HomeScreen = ({ navigation }) => {
     }
   }, [orgId, isFocused, refreshCounter])
 
+//set vaccination and art status
+  useEffect(()=>{
+    try{
+      if (user){
+        setVacColor(user.vaccinationVerified==="Verified"?'green':user.vaccinationVerified==="Rejected"?'red':'orange')
+        setVacIcon(user.vaccinationResult==='Fully Vaccinated'?'shield-check':user.vaccinationResult==='Partially Vaccinated'?'shield-half-full':'shield-alert')
+        setARTColor(user.ARTVerified==="Verified"?'green':user.ARTVerified==="Rejected"?'red':'orange')
+        setARTIcon(user.ARTResult==='negative'?'shield-check':'shield-alert')
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }, [user])
+
+//checkout function for workstatus and check out button  
   const checkOut=()=>{
     if (user.checkIn){
       const date = new Date();
@@ -246,27 +266,28 @@ if (isLoading){
 
         <View style={styles.divider} />
 
- <View style={styles.statusContainer2}>
+        <View style={styles.statusContainer2}>
 
+          {/*Vaccination*/}
           <View style={styles.statusBox}>
             <Text style={styles.topText}> {user?user.vaccinationResult:'No results'}</Text>
-            <MaterialCommunityIcons name="account-remove" size={45} style={{ color: "green" }} />
+            <MaterialCommunityIcons name={vacIcon} size={45} style={{ color: vacColor }} />
             <Text style={styles.topText}> {user?user.vaccinationVerified:''}</Text>
           </View>
-     
 
-            {/*ART Positive*/}
+          {/*ART Result*/}
           <View style={styles.statusBox}>
-            <Text style={styles.topText}> ART {user?user.ARTResult:'No results'} </Text>
-            <MaterialCommunityIcons name="alert-plus" size={45} style={{ color: "red" }} />
+            <Text style={styles.topText}> ART {user?user.ARTResult:''} </Text>
+            <MaterialCommunityIcons name={ARTIcon} size={45} style={{ color: ARTColor }} />
+            <Text style={styles.topText}>Submitted {user?user.ARTDate:''}</Text>
             <Text style={styles.topText}> {user?user.ARTVerified:''}</Text>
           </View>
 
-     </View>
+        </View>
 
    <View style={styles.statusContainer2}>
 
- {/*Work Status*/}
+      {/*Work Status*/}
           <View style={styles.statusBox}>
             <TouchableOpacity
               onPress={toggleWorkStatus}>

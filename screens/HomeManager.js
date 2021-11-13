@@ -65,6 +65,23 @@ const HomeScreen = ({ navigation }) => {
 
   const checkOut=()=>{
     if (user.checkIn){
+      const date = new Date();
+      //check out from check-ins collection
+      const checkinlogName = user.checkIn.date.slice(-4)
+        +user.checkIn.date.slice(3,5)
+        +user.checkIn.date.slice(0,2)
+        +user.checkIn.time.slice(0,2)
+        +user.checkIn.time.slice(3,5)
+        +user.checkIn.time.slice(6,8)
+        +user.checkIn.location;
+
+      firebase.firestore().collection("organisations")
+        .doc(orgId)
+        .collection('check-ins')
+        .doc(checkinlogName)
+        .update({
+            checkOut:firebase.firestore.Timestamp.fromDate(date),
+        });
       //check out from location's collection
       firebase.firestore().collection("organisations")
         .doc(orgId)
@@ -73,7 +90,7 @@ const HomeScreen = ({ navigation }) => {
         .collection(user.checkIn.date)
         .doc(user.checkIn.time)
         .update({
-            checkOut:new Date(),
+          checkOut:firebase.firestore.Timestamp.fromDate(new Date()),
         });
       //check out from employee's collection
         firebase.firestore().collection("organisations")

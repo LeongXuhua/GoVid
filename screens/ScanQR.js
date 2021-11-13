@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button, ActivityIndicator, } from 'react-native
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebase from 'firebase';
 import "firebase/firestore";
+import { useIsFocused } from '@react-navigation/core';
 
 const ScanQRScreen = () =>{
   const [hasPermission, setHasPermission] = useState(null);
@@ -15,6 +16,7 @@ const ScanQRScreen = () =>{
   const [user, setUser] = useState();
   const [checkInDetail, setCheckInDetail] =  useState();
   const [refreshCounter, setRefreshCounter] = useState(0);
+  const isFocused = useIsFocused();
 
   const fetchData = async () => {
     setIsloading(true);
@@ -48,7 +50,7 @@ const ScanQRScreen = () =>{
           setUser({
             id: snapshot.data().id,
             name: snapshot.data().name,
-            time: date,
+            time: firebase.firestore.Timestamp.fromDate(date),
           })
           setCheckInDetail(snapshot.data().checkIn)
           setIsloading(false)
@@ -56,7 +58,7 @@ const ScanQRScreen = () =>{
       
 }
     fetchUser();
-  }, [orgId, refreshCounter])
+  }, [orgId, refreshCounter, isFocused])
 
 
   useEffect(() => {
@@ -84,6 +86,13 @@ const ScanQRScreen = () =>{
     const fullDate = date
     const dateName = date.getDate().toString().padStart(2,0) + '-' + (date.getMonth()+1).toString().padStart(2,0) + '-' + date.getFullYear()
     const timeName = date.getHours().toString().padStart(2,0)+":"+date.getMinutes().toString().padStart(2,0)+":"+date.getSeconds().toString().padStart(2,0)
+    const logName = date.getFullYear() + 
+      (date.getMonth()+1).toString().padStart(2,0) + 
+      date.getDate().toString().padStart(2,0) + 
+      date.getHours().toString().padStart(2,0) + 
+      date.getMinutes().toString().padStart(2,0) +
+      date.getSeconds().toString().padStart(2,0) +
+      location;
 
     //check out of previous location
     if (checkInDetail){
@@ -96,7 +105,26 @@ const ScanQRScreen = () =>{
         .update({
             checkOut:date,
         });
+      
+      //for checkinlog
+      const checkinlogName = checkInDetail.date.slice(-4)
+        +checkInDetail.date.slice(3,5)
+        +checkInDetail.date.slice(0,2)
+        +checkInDetail.time.slice(0,2)
+        +checkInDetail.time.slice(3,5)
+        +checkInDetail.time.slice(6,8)
+        +checkInDetail.location;
+
+      firebase.firestore().collection("organisations")
+        .doc(orgId)
+        .collection('check-ins')
+        .doc(checkinlogName)
+        .update({
+            checkOut:date,
+        });
       }
+    
+      
 
     //add to location's collection
     firebase.firestore().collection("organisations")
@@ -111,6 +139,21 @@ const ScanQRScreen = () =>{
                   time: fullDate,
                   checkOut: null,
               });
+    
+    //for checkinlog
+    firebase.firestore().collection("organisations")
+              .doc(orgId)
+              .collection('check-ins')
+              .doc(logName)
+              .set({
+                  uid: firebase.auth().currentUser.uid,
+                  id: user.id,
+                  name: user.name,
+                  checkIn: fullDate,
+                  location: location,
+                  checkOut: null,
+              });
+
 
     // add to user's collection of current location
     firebase.firestore().collection("organisations")

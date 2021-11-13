@@ -1,27 +1,54 @@
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Platform } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Platform, ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { DataTable } from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/core';
+import firebase from 'firebase';
+import "firebase/firestore";
+
 
 const CheckInLogScreen = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [orgId, setOrgId]= useState();
+  const isFocused = useIsFocused();
+  const [locationLog, setLocationLog] = useState([]);
+  const [users, setUsers] = useState({});
+  const userDict = {};
+  const [userLoaded, setUserLoaded] = useState(false);
+  const [logLoaded, setLogLoaded] = useState(false);
+
   const [tableData, setTableData] = useState([
-    { time: "10.00AM", name: "Mary Tan", email: "abc@test.com", location: "Block A", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "11.00AM", name: "John Jones", email: "test@test.com", location: "Block B", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "12.00PM", name: "Bob", email: "zxc@test.com", location: "Block A", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { time: "13.00PM", name: "Tony Stark", email: "123@test.com", location: "Block D", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-  ])
+    /*{ time: "10.00AM", name: "Mary Tan", email: "abc@test.com", location: "Block A", vaccinated: "Fully Vaccinated", ARTResult: "Negative" },
+    { time: "11.00AM", name: "John Jones", email: "test@test.com", location: "Block B", vaccinated: "Fully Vaccinated", ARTResult: "Negative" },
+    { time: "12.00PM", name: "Bob", email: "zxc@test.com", location: "Block A", vaccinated: "Partially Vaccinated", ARTResult: "Negative" },
+    { time: "13.00PM", name: "Tony Stark", email: "123@test.com", location: "Block D", vaccinated: "Partially Vaccinated", ARTResult: "Negative" },
+  */])
 
   const [filteredData, setFilteredData] = useState([
-    { time: "10.00AM", name: "Mary Tan", email: "abc@test.com", location: "Block A", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "11.00AM", name: "John Jones", email: "test@test.com", location: "Block B", vaccinated: "Fully Vaccinated", artResult: "Negative" },
-    { time: "12.00PM", name: "Bob", email: "zxc@test.com", location: "Block A", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-    { time: "13.00PM", name: "Tony Stark", email: "123@test.com", location: "Block D", vaccinated: "Partially Vaccinated", artResult: "Negative" },
-  ])
+    /*{ time: "10.00AM", name: "Mary Tan", email: "abc@test.com", location: "Block A", vaccinated: "Fully Vaccinated", ARTResult: "Negative" },
+    { time: "11.00AM", name: "John Jones", email: "test@test.com", location: "Block B", vaccinated: "Fully Vaccinated", ARTResult: "Negative" },
+    { time: "12.00PM", name: "Bob", email: "zxc@test.com", location: "Block A", vaccinated: "Partially Vaccinated", ARTResult: "Negative" },
+    { time: "13.00PM", name: "Tony Stark", email: "123@test.com", location: "Block D", vaccinated: "Partially Vaccinated", ARTResult: "Negative" },
+  */])
 
-  const searchTime = (text) => {
+  const searchCheckIn = (text) => {
     if (text) {
       const newData = tableData.filter((item) => {
-        const itemData = item.time ? item.time.toUpperCase() : "".toUpperCase();
+        const itemData = item.checkIn ? item.checkIn.toUpperCase() : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+    }
+    else {
+      setFilteredData(tableData);
+    }
+  }
+
+  const searchCheckOut = (text) => {
+    if (text) {
+      const newData = tableData.filter((item) => {
+        const itemData = item.checkOut ? item.checkOut.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -88,10 +115,10 @@ const CheckInLogScreen = ({ navigation }) => {
     }
   }
 
-  const searchArtResult = (text) => {
+  const searchARTResult = (text) => {
     if (text) {
       const newData = tableData.filter((item) => {
-        const itemData = item.artResult ? item.artResult.toUpperCase() : "".toUpperCase();
+        const itemData = item.ARTResult ? item.ARTResult.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -102,6 +129,105 @@ const CheckInLogScreen = ({ navigation }) => {
     }
   }
 
+  const getVar = (uid, field)=>{
+    var output = field==='email'
+    ?users[uid].email
+    :field==='ARTResult'
+    ?users[uid].ARTResult
+    :field==='vaccinationResult'
+    ?users[uid].vaccinationResult
+    :null
+
+    return output;
+  }
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const snapshot = await firebase.firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+
+      const organisationId = await snapshot.data().organisationId;
+      setOrgId(organisationId);
+    }
+
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(()=>{
+    setIsLoading(true)
+    const fetchCheckIn = async()=>{
+      setLogLoaded(false)
+      if (orgId){
+        setTableData([]);
+        setFilteredData([]);
+        
+        const snapshot2 = await firebase.firestore()
+          .collection('organisations')
+          .doc(orgId)
+          .collection('check-ins')
+          .get()
+        
+        var checkInLog=[];
+
+        snapshot2.docs.map((doc)=>{
+          var checkOut = null;
+          if(doc.data().checkOut){
+            checkOut = doc.data().checkOut.toDate().toString();
+          }
+          checkInLog.push({
+            id: doc.data().id,
+            name: doc.data().name,
+            location: doc.data().location,
+            checkIn: doc.data().checkIn.toDate().toString(),
+            checkOut: checkOut,
+            uid: doc.data().uid,
+          })
+          setTableData(checkInLog)
+          setFilteredData(checkInLog)
+        })
+        setLogLoaded(true)
+        }
+      }
+
+    const fetchUsers = async()=>{
+      setUserLoaded(false)
+      if (orgId){
+        const snapshot2 = await firebase.firestore()
+          .collection('organisations')
+          .doc(orgId)
+          .collection('employees')
+          .get()
+
+        snapshot2.docs.map((doc)=>{
+          console.log(doc.data());
+          userDict[doc.id]=doc.data();
+          setUsers(userDict);
+        })
+        setUserLoaded(true)
+        }
+      }
+    fetchCheckIn();
+    fetchUsers();
+  }, [orgId, isFocused])
+
+  useEffect(()=>{
+    if(userLoaded&&logLoaded){
+      setIsLoading(false)
+    }
+  },[userLoaded,logLoaded])
+
+  if (isLoading){
+    return <ActivityIndicator />
+  }
   return (
     <SafeAreaView>
       <Text>Click on the table header to search</Text>
@@ -111,9 +237,13 @@ const CheckInLogScreen = ({ navigation }) => {
         <DataTable.Header>
 
           <DataTable.Title><TouchableOpacity><TextInput
-            placeholder="Time"
+            placeholder="Check-In"
             style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
-            onChangeText={(text) => searchTime(text)} /></TouchableOpacity></DataTable.Title>
+            onChangeText={(text) => searchCheckIn(text)} /></TouchableOpacity></DataTable.Title>
+            <DataTable.Title><TouchableOpacity><TextInput
+            placeholder="Check-Out"
+            style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
+            onChangeText={(text) => searchCheckOut(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="Name"
             style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
@@ -123,7 +253,7 @@ const CheckInLogScreen = ({ navigation }) => {
             style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchEmail(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
-            placeholder="Check-In Location"
+            placeholder="Location"
             style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
             onChangeText={(text) => searchLocation(text)} /></TouchableOpacity></DataTable.Title>
           <DataTable.Title><TouchableOpacity><TextInput
@@ -133,7 +263,7 @@ const CheckInLogScreen = ({ navigation }) => {
           <DataTable.Title><TouchableOpacity><TextInput
             placeholder="ART Result"
             style={{padding: 2.5, width: Platform.OS === 'android' ? 100:200, fontWeight: 'bold'}}
-            onChangeText={(text) => searchArtResult(text)} /></TouchableOpacity></DataTable.Title>
+            onChangeText={(text) => searchARTResult(text)} /></TouchableOpacity></DataTable.Title>
         </DataTable.Header>
 
         <FlatList
@@ -141,12 +271,13 @@ const CheckInLogScreen = ({ navigation }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <DataTable.Row>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.time}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.checkIn}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.checkOut}</Text></View>
               <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.name}</Text></View>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.email}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{users[item.uid].email}</Text></View>
               <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.location}</Text></View>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.vaccinated}</Text></View>
-              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{item.artResult}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{users[item.uid].vaccinationResult}</Text></View>
+              <View style={{width: Platform.OS === 'android' ? 100:200}}><Text>{users[item.uid].ARTResult}</Text></View>
             </DataTable.Row>
           )}
         />

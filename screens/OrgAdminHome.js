@@ -187,7 +187,6 @@ const OrgAdminHomeScreen = ({ navigation }) => {
         }
 
         snapshot2.docs.map(function(doc){
-          console.log(doc.data().vaccinationResult)
           employee.push({...doc.data(),})
 
           //increment employee count

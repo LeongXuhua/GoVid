@@ -209,7 +209,7 @@ const OrgAdminHomeScreen = ({ navigation }) => {
           };
           //distribute positive cases
           if(doc.data().ARTResult=="positive"){
-            org.empOffice=org.empOffice+1;
+            org.empPositive=org.empPositive+1;
           };
           setTableData(employee);
           setFilteredData(employee);

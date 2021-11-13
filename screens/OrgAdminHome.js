@@ -284,7 +284,7 @@ const OrgAdminHomeScreen = ({ navigation }) => {
           </View>
 
         </View>
-
+{/*
         <View>
           <Text style={styles.title}>Check-In's</Text>
           <DataTable style={styles.table}>
@@ -331,7 +331,7 @@ const OrgAdminHomeScreen = ({ navigation }) => {
             />
           </DataTable>
 
-        </View>
+              </View>*/}
       </ScrollView>
     </SafeAreaView>
   );
